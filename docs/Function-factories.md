@@ -1,11 +1,11 @@
-# Function factories
+# 함수 공장
 \index{function factories}
 
 
 
-## Introduction
+## 들어가기
 
-A __function factory__ is a function that makes functions. Here's a very simple example: we use a function factory (`power1()`) to make two child functions (`square()` and `cube()`):
+__함수공장 (function factory)__ 는 함수를 만드는 함수이다. Here's a very simple example: we use a function factory (`power1()`) to make two child functions (`square()` and `cube()`):
 
 
 ```r

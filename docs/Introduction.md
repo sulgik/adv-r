@@ -203,34 +203,34 @@ This book was written in [bookdown](http://bookdown.org/) inside [RStudio](http:
 This version of the book was built with R version 4.1.1 (2021-08-10) and the following packages.
 
 
-|package     |version    |source                       |
-|:-----------|:----------|:----------------------------|
-|bench       |1.1.1      |CRAN (R 4.1.1)               |
-|bookdown    |0.24       |CRAN (R 4.1.1)               |
-|bslib       |0.2.5.1    |CRAN (R 4.1.0)               |
-|dbplyr      |2.1.1      |CRAN (R 4.1.0)               |
-|desc        |1.3.0      |CRAN (R 4.1.0)               |
-|downlit     |0.2.1      |CRAN (R 4.1.1)               |
-|emo         |0.0.0.9000 |Github (hadley/emo\@3f03b11) |
-|ggbeeswarm  |0.6.0      |CRAN (R 4.1.1)               |
-|ggplot2     |3.3.5      |CRAN (R 4.1.0)               |
-|jsonlite    |1.7.2      |CRAN (R 4.1.0)               |
-|knitr       |1.33       |CRAN (R 4.1.0)               |
-|lobstr      |1.1.1      |CRAN (R 4.1.1)               |
-|memoise     |2.0.0      |CRAN (R 4.1.0)               |
-|png         |0.1-7      |CRAN (R 4.1.0)               |
-|profvis     |0.3.7      |CRAN (R 4.1.1)               |
-|Rcpp        |1.0.7      |CRAN (R 4.1.0)               |
-|rlang       |0.4.11     |CRAN (R 4.1.0)               |
-|RSQLite     |2.2.8      |CRAN (R 4.1.1)               |
-|scales      |1.1.1      |CRAN (R 4.1.0)               |
-|sessioninfo |1.1.1      |CRAN (R 4.1.0)               |
-|sloop       |1.0.1      |CRAN (R 4.1.1)               |
-|testthat    |3.0.4      |CRAN (R 4.1.0)               |
-|tidyr       |1.1.4      |CRAN (R 4.1.1)               |
-|vctrs       |0.3.8      |CRAN (R 4.1.0)               |
-|xml2        |1.3.2      |CRAN (R 4.1.0)               |
-|zeallot     |0.1.0      |CRAN (R 4.1.0)               |
+|package     |version |source         |
+|:-----------|:-------|:--------------|
+|bench       |NA      |NA             |
+|bookdown    |0.24    |CRAN (R 4.1.1) |
+|bslib       |0.2.5.1 |CRAN (R 4.1.0) |
+|dbplyr      |2.1.1   |CRAN (R 4.1.0) |
+|desc        |1.3.0   |CRAN (R 4.1.0) |
+|downlit     |0.2.1   |CRAN (R 4.1.1) |
+|emo         |NA      |NA             |
+|ggbeeswarm  |NA      |NA             |
+|ggplot2     |3.3.5   |CRAN (R 4.1.0) |
+|jsonlite    |1.7.2   |CRAN (R 4.1.0) |
+|knitr       |1.33    |CRAN (R 4.1.0) |
+|lobstr      |NA      |NA             |
+|memoise     |2.0.0   |CRAN (R 4.1.0) |
+|png         |0.1-7   |CRAN (R 4.1.0) |
+|profvis     |NA      |NA             |
+|Rcpp        |1.0.7   |CRAN (R 4.1.0) |
+|rlang       |0.4.11  |CRAN (R 4.1.0) |
+|RSQLite     |NA      |NA             |
+|scales      |1.1.1   |CRAN (R 4.1.0) |
+|sessioninfo |1.1.1   |CRAN (R 4.1.0) |
+|sloop       |NA      |NA             |
+|testthat    |3.0.4   |CRAN (R 4.1.0) |
+|tidyr       |1.1.4   |CRAN (R 4.1.1) |
+|vctrs       |0.3.8   |CRAN (R 4.1.0) |
+|xml2        |1.3.2   |CRAN (R 4.1.0) |
+|zeallot     |0.1.0   |CRAN (R 4.1.0) |
 
 
 

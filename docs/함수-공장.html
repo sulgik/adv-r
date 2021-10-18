@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>6 함수 공장 | Advanced R</title>
+<meta name="author" content="Hadley Wickham">
+<meta name="generator" content="bookdown 0.24 with bs4_book()">
+<meta property="og:title" content="6 함수 공장 | Advanced R">
+<meta property="og:type" content="book">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="6 함수 공장 | Advanced R">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.10/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-141212623-1"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-141212623-1');
+    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><meta name="description" content="6.1 들어가기 함수공장 (function factory) 는 함수를 만드는 함수이다. Here’s a very simple example: we use a function factory (power1()) to make two child functions (square() and cube()): power1 &lt;- function(exp) { ...">
+<meta property="og:description" content="6.1 들어가기 함수공장 (function factory) 는 함수를 만드는 함수이다. Here’s a very simple example: we use a function factory (power1()) to make two child functions (square() and cube()): power1 &lt;- function(exp) { ...">
+<meta name="twitter:description" content="6.1 들어가기 함수공장 (function factory) 는 함수를 만드는 함수이다. Here’s a very simple example: we use a function factory (power1()) to make two child functions (square() and cube()): power1 &lt;- function(exp) { ...">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Advanced R</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">환영합니다</a></li>
+<li><a class="" href="preface.html">Preface</a></li>
+<li><a class="" href="introduction.html"><span class="header-section-number">1</span> Introduction</a></li>
+<li class="book-part">Foundations</li>
+<li><a class="" href="foundations-intro.html">Introduction</a></li>
+<li><a class="" href="names-values.html"><span class="header-section-number">2</span> Names and values</a></li>
+<li><a class="" href="functions.html"><span class="header-section-number">3</span> 함수</a></li>
+<li><a class="" href="environments.html"><span class="header-section-number">4</span> 환경</a></li>
+<li class="book-part">Functional programming</li>
+<li><a class="" href="fp.html">Introduction</a></li>
+<li><a class="" href="functionals.html"><span class="header-section-number">5</span> Functionals</a></li>
+<li><a class="active" href="%ED%95%A8%EC%88%98-%EA%B3%B5%EC%9E%A5.html"><span class="header-section-number">6</span> 함수 공장</a></li>
+<li><a class="" href="function-operators.html"><span class="header-section-number">7</span> 함수 연산자</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/hadley/adv-r">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="함수-공장" class="section level1" number="6">
+<h1>
+<span class="header-section-number">6</span> 함수 공장<a class="anchor" aria-label="anchor" href="#%ED%95%A8%EC%88%98-%EA%B3%B5%EC%9E%A5"><i class="fas fa-link"></i></a>
+</h1>
+<p></p>
+<div id="들어가기" class="section level2" number="6.1">
+<h2>
+<span class="header-section-number">6.1</span> 들어가기<a class="anchor" aria-label="anchor" href="#%EB%93%A4%EC%96%B4%EA%B0%80%EA%B8%B0"><i class="fas fa-link"></i></a>
+</h2>
+<p><strong>함수공장 (function factory)</strong> 는 함수를 만드는 함수이다. Here’s a very simple example: we use a function factory (<code>power1()</code>) to make two child functions (<code>square()</code> and <code>cube()</code>):</p>
+<div class="sourceCode" id="cb266"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">power1</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">exp</span><span class="op">)</span> <span class="op">{</span>
+  <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">x</span> <span class="op">^</span> <span class="va">exp</span>
+  <span class="op">}</span>
+<span class="op">}</span>
+
+<span class="va">square</span> <span class="op">&lt;-</span> <span class="fu">power1</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>
+<span class="va">cube</span> <span class="op">&lt;-</span> <span class="fu">power1</span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></code></pre></div>
+<p>Don’t worry if this doesn’t make sense yet, it should by the end of the chapter!</p>
+<p>
+
+I’ll call <code>square()</code> and <code>cube()</code> <strong>manufactured functions</strong>, but this is just a term to ease communication with other humans: from R’s perspective they are no different to functions created any other way.</p>
+<div class="sourceCode" id="cb267"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">square</span><span class="op">(</span><span class="fl">3</span><span class="op">)</span>
+<span class="co">#&gt; [1] 9</span>
+<span class="fu">cube</span><span class="op">(</span><span class="fl">3</span><span class="op">)</span>
+<span class="co">#&gt; [1] 27</span></code></pre></div>
+<p>You have already learned about the individual components that make function factories possible:</p>
+<ul>
+<li><p>In Section <a href="functions.html#first-class-functions">3.2.3</a>, you learned about R’s first-class
+functions. In R, you bind a function to a name in the same way as you bind
+any object to a name: with <code><a href="https://rdrr.io/r/base/assignOps.html">&lt;-</a></code>.</p></li>
+<li><p>In Section <a href="environments.html#function-environments">4.4.2</a>, you learned that a function
+captures (encloses) the environment in which it is created.</p></li>
+<li><p>In Section <a href="environments.html#execution-environments">4.4.4</a>, you learned that a function
+creates a new execution environment every time it is run. This environment
+is usually ephemeral, but here it becomes the enclosing environment of
+the manufactured function.</p></li>
+</ul>
+<p>In this chapter, you’ll learn how the non-obvious combination of these three features leads to the function factory. You’ll also see examples of their usage in visualisation and statistics.</p>
+<p>Of the three main functional programming tools (functionals, function factories, and function operators), function factories are the least used. Generally, they don’t tend to reduce overall code complexity but instead partition complexity into more easily digested chunks. Function factories are also an important building block for the very useful function operators, which you’ll learn about in Chapter <a href="function-operators.html#function-operators">7</a>.</p>
+<div id="outline-4" class="section level3 unnumbered">
+<h3>Outline<a class="anchor" aria-label="anchor" href="#outline-4"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li><p>Section <a href="%ED%95%A8%EC%88%98-%EA%B3%B5%EC%9E%A5.html#factory-fundamentals">6.2</a> begins the chapter with an explanation
+of how function factories work, pulling together ideas from scoping and
+environments. You’ll also see how function factories can be used to implement
+a memory for functions, allowing data to persist across calls.</p></li>
+<li><p>Section <a href="%ED%95%A8%EC%88%98-%EA%B3%B5%EC%9E%A5.html#graph-fact">6.3</a> illustrates the use of function factories with
+examples from ggplot2. You’ll see two examples of how ggplot2 works
+with user supplied function factories, and one example of where ggplot2
+uses a function factory internally.</p></li>
+<li><p>Section <a href="%ED%95%A8%EC%88%98-%EA%B3%B5%EC%9E%A5.html#stat-fact">6.4</a> uses function factories to tackle three challenges from
+statistics: understanding the Box-Cox transform, solving maximum likelihood
+problems, and drawing bootstrap resamples.</p></li>
+<li><p>Section <a href="%ED%95%A8%EC%88%98-%EA%B3%B5%EC%9E%A5.html#functional-factories">6.5</a> shows how you can combine function
+factories and functionals to rapidly generate a family of functions from data.</p></li>
+</ul>
+</div>
+<div id="prerequisites-3" class="section level3 unnumbered">
+<h3>Prerequisites<a class="anchor" aria-label="anchor" href="#prerequisites-3"><i class="fas fa-link"></i></a>
+</h3>
+<p>Make sure you’re familiar with the contents of Sections <a href="functions.html#first-class-functions">3.2.3</a> (first-class functions), <a href="environments.html#function-environments">4.4.2</a> (the function environment), and <a href="environments.html#execution-environments">4.4.4</a> (execution environments) mentioned above.</p>
+<p>Function factories only need base R. We’ll use a little <a href="https://rlang.r-lib.org">rlang</a> to peek inside of them more easily, and we’ll use <a href="https://ggplot2.tidyverse.org">ggplot2</a> and <a href="https://scales.r-lib.org">scales</a> to explore the use of function factories in visualisation.</p>
+<div class="sourceCode" id="cb268"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rlang.r-lib.org">rlang</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://scales.r-lib.org">scales</a></span><span class="op">)</span></code></pre></div>
+</div>
+</div>
+<div id="factory-fundamentals" class="section level2" number="6.2">
+<h2>
+<span class="header-section-number">6.2</span> Factory fundamentals<a class="anchor" aria-label="anchor" href="#factory-fundamentals"><i class="fas fa-link"></i></a>
+</h2>
+<p>The key idea that makes function factories work can be expressed very concisely:</p>
+<blockquote>
+<p>The enclosing environment of the manufactured function is an execution
+environment of the function factory.</p>
+</blockquote>
+<p>It only takes few words to express these big ideas, but it takes a lot more work to really understand what this means. This section will help you put the pieces together with interactive exploration and some diagrams.</p>
+<div id="environments-1" class="section level3" number="6.2.1">
+<h3>
+<span class="header-section-number">6.2.1</span> Environments<a class="anchor" aria-label="anchor" href="#environments-1"><i class="fas fa-link"></i></a>
+</h3>
+<p>Let’s start by taking a look at <code>square()</code> and <code>cube()</code>:</p>
+<div class="sourceCode" id="cb269"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">square</span>
+<span class="co">#&gt; function(x) {</span>
+<span class="co">#&gt;     x ^ exp</span>
+<span class="co">#&gt;   }</span>
+<span class="co">#&gt; &lt;environment: 0x55d1f510b598&gt;</span>
+
+<span class="va">cube</span>
+<span class="co">#&gt; function(x) {</span>
+<span class="co">#&gt;     x ^ exp</span>
+<span class="co">#&gt;   }</span>
+<span class="co">#&gt; &lt;bytecode: 0x55d1f5235450&gt;</span>
+<span class="co">#&gt; &lt;environment: 0x55d1f51541c0&gt;</span></code></pre></div>
+<p>It’s obvious where <code>x</code> comes from, but how does R find the value associated with <code>exp</code>? Simply printing the manufactured functions is not revealing because the bodies are identical; the contents of the enclosing environment are the important factors. We can get a little more insight by using <code><a href="https://rlang.r-lib.org/reference/env_print.html">rlang::env_print()</a></code>. That shows us that we have two different environments (each of which was originally an execution environment of <code>power1()</code>). The environments have the same parent, which is the enclosing environment of <code>power1()</code>, the global environment.</p>
+<div class="sourceCode" id="cb270"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rlang.r-lib.org/reference/env_print.html">env_print</a></span><span class="op">(</span><span class="va">square</span><span class="op">)</span>
+<span class="co">#&gt; &lt;environment: 0x55d1f510b598&gt;</span>
+<span class="co">#&gt; parent: &lt;environment: global&gt;</span>
+<span class="co">#&gt; bindings:</span>
+<span class="co">#&gt;  * exp: &lt;dbl&gt;</span>
+
+<span class="fu"><a href="https://rlang.r-lib.org/reference/env_print.html">env_print</a></span><span class="op">(</span><span class="va">cube</span><span class="op">)</span>
+<span class="co">#&gt; &lt;environment: 0x55d1f51541c0&gt;</span>
+<span class="co">#&gt; parent: &lt;environment: global&gt;</span>
+<span class="co">#&gt; bindings:</span>
+<span class="co">#&gt;  * exp: &lt;dbl&gt;</span></code></pre></div>
+<p><code><a href="https://rlang.r-lib.org/reference/env_print.html">env_print()</a></code> shows us that both environments have a binding to <code>exp</code>, but we want to see its value<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;A future version of &lt;code&gt;env_print()&lt;/code&gt; is likely to do better at summarising the contents so you don’t need this step.&lt;/p&gt;"><sup>35</sup></a>. We can do that by first getting the environment of the function, and then extracting the values:</p>
+<div class="sourceCode" id="cb271"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rlang.r-lib.org/reference/fn_env.html">fn_env</a></span><span class="op">(</span><span class="va">square</span><span class="op">)</span><span class="op">$</span><span class="va">exp</span>
+<span class="co">#&gt; [1] 2</span>
+
+<span class="fu"><a href="https://rlang.r-lib.org/reference/fn_env.html">fn_env</a></span><span class="op">(</span><span class="va">cube</span><span class="op">)</span><span class="op">$</span><span class="va">exp</span>
+<span class="co">#&gt; [1] 3</span></code></pre></div>
+<p>This is what makes manufactured functions behave differently from one another: names in the enclosing environment are bound to different values.</p>
+</div>
+<div id="diagram-conventions" class="section level3" number="6.2.2">
+<h3>
+<span class="header-section-number">6.2.2</span> Diagram conventions<a class="anchor" aria-label="anchor" href="#diagram-conventions"><i class="fas fa-link"></i></a>
+</h3>
+<p>We can also show these relationships in a diagram:</p>
+<div class="inline-figure"><img src="diagrams/function-factories/power-full.png" width="354" style="display: block; margin: auto;"></div>
+<p>There’s a lot going on this diagram and some of the details aren’t that important. We can simplify considerably by using two conventions:</p>
+<ul>
+<li><p>Any free floating symbol lives in the global environment.</p></li>
+<li><p>Any environment without an explicit parent inherits from the global
+environment.</p></li>
+</ul>
+<div class="inline-figure"><img src="diagrams/function-factories/power-simple.png" width="330" style="display: block; margin: auto;"></div>
+<p>This view, which focuses on the environments, doesn’t show any direct link between <code>cube()</code> and <code>square()</code>. That’s because the link is the through the body of the function, which is identical for both, but is not shown in this diagram.</p>
+<p>To finish up, let’s look at the execution environment of <code>square(10)</code>. When <code>square()</code> executes <code>x ^ exp</code> it finds <code>x</code> in the execution environment and <code>exp</code> in its enclosing environment.</p>
+<div class="sourceCode" id="cb272"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">square</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>
+<span class="co">#&gt; [1] 100</span></code></pre></div>
+<div class="inline-figure"><img src="diagrams/function-factories/power-exec.png" width="330" style="display: block; margin: auto;"></div>
+</div>
+<div id="forcing-evaluation" class="section level3" number="6.2.3">
+<h3>
+<span class="header-section-number">6.2.3</span> Forcing evaluation<a class="anchor" aria-label="anchor" href="#forcing-evaluation"><i class="fas fa-link"></i></a>
+</h3>
+<p>There’s a subtle bug in <code>power1()</code> caused by lazy evaluation. To see the problem we need to introduce some indirection:</p>
+<div class="sourceCode" id="cb273"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">2</span>
+<span class="va">square</span> <span class="op">&lt;-</span> <span class="fu">power1</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
+<span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">3</span></code></pre></div>
+<p>What should <code>square(2)</code> return? You would hope it returns 4:</p>
+<div class="sourceCode" id="cb274"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">square</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>
+<span class="co">#&gt; [1] 8</span></code></pre></div>
+<p>Unfortunately it doesn’t because <code>x</code> is only evaluated lazily when <code>square()</code> is run, not when <code>power1()</code> is run. In general, this problem will arise whenever a binding changes in between calling the factory function and calling the manufactured function. This is likely to only happen rarely, but when it does, it will lead to a real head-scratcher of a bug.</p>
+<p>We can fix this problem by <strong>forcing</strong> evaluation with <code><a href="https://rdrr.io/r/base/force.html">force()</a></code>:</p>
+<div class="sourceCode" id="cb275"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">power2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">exp</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/force.html">force</a></span><span class="op">(</span><span class="va">exp</span><span class="op">)</span>
+  <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">x</span> <span class="op">^</span> <span class="va">exp</span>
+  <span class="op">}</span>
+<span class="op">}</span>
+
+<span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">2</span>
+<span class="va">square</span> <span class="op">&lt;-</span> <span class="fu">power2</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
+<span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">3</span>
+<span class="fu">square</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>
+<span class="co">#&gt; [1] 4</span></code></pre></div>
+<p>Whenever you create a function factory, make sure every argument is evaluated, using <code><a href="https://rdrr.io/r/base/force.html">force()</a></code> as necessary if the argument is only used by the manufactured function.</p>
+</div>
+<div id="stateful-funs" class="section level3" number="6.2.4">
+<h3>
+<span class="header-section-number">6.2.4</span> Stateful functions<a class="anchor" aria-label="anchor" href="#stateful-funs"><i class="fas fa-link"></i></a>
+</h3>
+<p></p>
+<p>함수 공장을 사용하면 함수 호출들에 대해 state 를 유지할수 있는데, <a href="functions.html#fresh-start">3.4.3</a> 섹션에 기술된 fresh start 원칙때문에 일반적으로 쉬운 일은 아니다.</p>
+<p>There are two things that make this possible:</p>
+<ul>
+<li><p>The enclosing environment of the manufactured function is unique and constant.</p></li>
+<li><p>R has a special assignment operator, <code><a href="https://rdrr.io/r/base/assignOps.html">&lt;&lt;-</a></code>, which modifies bindings in the
+enclosing environment.</p></li>
+</ul>
+<p>일반 할당 연산자, <code><a href="https://rdrr.io/r/base/assignOps.html">&lt;-</a></code>, 는 항상 현재 환경에서 바인딩을 만든다. <strong>super assignment operator</strong>, <code><a href="https://rdrr.io/r/base/assignOps.html">&lt;&lt;-</a></code> 은 부모 환경에 존재하는 이름을 새로 바인드 한다.</p>
+<p>The following example shows how we can combine these ideas to create a function that records how many times it has been called:</p>
+<div class="sourceCode" id="cb276"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">new_counter</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">i</span> <span class="op">&lt;-</span> <span class="fl">0</span>
+  
+  <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">i</span> <span class="op">&lt;&lt;-</span> <span class="va">i</span> <span class="op">+</span> <span class="fl">1</span>
+    <span class="va">i</span>
+  <span class="op">}</span>
+<span class="op">}</span>
+
+<span class="va">counter_one</span> <span class="op">&lt;-</span> <span class="fu">new_counter</span><span class="op">(</span><span class="op">)</span>
+<span class="va">counter_two</span> <span class="op">&lt;-</span> <span class="fu">new_counter</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="diagrams/function-factories/counter-1.png" width="354" style="display: block; margin: auto;"></div>
+<p>When the manufactured function is run <code>i &lt;&lt;- i + 1</code> will modify <code>i</code> in its enclosing environment. Because manufactured functions have independent enclosing environments, they have independent counts:</p>
+<div class="sourceCode" id="cb277"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">counter_one</span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; [1] 1</span>
+<span class="fu">counter_one</span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; [1] 2</span>
+<span class="fu">counter_two</span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; [1] 1</span></code></pre></div>
+<div class="inline-figure"><img src="diagrams/function-factories/counter-2.png" width="354" style="display: block; margin: auto;"></div>
+<p>Stateful functions are best used in moderation. As soon as your function starts managing the state of multiple variables, it’s better to switch to R6, the topic of Chapter <a href="#r6"><strong>??</strong></a>.</p>
+</div>
+<div id="factory-pitfalls" class="section level3" number="6.2.5">
+<h3>
+<span class="header-section-number">6.2.5</span> Garbage collection<a class="anchor" aria-label="anchor" href="#factory-pitfalls"><i class="fas fa-link"></i></a>
+</h3>
+<p></p>
+<p>With most functions, you can rely on the garbage collector to clean up any large temporary objects created inside a function. However, manufactured functions hold on to the execution environment, so you’ll need to explicitly unbind any large temporary objects with <code><a href="https://rdrr.io/r/base/rm.html">rm()</a></code>. Compare the sizes of <code>g1()</code> and <code>g2()</code> in the example below:</p>
+<div class="sourceCode" id="cb278"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">f1</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span>
+  <span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
+  <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="va">m</span>
+<span class="op">}</span>
+
+<span class="va">g1</span> <span class="op">&lt;-</span> <span class="fu">f1</span><span class="op">(</span><span class="fl">1e6</span><span class="op">)</span>
+<span class="fu">lobstr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/obj_size.html">obj_size</a></span><span class="op">(</span><span class="va">g1</span><span class="op">)</span>
+<span class="co">#&gt; 8,013,104 B</span>
+
+<span class="va">f2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span>
+  <span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/rm.html">rm</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
+  <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="va">m</span>
+<span class="op">}</span>
+
+<span class="va">g2</span> <span class="op">&lt;-</span> <span class="fu">f2</span><span class="op">(</span><span class="fl">1e6</span><span class="op">)</span>
+<span class="fu">lobstr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/obj_size.html">obj_size</a></span><span class="op">(</span><span class="va">g2</span><span class="op">)</span>
+<span class="co">#&gt; 12,944 B</span></code></pre></div>
+</div>
+<div id="exercises-18" class="section level3" number="6.2.6">
+<h3>
+<span class="header-section-number">6.2.6</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-18"><i class="fas fa-link"></i></a>
+</h3>
+<ol style="list-style-type: decimal">
+<li>
+<p>The definition of <code><a href="https://rdrr.io/r/base/force.html">force()</a></code> is simple:</p>
+<div class="sourceCode" id="cb279"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">force</span>
+<span class="co">#&gt; function (x) </span>
+<span class="co">#&gt; x</span>
+<span class="co">#&gt; &lt;bytecode: 0x55d1f1342d40&gt;</span>
+<span class="co">#&gt; &lt;environment: namespace:base&gt;</span></code></pre></div>
+<p>Why is it better to <code><a href="https://rdrr.io/r/base/force.html">force(x)</a></code> instead of just <code>x</code>?</p>
+</li>
+<li><p>Base R contains two function factories, <code><a href="https://rdrr.io/r/stats/approxfun.html">approxfun()</a></code> and <code><a href="https://rdrr.io/r/stats/ecdf.html">ecdf()</a></code>.
+Read their documentation and experiment to figure out what the functions
+do and what they return.</p></li>
+<li>
+<p>Create a function <code>pick()</code> that takes an index, <code>i</code>, as an argument and
+returns a function with an argument <code>x</code> that subsets <code>x</code> with <code>i</code>.</p>
+<div class="sourceCode" id="cb280"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">pick</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
+<span class="co"># should be equivalent to</span>
+<span class="va">x</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="fu">pick</span><span class="op">(</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span>
+<span class="co"># should be equivalent to</span>
+<span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">[[</span><span class="fl">5</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></code></pre></div>
+</li>
+<li>
+<p>Create a function that creates functions that compute the i<sup>th</sup><a href="http://en.wikipedia.org/wiki/Central_moment">central moment</a> of a numeric
+vector. You can test it by running the following code:</p>
+<div class="sourceCode" id="cb281"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">m1</span> <span class="op">&lt;-</span> <span class="fu">moment</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
+<span class="va">m2</span> <span class="op">&lt;-</span> <span class="fu">moment</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>
+
+<span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html">all.equal</a></span><span class="op">(</span><span class="fu">m1</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html">all.equal</a></span><span class="op">(</span><span class="fu">m2</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">var</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">*</span> <span class="fl">99</span> <span class="op">/</span> <span class="fl">100</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+</li>
+<li>
+<p>What happens if you don’t use a closure? Make predictions, then verify with
+the code below.</p>
+<div class="sourceCode" id="cb282"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">i</span> <span class="op">&lt;-</span> <span class="fl">0</span>
+<span class="va">new_counter2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">i</span> <span class="op">&lt;&lt;-</span> <span class="va">i</span> <span class="op">+</span> <span class="fl">1</span>
+  <span class="va">i</span>
+<span class="op">}</span></code></pre></div>
+</li>
+<li>
+<p>What happens if you use <code><a href="https://rdrr.io/r/base/assignOps.html">&lt;-</a></code> instead of <code><a href="https://rdrr.io/r/base/assignOps.html">&lt;&lt;-</a></code>? Make predictions, then verify
+with the code below.</p>
+<div class="sourceCode" id="cb283"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">new_counter3</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">i</span> <span class="op">&lt;-</span> <span class="fl">0</span>
+  <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">i</span> <span class="op">&lt;-</span> <span class="va">i</span> <span class="op">+</span> <span class="fl">1</span>
+    <span class="va">i</span>
+  <span class="op">}</span>
+<span class="op">}</span></code></pre></div>
+</li>
+</ol>
+</div>
+</div>
+<div id="graph-fact" class="section level2" number="6.3">
+<h2>
+<span class="header-section-number">6.3</span> Graphical factories<a class="anchor" aria-label="anchor" href="#graph-fact"><i class="fas fa-link"></i></a>
+</h2>
+<p>We’ll begin our exploration of useful function factories with a few examples from ggplot2.</p>
+<div id="labelling" class="section level3" number="6.3.1">
+<h3>
+<span class="header-section-number">6.3.1</span> Labelling<a class="anchor" aria-label="anchor" href="#labelling"><i class="fas fa-link"></i></a>
+</h3>
+<p>One of the goals of the <a href="http://scales.r-lib.org">scales</a> package is to make it easy to customise the labels on ggplot2. It provides many functions to control the fine details of axes and legends. The formatter functions<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;It’s an unfortunate accident of history that scales uses function suffixes instead of function prefixes. That’s because it was written before I understood the autocomplete advantages to using common prefixes instead of common suffixes.&lt;/p&gt;"><sup>36</sup></a> are a useful class of functions which make it easier to control the appearance of axis breaks. The design of these functions might initially seem a little odd: they all return a function, which you have to call in order to format a number.</p>
+<div class="sourceCode" id="cb284"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">12345</span>, <span class="fl">123456</span>, <span class="fl">1234567</span><span class="op">)</span>
+<span class="fu"><a href="https://scales.r-lib.org/reference/label_number.html">comma_format</a></span><span class="op">(</span><span class="op">)</span><span class="op">(</span><span class="va">y</span><span class="op">)</span>
+<span class="co">#&gt; [1] "12,345"    "123,456"   "1,234,567"</span>
+
+<span class="fu"><a href="https://scales.r-lib.org/reference/label_number.html">number_format</a></span><span class="op">(</span>scale <span class="op">=</span> <span class="fl">1e-3</span>, suffix <span class="op">=</span> <span class="st">" K"</span><span class="op">)</span><span class="op">(</span><span class="va">y</span><span class="op">)</span>
+<span class="co">#&gt; [1] "12 K"    "123 K"   "1 235 K"</span></code></pre></div>
+<p>In other words, the primary interface is a function factory. At first glance, this seems to add extra complexity for little gain. But it enables a nice interaction with ggplot2’s scales, because they accept functions in the <code>label</code> argument:</p>
+<div class="sourceCode" id="cb285"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, y <span class="op">=</span> <span class="va">y</span><span class="op">)</span>
+<span class="va">core</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fl">1</span>, labels <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
+  
+<span class="va">core</span>
+<span class="va">core</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>
+  labels <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/label_number.html">comma_format</a></span><span class="op">(</span><span class="op">)</span>
+<span class="op">)</span>
+<span class="va">core</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>
+  labels <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/label_number.html">number_format</a></span><span class="op">(</span>scale <span class="op">=</span> <span class="fl">1e-3</span>, suffix <span class="op">=</span> <span class="st">" K"</span><span class="op">)</span>
+<span class="op">)</span>
+<span class="va">core</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>
+  labels <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/label_scientific.html">scientific_format</a></span><span class="op">(</span><span class="op">)</span>
+<span class="op">)</span></code></pre></div>
+<p><img src="Function-factories_files/figure-html/unnamed-chunk-25-1.png" width="24%"><img src="Function-factories_files/figure-html/unnamed-chunk-25-2.png" width="24%"><img src="Function-factories_files/figure-html/unnamed-chunk-25-3.png" width="24%"><img src="Function-factories_files/figure-html/unnamed-chunk-25-4.png" width="24%"></p>
+</div>
+<div id="histogram-bins" class="section level3" number="6.3.2">
+<h3>
+<span class="header-section-number">6.3.2</span> Histogram bins<a class="anchor" aria-label="anchor" href="#histogram-bins"><i class="fas fa-link"></i></a>
+</h3>
+<p>A little known feature of <code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram()</a></code> is that the <code>binwidth</code> argument can be a function. This is particularly useful because the function is executed once for each group, which means you can have different binwidths in different facets, which is otherwise not possible.</p>
+<p>To illustrate this idea, and see where variable binwidth might be useful, I’m going to construct an example where a fixed binwidth isn’t great.</p>
+<div class="sourceCode" id="cb286"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># construct some sample data with very different numbers in each cell</span>
+<span class="va">sd</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span>, <span class="fl">15</span><span class="op">)</span>
+<span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">100</span>
+
+<span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">3</span> <span class="op">*</span> <span class="va">n</span>, sd <span class="op">=</span> <span class="va">sd</span><span class="op">)</span>, sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="va">sd</span>, <span class="va">n</span><span class="op">)</span><span class="op">)</span>
+
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">sd</span>, scales <span class="op">=</span> <span class="st">"free_x"</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="Function-factories_files/figure-html/unnamed-chunk-26-1.png" width="90%" style="display: block; margin: auto;"></div>
+<p>Here each facet has the same number of observations, but the variability is very different. It would be nice if we could request that the binwidths vary so we get approximately the same number of observations in each bin. One way to do that is with a function factory that inputs the desired number of bins (<code>n</code>), and outputs a function that takes a numeric vector and returns a binwidth:</p>
+<div class="sourceCode" id="cb287"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">binwidth_bins</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/force.html">force</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span>
+  
+  <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
+    <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="va">n</span>
+  <span class="op">}</span>
+<span class="op">}</span>
+
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fu">binwidth_bins</span><span class="op">(</span><span class="fl">20</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">sd</span>, scales <span class="op">=</span> <span class="st">"free_x"</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="Function-factories_files/figure-html/unnamed-chunk-27-1.png" width="90%" style="display: block; margin: auto;"></div>
+<p>We could use this same pattern to wrap around the base R functions that automatically find the so-called optimal<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;ggplot2 doesn’t expose these functions directly because I don’t think the definition of optimality needed to make the problem mathematically tractable is a good match to the actual needs of data exploration.&lt;/p&gt;"><sup>37</sup></a> binwidth, <code><a href="https://rdrr.io/r/grDevices/nclass.html">nclass.Sturges()</a></code>, <code><a href="https://rdrr.io/r/grDevices/nclass.html">nclass.scott()</a></code>, and <code><a href="https://rdrr.io/r/grDevices/nclass.html">nclass.FD()</a></code>:</p>
+<div class="sourceCode" id="cb288"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">base_bins</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">type</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">fun</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://rdrr.io/r/base/switch.html">switch</a></span><span class="op">(</span><span class="va">type</span>,
+    Sturges <span class="op">=</span> <span class="va">nclass.Sturges</span>,
+    scott <span class="op">=</span> <span class="va">nclass.scott</span>,
+    FD <span class="op">=</span> <span class="va">nclass.FD</span>,
+    <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"Unknown type"</span>, call. <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+  <span class="op">)</span>
+  
+  <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
+    <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="fu">fun</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
+  <span class="op">}</span>
+<span class="op">}</span>
+
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fu">base_bins</span><span class="op">(</span><span class="st">"FD"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">sd</span>, scales <span class="op">=</span> <span class="st">"free_x"</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="Function-factories_files/figure-html/unnamed-chunk-28-1.png" width="90%" style="display: block; margin: auto;"></div>
+</div>
+<div id="ggsave" class="section level3" number="6.3.3">
+<h3>
+<span class="header-section-number">6.3.3</span> <code>ggsave()</code><a class="anchor" aria-label="anchor" href="#ggsave"><i class="fas fa-link"></i></a>
+</h3>
+<p>Finally, I want to show a function factory used internally by ggplot2. <code>ggplot2:::plot_dev()</code> is used by <code><a href="https://ggplot2.tidyverse.org/reference/ggsave.html">ggsave()</a></code> to go from a file extension (e.g. <code>png</code>, <code>jpeg</code> etc) to a graphics device function (e.g. <code><a href="https://rdrr.io/r/grDevices/png.html">png()</a></code>, <code><a href="https://rdrr.io/r/grDevices/png.html">jpeg()</a></code>). The challenge here arises because the base graphics devices have some minor inconsistencies which we need to paper over:</p>
+<ul>
+<li><p>Most have <code>filename</code> as first argument but some have <code>file</code>.</p></li>
+<li><p>The <code>width</code> and <code>height</code> of raster graphic devices use pixels units
+by default, but the vector graphics use inches.</p></li>
+</ul>
+<p>A mildly simplified version of <code>plot_dev()</code> is shown below:</p>
+<div class="sourceCode" id="cb289"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">plot_dev</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">ext</span>, <span class="va">dpi</span> <span class="op">=</span> <span class="fl">96</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/force.html">force</a></span><span class="op">(</span><span class="va">dpi</span><span class="op">)</span>
+  
+  <span class="kw"><a href="https://rdrr.io/r/base/switch.html">switch</a></span><span class="op">(</span><span class="va">ext</span>,
+    eps <span class="op">=</span>  ,
+    ps  <span class="op">=</span>  <span class="kw">function</span><span class="op">(</span><span class="va">path</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span>
+      <span class="fu">grDevices</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grDevices/postscript.html">postscript</a></span><span class="op">(</span>
+        file <span class="op">=</span> <span class="va">filename</span>, <span class="va">...</span>, onefile <span class="op">=</span> <span class="cn">FALSE</span>, 
+        horizontal <span class="op">=</span> <span class="cn">FALSE</span>, paper <span class="op">=</span> <span class="st">"special"</span>
+      <span class="op">)</span>
+    <span class="op">}</span>,
+    pdf <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">filename</span>, <span class="va">...</span><span class="op">)</span> <span class="fu">grDevices</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grDevices/pdf.html">pdf</a></span><span class="op">(</span>file <span class="op">=</span> <span class="va">filename</span>, <span class="va">...</span><span class="op">)</span>,
+    svg <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">filename</span>, <span class="va">...</span><span class="op">)</span> <span class="fu">svglite</span><span class="fu">::</span><span class="fu"><a href="https://svglite.r-lib.org/reference/svglite.html">svglite</a></span><span class="op">(</span>file <span class="op">=</span> <span class="va">filename</span>, <span class="va">...</span><span class="op">)</span>,
+    emf <span class="op">=</span> ,
+    wmf <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="fu">grDevices</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grDevices/windows.html">win.metafile</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span>,
+    png <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="fu">grDevices</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grDevices/png.html">png</a></span><span class="op">(</span><span class="va">...</span>, res <span class="op">=</span> <span class="va">dpi</span>, units <span class="op">=</span> <span class="st">"in"</span><span class="op">)</span>,
+    jpg <span class="op">=</span> ,
+    jpeg <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="fu">grDevices</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grDevices/png.html">jpeg</a></span><span class="op">(</span><span class="va">...</span>, res <span class="op">=</span> <span class="va">dpi</span>, units <span class="op">=</span> <span class="st">"in"</span><span class="op">)</span>,
+    bmp <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="fu">grDevices</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grDevices/png.html">bmp</a></span><span class="op">(</span><span class="va">...</span>, res <span class="op">=</span> <span class="va">dpi</span>, units <span class="op">=</span> <span class="st">"in"</span><span class="op">)</span>,
+    tiff <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="fu">grDevices</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grDevices/png.html">tiff</a></span><span class="op">(</span><span class="va">...</span>, res <span class="op">=</span> <span class="va">dpi</span>, units <span class="op">=</span> <span class="st">"in"</span><span class="op">)</span>,
+    <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"Unknown graphics extension: "</span>, <span class="va">ext</span>, call. <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+  <span class="op">)</span>
+<span class="op">}</span>
+
+<span class="fu">plot_dev</span><span class="op">(</span><span class="st">"pdf"</span><span class="op">)</span>
+<span class="co">#&gt; function(filename, ...) grDevices::pdf(file = filename, ...)</span>
+<span class="co">#&gt; &lt;bytecode: 0x55d1f5f04150&gt;</span>
+<span class="co">#&gt; &lt;environment: 0x55d1f62b0728&gt;</span>
+<span class="fu">plot_dev</span><span class="op">(</span><span class="st">"png"</span><span class="op">)</span>
+<span class="co">#&gt; function(...) grDevices::png(..., res = dpi, units = "in")</span>
+<span class="co">#&gt; &lt;bytecode: 0x55d1f5cc6c30&gt;</span>
+<span class="co">#&gt; &lt;environment: 0x55d1f59505b0&gt;</span></code></pre></div>
+</div>
+<div id="exercises-19" class="section level3" number="6.3.4">
+<h3>
+<span class="header-section-number">6.3.4</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-19"><i class="fas fa-link"></i></a>
+</h3>
+<ol style="list-style-type: decimal">
+<li>Compare and contrast <code><a href="https://ggplot2.tidyverse.org/reference/label_bquote.html">ggplot2::label_bquote()</a></code> with
+<code><a href="https://scales.r-lib.org/reference/label_number.html">scales::number_format()</a></code>
+</li>
+</ol>
+</div>
+</div>
+<div id="stat-fact" class="section level2" number="6.4">
+<h2>
+<span class="header-section-number">6.4</span> Statistical factories<a class="anchor" aria-label="anchor" href="#stat-fact"><i class="fas fa-link"></i></a>
+</h2>
+<p>More motivating examples for function factories come from statistics:</p>
+<ul>
+<li>The Box-Cox transformation.</li>
+<li>Bootstrap resampling.</li>
+<li>Maximum likelihood estimation.</li>
+</ul>
+<p>All of these examples can be tackled without function factories, but I think function factories are a good fit for these problems and provide elegant solutions. These examples expect some statistical background, so feel free to skip if they don’t make much sense to you.</p>
+<div id="box-cox-transformation" class="section level3" number="6.4.1">
+<h3>
+<span class="header-section-number">6.4.1</span> Box-Cox transformation<a class="anchor" aria-label="anchor" href="#box-cox-transformation"><i class="fas fa-link"></i></a>
+</h3>
+<p></p>
+<p>The Box-Cox transformation (a type of <a href="https://en.wikipedia.org/wiki/Power_transform">power transformation</a>) is a flexible transformation often used to transform data towards normality. It has a single parameter, <span class="math inline">\(\lambda\)</span>, which controls the strength of the transformation. We could express the transformation as a simple two argument function:</p>
+<div class="sourceCode" id="cb290"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">boxcox1</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">lambda</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">lambda</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span>
+  
+  <span class="kw">if</span> <span class="op">(</span><span class="va">lambda</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
+  <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span>
+    <span class="op">(</span><span class="va">x</span> <span class="op">^</span> <span class="va">lambda</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="op">/</span> <span class="va">lambda</span>
+  <span class="op">}</span>
+<span class="op">}</span></code></pre></div>
+<p>But re-formulating as a function factory makes it easy to explore its behaviour with <code><a href="https://ggplot2.tidyverse.org/reference/geom_function.html">stat_function()</a></code>:</p>
+<div class="sourceCode" id="cb291"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">boxcox2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">lambda</span><span class="op">)</span> <span class="op">{</span>
+  <span class="kw">if</span> <span class="op">(</span><span class="va">lambda</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span>
+    <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
+  <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span>
+    <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">(</span><span class="va">x</span> <span class="op">^</span> <span class="va">lambda</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="op">/</span> <span class="va">lambda</span>
+  <span class="op">}</span>
+<span class="op">}</span>
+
+<span class="va">stat_boxcox</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">lambda</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_function.html">stat_function</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="va">lambda</span><span class="op">)</span>, fun <span class="op">=</span> <span class="fu">boxcox2</span><span class="op">(</span><span class="va">lambda</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">1</span>, <span class="fl">1.5</span><span class="op">)</span>, <span class="va">stat_boxcox</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html">scale_colour_viridis_c</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1.5</span><span class="op">)</span><span class="op">)</span>
+
+<span class="co"># visually, log() does seem to make sense as the transformation</span>
+<span class="co"># for lambda = 0; as values get smaller and smaller, the function</span>
+<span class="co"># gets close and closer to a log transformation</span>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.01</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.25</span>, <span class="fl">0.1</span>, <span class="fl">0</span><span class="op">)</span>, <span class="va">stat_boxcox</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html">scale_colour_viridis_c</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1.5</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p><img src="Function-factories_files/figure-html/unnamed-chunk-31-1.png" width="50%"><img src="Function-factories_files/figure-html/unnamed-chunk-31-2.png" width="50%"></p>
+<p>In general, this allows you to use a Box-Cox transformation with any function that accepts a unary transformation function: you don’t have to worry about that function providing <code>...</code> to pass along additional arguments. I also think that the partitioning of <code>lambda</code> and <code>x</code> into two different function arguments is natural since <code>lambda</code> plays quite a different role than <code>x</code>.</p>
+</div>
+<div id="bootstrap-generators" class="section level3" number="6.4.2">
+<h3>
+<span class="header-section-number">6.4.2</span> Bootstrap generators<a class="anchor" aria-label="anchor" href="#bootstrap-generators"><i class="fas fa-link"></i></a>
+</h3>
+<p></p>
+<p>Function factories are a useful approach for bootstrapping. Instead of thinking about a single bootstrap (you always need more than one!), you can think about a bootstrap <strong>generator</strong>, a function that yields a fresh bootstrap every time it is called:</p>
+<div class="sourceCode" id="cb292"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">boot_permute</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span>, <span class="va">var</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/force.html">force</a></span><span class="op">(</span><span class="va">var</span><span class="op">)</span>
+  
+  <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">col</span> <span class="op">&lt;-</span> <span class="va">df</span><span class="op">[[</span><span class="va">var</span><span class="op">]</span><span class="op">]</span>
+    <span class="va">col</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">n</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">]</span>
+  <span class="op">}</span>
+<span class="op">}</span>
+
+<span class="va">boot_mtcars1</span> <span class="op">&lt;-</span> <span class="fu">boot_permute</span><span class="op">(</span><span class="va">mtcars</span>, <span class="st">"mpg"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu">boot_mtcars1</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [1] 16.4 22.8 22.8 22.8 16.4 19.2</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu">boot_mtcars1</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [1] 17.8 18.7 30.4 30.4 16.4 21.0</span></code></pre></div>
+<p>The advantage of a function factory is more clear with a parametric bootstrap where we have to first fit a model. We can do this setup step once, when the factory is called, rather than once every time we generate the bootstrap:</p>
+<div class="sourceCode" id="cb293"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">boot_model</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span>, <span class="va">formula</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">formula</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span>
+  <span class="va">fitted</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unname.html">unname</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/fitted.values.html">fitted</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span><span class="op">)</span>
+  <span class="va">resid</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unname.html">unname</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/residuals.html">resid</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/rm.html">rm</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span>
+
+  <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">fitted</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">resid</span><span class="op">)</span>
+  <span class="op">}</span>
+<span class="op">}</span> 
+
+<span class="va">boot_mtcars2</span> <span class="op">&lt;-</span> <span class="fu">boot_model</span><span class="op">(</span><span class="va">mtcars</span>, <span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu">boot_mtcars2</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [1] 25.0 24.0 21.7 19.2 24.9 16.0</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu">boot_mtcars2</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [1] 27.4 21.0 20.3 19.4 16.3 21.3</span></code></pre></div>
+<p>I use <code><a href="https://rdrr.io/r/base/rm.html">rm(mod)</a></code> because linear model objects are quite large (they include complete copies of the model matrix and input data) and I want to keep the manufactured function as small as possible.</p>
+</div>
+<div id="MLE" class="section level3" number="6.4.3">
+<h3>
+<span class="header-section-number">6.4.3</span> Maximum likelihood estimation<a class="anchor" aria-label="anchor" href="#MLE"><i class="fas fa-link"></i></a>
+</h3>
+<p>
+
+</p>
+<p>The goal of maximum likelihood estimation (MLE) is to find the parameter values for a distribution that make the observed data most likely. To do MLE, you start with a probability function. For example, take the Poisson distribution. If we know <span class="math inline">\(\lambda\)</span>, we can compute the probability of getting a vector <span class="math inline">\(\mathbf{x}\)</span> of values (<span class="math inline">\(x_1\)</span>, <span class="math inline">\(x_2\)</span>, …, <span class="math inline">\(x_n\)</span>) by multiplying the Poisson probability function as follows:</p>
+<p><span class="math display">\[ P(\lambda, \mathbf{x}) = \prod_{i=1}^{n} \frac{\lambda ^ {x_i} e^{-\lambda}}{x_i!} \]</span></p>
+<p>In statistics, we almost always work with the log of this function. The log is a monotonic transformation which preserves important properties (i.e. the extrema occur in the same place), but has specific advantages:</p>
+<ul>
+<li><p>The log turns a product into a sum, which is easier to work with.</p></li>
+<li><p>Multiplying small numbers yields even smaller numbers, which makes the
+floating point approximation used by a computer less accurate.</p></li>
+</ul>
+<p>Let’s apply a log transformation to this probability function and simplify it as much as possible:</p>
+<p><span class="math display">\[ \log(P(\lambda, \mathbf{x})) = \sum_{i=1}^{n} \log(\frac{\lambda ^ {x_i} e^{-\lambda}}{x_i!}) \]</span></p>
+<p><span class="math display">\[ \log(P(\lambda, \mathbf{x})) = \sum_{i=1}^{n} \left( x_i \log(\lambda) - \lambda - \log(x_i!) \right) \]</span></p>
+<p><span class="math display">\[ \log(P(\lambda, \mathbf{x})) = 
+     \sum_{i=1}^{n} x_i \log(\lambda)
+   - \sum_{i=1}^{n} \lambda 
+   - \sum_{i=1}^{n} \log(x_i!) \]</span></p>
+<p><span class="math display">\[ \log(P(\lambda, \mathbf{x})) = 
+   \log(\lambda) \sum_{i=1}^{n} x_i - n \lambda - \sum_{i=1}^{n} \log(x_i!) \]</span></p>
+<p>We can now turn this function into an R function. The R function is quite elegant because R is vectorised and, because it’s a statistical programming language, R comes with built-in functions like the log-factorial (<code><a href="https://rdrr.io/r/base/Special.html">lfactorial()</a></code>).</p>
+<div class="sourceCode" id="cb294"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">lprob_poisson</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">lambda</span>, <span class="va">x</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
+  <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">lambda</span><span class="op">)</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">-</span> <span class="op">(</span><span class="va">n</span> <span class="op">*</span> <span class="va">lambda</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Special.html">lfactorial</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
+<span class="op">}</span></code></pre></div>
+<p>Consider this vector of observations:</p>
+<div class="sourceCode" id="cb295"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">x1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">41</span>, <span class="fl">30</span>, <span class="fl">31</span>, <span class="fl">38</span>, <span class="fl">29</span>, <span class="fl">24</span>, <span class="fl">30</span>, <span class="fl">29</span>, <span class="fl">31</span>, <span class="fl">38</span><span class="op">)</span></code></pre></div>
+<p>We can use <code>lprob_poisson()</code> to compute the (logged) probability of <code>x1</code> for different values of <code>lambda</code>.</p>
+<div class="sourceCode" id="cb296"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">lprob_poisson</span><span class="op">(</span><span class="fl">10</span>, <span class="va">x1</span><span class="op">)</span>
+<span class="co">#&gt; [1] -184</span>
+<span class="fu">lprob_poisson</span><span class="op">(</span><span class="fl">20</span>, <span class="va">x1</span><span class="op">)</span>
+<span class="co">#&gt; [1] -61.1</span>
+<span class="fu">lprob_poisson</span><span class="op">(</span><span class="fl">30</span>, <span class="va">x1</span><span class="op">)</span>
+<span class="co">#&gt; [1] -31</span></code></pre></div>
+<p>So far we’ve been thinking of <code>lambda</code> as fixed and known and the function told us the probability of getting different values of <code>x</code>. But in real-life, we observe <code>x</code> and it is <code>lambda</code> that is unknown. The likelihood is the probability function seen through this lens: we want to find the <code>lambda</code> that makes the observed <code>x</code> the most likely. That is, given <code>x</code>, what value of <code>lambda</code> gives us the highest value of <code>lprob_poisson</code>()?</p>
+<p>In statistics, we highlight this change in perspective by writing <span class="math inline">\(f_{\mathbf{x}}(\lambda)\)</span> instead of <span class="math inline">\(f(\lambda, \mathbf{x})\)</span>. In R, we can use a function factory. We provide <code>x</code> and generate a function with a single parameter, <code>lambda</code>:</p>
+<div class="sourceCode" id="cb297"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">ll_poisson1</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
+
+  <span class="kw">function</span><span class="op">(</span><span class="va">lambda</span><span class="op">)</span> <span class="op">{</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">lambda</span><span class="op">)</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">-</span> <span class="va">n</span> <span class="op">*</span> <span class="va">lambda</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Special.html">lfactorial</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
+  <span class="op">}</span>
+<span class="op">}</span></code></pre></div>
+<p>(We don’t need <code><a href="https://rdrr.io/r/base/force.html">force()</a></code> because <code><a href="https://rdrr.io/r/base/length.html">length()</a></code> implicitly forces evaluation of <code>x</code>.)</p>
+<p>One nice thing about this approach is that we can do some precomputation: any term that only involves <code>x</code> can be computed once in the factory. This is useful because we’re going to need to call this function many times to find the best <code>lambda</code>.</p>
+<div class="sourceCode" id="cb298"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">ll_poisson2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
+  <span class="va">sum_x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
+  <span class="va">c</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Special.html">lfactorial</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
+
+  <span class="kw">function</span><span class="op">(</span><span class="va">lambda</span><span class="op">)</span> <span class="op">{</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">lambda</span><span class="op">)</span> <span class="op">*</span> <span class="va">sum_x</span> <span class="op">-</span> <span class="va">n</span> <span class="op">*</span> <span class="va">lambda</span> <span class="op">-</span> <span class="va">c</span>
+  <span class="op">}</span>
+<span class="op">}</span></code></pre></div>
+<p>Now we can use this function to find the value of <code>lambda</code> that maximizes the (log) likelihood:</p>
+<div class="sourceCode" id="cb299"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">ll1</span> <span class="op">&lt;-</span> <span class="fu">ll_poisson2</span><span class="op">(</span><span class="va">x1</span><span class="op">)</span>
+
+<span class="fu">ll1</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>
+<span class="co">#&gt; [1] -184</span>
+<span class="fu">ll1</span><span class="op">(</span><span class="fl">20</span><span class="op">)</span>
+<span class="co">#&gt; [1] -61.1</span>
+<span class="fu">ll1</span><span class="op">(</span><span class="fl">30</span><span class="op">)</span>
+<span class="co">#&gt; [1] -31</span></code></pre></div>
+<p>Rather than trial and error, we can automate the process of finding the best value with <code><a href="https://rdrr.io/r/stats/optimize.html">optimise()</a></code>. It will evaluate <code>ll1()</code> many times, using mathematical tricks to narrow in on the largest value as quickly as possible. The results tell us that the highest value is <code>-30.27</code> which occurs when <code>lambda = 32.1</code>:</p>
+<div class="sourceCode" id="cb300"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/optimize.html">optimise</a></span><span class="op">(</span><span class="va">ll1</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">100</span><span class="op">)</span>, maximum <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="co">#&gt; $maximum</span>
+<span class="co">#&gt; [1] 32.1</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $objective</span>
+<span class="co">#&gt; [1] -30.3</span></code></pre></div>
+<p>Now, we could have solved this problem without using a function factory because <code><a href="https://rdrr.io/r/stats/optimize.html">optimise()</a></code> passes <code>...</code> on to the function being optimised. That means we could use the log-probability function directly:</p>
+<div class="sourceCode" id="cb301"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/optimize.html">optimise</a></span><span class="op">(</span><span class="va">lprob_poisson</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">100</span><span class="op">)</span>, x <span class="op">=</span> <span class="va">x1</span>, maximum <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="co">#&gt; $maximum</span>
+<span class="co">#&gt; [1] 32.1</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $objective</span>
+<span class="co">#&gt; [1] -30.3</span></code></pre></div>
+<p>The advantage of using a function factory here is fairly small, but there are two niceties:</p>
+<ul>
+<li><p>We can precompute some values in the factory, saving computation time
+in each iteration.</p></li>
+<li><p>The two-level design better reflects the mathematical structure of
+the underlying problem.</p></li>
+</ul>
+<p>These advantages get bigger in more complex MLE problems, where you have multiple parameters and multiple data vectors.</p>
+<!-- GVW: stepping back, what patterns in existing code should people look for that suggest "Hey, maybe use a function factory here"? -->
+</div>
+<div id="exercises-20" class="section level3" number="6.4.4">
+<h3>
+<span class="header-section-number">6.4.4</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-20"><i class="fas fa-link"></i></a>
+</h3>
+<ol style="list-style-type: decimal">
+<li><p>In <code>boot_model()</code>, why don’t I need to force the evaluation of <code>df</code>
+or <code>model</code>?</p></li>
+<li>
+<p>Why might you formulate the Box-Cox transformation like this?</p>
+<div class="sourceCode" id="cb302"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">boxcox3</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
+  <span class="kw">function</span><span class="op">(</span><span class="va">lambda</span><span class="op">)</span> <span class="op">{</span>
+    <span class="kw">if</span> <span class="op">(</span><span class="va">lambda</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span>
+      <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
+    <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span>
+      <span class="op">(</span><span class="va">x</span> <span class="op">^</span> <span class="va">lambda</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="op">/</span> <span class="va">lambda</span>
+    <span class="op">}</span>
+  <span class="op">}</span>  
+<span class="op">}</span></code></pre></div>
+</li>
+<li><p>Why don’t you need to worry that <code>boot_permute()</code> stores a copy of the
+data inside the function that it generates?</p></li>
+<li><p>How much time does <code>ll_poisson2()</code> save compared to <code>ll_poisson1()</code>?
+Use <code><a href="https://rdrr.io/pkg/bench/man/mark.html">bench::mark()</a></code> to see how much faster the optimisation occurs.
+How does changing the length of <code>x</code> change the results?</p></li>
+</ol>
+</div>
+</div>
+<div id="functional-factories" class="section level2" number="6.5">
+<h2>
+<span class="header-section-number">6.5</span> Function factories + functionals<a class="anchor" aria-label="anchor" href="#functional-factories"><i class="fas fa-link"></i></a>
+</h2>
+<p>To finish off the chapter, I’ll show how you might combine functionals and function factories to turn data into many functions. The following code creates many specially named power functions by iterating over a list of arguments:</p>
+<div class="sourceCode" id="cb303"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+  square <span class="op">=</span> <span class="fl">2</span>, 
+  cube <span class="op">=</span> <span class="fl">3</span>, 
+  root <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">2</span>, 
+  cuberoot <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">3</span>, 
+  reciprocal <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>
+<span class="op">)</span>
+<span class="va">funs</span> <span class="op">&lt;-</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">names</span>, <span class="va">power1</span><span class="op">)</span>
+
+<span class="va">funs</span><span class="op">$</span><span class="fu">root</span><span class="op">(</span><span class="fl">64</span><span class="op">)</span>
+<span class="co">#&gt; [1] 8</span>
+<span class="va">funs</span><span class="op">$</span><span class="va">root</span>
+<span class="co">#&gt; function(x) {</span>
+<span class="co">#&gt;     x ^ exp</span>
+<span class="co">#&gt;   }</span>
+<span class="co">#&gt; &lt;bytecode: 0x55d1f5235450&gt;</span>
+<span class="co">#&gt; &lt;environment: 0x55d1f7d01378&gt;</span></code></pre></div>
+<p>This idea extends in a straightforward way if your function factory takes two (replace <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> with <code><a href="https://purrr.tidyverse.org/reference/map2.html">map2()</a></code>) or more (replace with <code><a href="https://purrr.tidyverse.org/reference/map2.html">pmap()</a></code>) arguments.</p>
+<p>One downside of the current construction is that you have to prefix every function call with <code>funs$</code>. There are three ways to eliminate this additional syntax:</p>
+<ul>
+<li>
+<p>For a very temporary effect, you can use <code><a href="https://rdrr.io/r/base/with.html">with()</a></code>:</p>
+<div class="sourceCode" id="cb304"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">funs</span>, <span class="fu">root</span><span class="op">(</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [1] 10</span></code></pre></div>
+<p>I recommend this because it makes it very clear when code is being
+executed in a special context and what that context is.</p>
+</li>
+<li>
+<p>For a longer effect, you can <code><a href="https://rdrr.io/r/base/attach.html">attach()</a></code> the functions to the search path,
+then <code><a href="https://rdrr.io/r/base/detach.html">detach()</a></code> when you’re done:</p>
+<div class="sourceCode" id="cb305"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/attach.html">attach</a></span><span class="op">(</span><span class="va">funs</span><span class="op">)</span>
+<span class="co">#&gt; The following objects are masked _by_ .GlobalEnv:</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;     cube, square</span>
+<span class="fu">root</span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>
+<span class="co">#&gt; [1] 10</span>
+<span class="kw"><a href="https://rdrr.io/r/base/detach.html">detach</a></span><span class="op">(</span><span class="va">funs</span><span class="op">)</span></code></pre></div>
+<p>You’ve probably been told to avoid using <code><a href="https://rdrr.io/r/base/attach.html">attach()</a></code>, and that’s generally
+good advice. However, the situation is a little different to the usual
+because we’re attaching a list of functions, not a data frame. It’s less
+likely that you’ll modify a function than a column in a data frame, so the
+some of the worst problems with <code><a href="https://rdrr.io/r/base/attach.html">attach()</a></code> don’t apply.</p>
+</li>
+<li>
+<p>Finally, you could copy the functions to the global environment with
+<code><a href="https://rlang.r-lib.org/reference/env_bind.html">env_bind()</a></code> (you’ll learn about <code>!!!</code> in Section <a href="#tidy-dots"><strong>??</strong></a>).
+This is mostly permanent:</p>
+<div class="sourceCode" id="cb306"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/env_bind.html">env_bind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/environment.html">globalenv</a></span><span class="op">(</span><span class="op">)</span>, <span class="op">!</span><span class="op">!</span><span class="op">!</span><span class="va">funs</span><span class="op">)</span>
+<span class="fu">root</span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>
+<span class="co">#&gt; [1] 10</span></code></pre></div>
+<p>You can later unbind those same names, but there’s no guarantee that
+they haven’t been rebound in the meantime, and you might be deleting an
+object that someone else created.</p>
+<div class="sourceCode" id="cb307"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/env_unbind.html">env_unbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/environment.html">globalenv</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">funs</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+</li>
+</ul>
+<p>You’ll learn an alternative approach to the same problem in Section <a href="#new-function"><strong>??</strong></a>. Instead of using a function factory, you could construct the function with quasiquotation. This requires additional knowledge, but generates functions with readable bodies, and avoids accidentally capturing large objects in the enclosing scope. We use that idea in Section <a href="#tag-functions"><strong>??</strong></a> when we work on tools for generating HTML from R.</p>
+<div id="exercises-21" class="section level3" number="6.5.1">
+<h3>
+<span class="header-section-number">6.5.1</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-21"><i class="fas fa-link"></i></a>
+</h3>
+<ol style="list-style-type: decimal">
+<li>
+<p>Which of the following commands is equivalent to <code><a href="https://rdrr.io/r/base/with.html">with(x, f(z))</a></code>?</p>
+<ol style="list-style-type: lower-alpha">
+<li>
+<code>x$f(x$z)</code>.</li>
+<li>
+<code>f(x$z)</code>.</li>
+<li>
+<code>x$f(z)</code>.</li>
+<li>
+<code>f(z)</code>.</li>
+<li>It depends.</li>
+</ol>
+</li>
+<li>
+<p>Compare and contrast the effects of <code><a href="https://rlang.r-lib.org/reference/env_bind.html">env_bind()</a></code> vs. <code><a href="https://rdrr.io/r/base/attach.html">attach()</a></code> for the
+following code.</p>
+<div class="sourceCode" id="cb308"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">funs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+  mean <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">x</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
+  sum <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">x</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="op">)</span>
+
+<span class="kw"><a href="https://rdrr.io/r/base/attach.html">attach</a></span><span class="op">(</span><span class="va">funs</span><span class="op">)</span>
+<span class="co">#&gt; The following objects are masked from package:base:</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;     mean, sum</span>
+<span class="va">mean</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"Hi!"</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/detach.html">detach</a></span><span class="op">(</span><span class="va">funs</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rlang.r-lib.org/reference/env_bind.html">env_bind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/environment.html">globalenv</a></span><span class="op">(</span><span class="op">)</span>, <span class="op">!</span><span class="op">!</span><span class="op">!</span><span class="va">funs</span><span class="op">)</span>
+<span class="va">mean</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"Hi!"</span><span class="op">)</span> 
+<span class="fu"><a href="https://rlang.r-lib.org/reference/env_unbind.html">env_unbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/environment.html">globalenv</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">funs</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+  <div class="chapter-nav">
+<div class="prev"><a href="functionals.html"><span class="header-section-number">5</span> Functionals</a></div>
+<div class="next"><a href="function-operators.html"><span class="header-section-number">7</span> 함수 연산자</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#%ED%95%A8%EC%88%98-%EA%B3%B5%EC%9E%A5"><span class="header-section-number">6</span> 함수 공장</a></li>
+<li>
+<a class="nav-link" href="#%EB%93%A4%EC%96%B4%EA%B0%80%EA%B8%B0"><span class="header-section-number">6.1</span> 들어가기</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#outline-4">Outline</a></li>
+<li><a class="nav-link" href="#prerequisites-3">Prerequisites</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#factory-fundamentals"><span class="header-section-number">6.2</span> Factory fundamentals</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#environments-1"><span class="header-section-number">6.2.1</span> Environments</a></li>
+<li><a class="nav-link" href="#diagram-conventions"><span class="header-section-number">6.2.2</span> Diagram conventions</a></li>
+<li><a class="nav-link" href="#forcing-evaluation"><span class="header-section-number">6.2.3</span> Forcing evaluation</a></li>
+<li><a class="nav-link" href="#stateful-funs"><span class="header-section-number">6.2.4</span> Stateful functions</a></li>
+<li><a class="nav-link" href="#factory-pitfalls"><span class="header-section-number">6.2.5</span> Garbage collection</a></li>
+<li><a class="nav-link" href="#exercises-18"><span class="header-section-number">6.2.6</span> Exercises</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#graph-fact"><span class="header-section-number">6.3</span> Graphical factories</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#labelling"><span class="header-section-number">6.3.1</span> Labelling</a></li>
+<li><a class="nav-link" href="#histogram-bins"><span class="header-section-number">6.3.2</span> Histogram bins</a></li>
+<li><a class="nav-link" href="#ggsave"><span class="header-section-number">6.3.3</span> ggsave()</a></li>
+<li><a class="nav-link" href="#exercises-19"><span class="header-section-number">6.3.4</span> Exercises</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#stat-fact"><span class="header-section-number">6.4</span> Statistical factories</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#box-cox-transformation"><span class="header-section-number">6.4.1</span> Box-Cox transformation</a></li>
+<li><a class="nav-link" href="#bootstrap-generators"><span class="header-section-number">6.4.2</span> Bootstrap generators</a></li>
+<li><a class="nav-link" href="#MLE"><span class="header-section-number">6.4.3</span> Maximum likelihood estimation</a></li>
+<li><a class="nav-link" href="#exercises-20"><span class="header-section-number">6.4.4</span> Exercises</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#functional-factories"><span class="header-section-number">6.5</span> Function factories + functionals</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#exercises-21"><span class="header-section-number">6.5.1</span> Exercises</a></li></ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/hadley/adv-r/blob/master/Function-factories.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/hadley/adv-r/edit/master/Function-factories.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Advanced R</strong>" was written by Hadley Wickham. </p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

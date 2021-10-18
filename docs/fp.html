@@ -45,13 +45,18 @@
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">환영합니다</a></li>
-<li><a class="" href="functions.html"><span class="header-section-number">1</span> 함수</a></li>
-<li><a class="" href="environments.html"><span class="header-section-number">2</span> Environments</a></li>
+<li><a class="" href="preface.html">Preface</a></li>
+<li><a class="" href="introduction.html"><span class="header-section-number">1</span> Introduction</a></li>
+<li class="book-part">Foundations</li>
+<li><a class="" href="foundations-intro.html">Introduction</a></li>
+<li><a class="" href="names-values.html"><span class="header-section-number">2</span> Names and values</a></li>
+<li><a class="" href="functions.html"><span class="header-section-number">3</span> 함수</a></li>
+<li><a class="" href="environments.html"><span class="header-section-number">4</span> 환경</a></li>
 <li class="book-part">Functional programming</li>
 <li><a class="active" href="fp.html">Introduction</a></li>
-<li><a class="" href="functionals.html"><span class="header-section-number">3</span> Functionals</a></li>
-<li><a class="" href="function-factories.html"><span class="header-section-number">4</span> Function factories</a></li>
-<li><a class="" href="function-operators.html"><span class="header-section-number">5</span> Function operators</a></li>
+<li><a class="" href="functionals.html"><span class="header-section-number">5</span> Functionals</a></li>
+<li><a class="" href="%ED%95%A8%EC%88%98-%EA%B3%B5%EC%9E%A5.html"><span class="header-section-number">6</span> 함수 공장</a></li>
+<li><a class="" href="function-operators.html"><span class="header-section-number">7</span> 함수 연산자</a></li>
 </ul>
 
         <div class="book-extra">
@@ -88,17 +93,17 @@ functions like <code><a href="https://rdrr.io/r/base/print.html">print()</a></co
 <p>It’s hard to describe exactly what a functional <em>style</em> is, but generally I think it means decomposing a big problem into smaller pieces, then solving each piece with a function or combination of functions. When using a functional style, you strive to decompose components of the problem into isolated functions that operate independently. Each function taken by itself is simple and straightforward to understand; complexity is handled by composing functions in various ways.</p>
 <p>The following three chapters discuss the three key functional techniques that help you to decompose problems into smaller pieces:</p>
 <ul>
-<li><p>Chapter <a href="functionals.html#functionals">3</a> shows you how to replace many for loops with
+<li><p>Chapter <a href="functionals.html#functionals">5</a> shows you how to replace many for loops with
 <strong>functionals</strong> which are functions (like <code><a href="https://rdrr.io/r/base/lapply.html">lapply()</a></code>) that take another
 function as an argument. Functionals allow you to take a function that solves
 the problem for a single input and generalise it to handle any number of
 inputs. Functionals are by far and away the most important technique and
 you’ll use them all the time in data analysis.</p></li>
-<li><p>Chapter <a href="function-factories.html#function-factories">4</a> introduces <strong>function factories</strong>:
+<li><p>Chapter <a href="#function-factories"><strong>??</strong></a> introduces <strong>function factories</strong>:
 functions that create functions. Function factories are less commonly
 used than functionals, but can allow you to elegantly partition work
 between different parts of your code.</p></li>
-<li><p>Chapter <a href="function-operators.html#function-operators">5</a> shows you how to create <strong>function
+<li><p>Chapter <a href="function-operators.html#function-operators">7</a> shows you how to create <strong>function
 operators</strong>: functions that take functions as input and produce functions
 as output. They are like adverbs, because they typically modify the operation
 of a function.</p></li>
@@ -109,8 +114,8 @@ of a function.</p></li>
 </div>
 </div>
   <div class="chapter-nav">
-<div class="prev"><a href="environments.html"><span class="header-section-number">2</span> Environments</a></div>
-<div class="next"><a href="functionals.html"><span class="header-section-number">3</span> Functionals</a></div>
+<div class="prev"><a href="environments.html"><span class="header-section-number">4</span> 환경</a></div>
+<div class="next"><a href="functionals.html"><span class="header-section-number">5</span> Functionals</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">

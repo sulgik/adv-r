@@ -1,1045 +1,72 @@
 <!DOCTYPE html>
-<html lang="" xml:lang="">
+<html lang="en">
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Introduction | Advanced R</title>
+<meta name="author" content="Hadley Wickham">
+<meta name="generator" content="bookdown 0.24 with bs4_book()">
+<meta property="og:title" content="Introduction | Advanced R">
+<meta property="og:type" content="book">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Introduction | Advanced R">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.10/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-141212623-1"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Introduction | Advanced R</title>
-  <meta name="description" content="Introduction | Advanced R" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
-
-  <meta property="og:title" content="Introduction | Advanced R" />
-  <meta property="og:type" content="book" />
-  
-  
-  
-  
-
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Introduction | Advanced R" />
-  
-  
-  
-
-<meta name="author" content="Hadley Wickham" />
-
-
-
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-  
-  
-<link rel="prev" href="introduction.html"/>
-<link rel="next" href="names-values.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
-<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
-
-
-
-
-
-
-
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-141212623-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-141212623-1');
-</script>
-
-
-
-<style type="text/css">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-</style>
-
-
-<link rel="stylesheet" href="adv-r.css" type="text/css" />
+      gtag('config', 'UA-141212623-1');
+    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><meta name="description" content="To start your journey in mastering R, the following six chapters will help you learn the foundational components of R. I expect that you’ve already seen many of these pieces before, but you...">
+<meta property="og:description" content="To start your journey in mastering R, the following six chapters will help you learn the foundational components of R. I expect that you’ve already seen many of these pieces before, but you...">
+<meta name="twitter:description" content="To start your journey in mastering R, the following six chapters will help you learn the foundational components of R. I expect that you’ve already seen many of these pieces before, but you...">
 </head>
+<body data-spy="scroll" data-target="#toc">
 
-<body>
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
 
-
-
-  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
-
-    <div class="book-summary">
-      <nav role="navigation">
-
-<ul class="summary">
-<li><strong><a href="./">Advanced R</a></strong></li>
-
-<li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a>
-<ul>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#license"><i class="fa fa-check"></i>License</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#other-books"><i class="fa fa-check"></i>Other books</a></li>
-</ul></li>
-<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i>Preface</a></li>
-<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
-<ul>
-<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#why-r"><i class="fa fa-check"></i><b>1.1</b> Why R?</a></li>
-<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#who-should-read"><i class="fa fa-check"></i><b>1.2</b> Who should read this book</a></li>
-<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#what-you-will-get"><i class="fa fa-check"></i><b>1.3</b> What you will get out of this book</a></li>
-<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#what-you-will-not-learn"><i class="fa fa-check"></i><b>1.4</b> What you will not learn</a></li>
-<li class="chapter" data-level="1.5" data-path="introduction.html"><a href="introduction.html#meta-techniques"><i class="fa fa-check"></i><b>1.5</b> Meta-techniques</a></li>
-<li class="chapter" data-level="1.6" data-path="introduction.html"><a href="introduction.html#recommended-reading"><i class="fa fa-check"></i><b>1.6</b> Recommended reading</a></li>
-<li class="chapter" data-level="1.7" data-path="introduction.html"><a href="introduction.html#getting-help"><i class="fa fa-check"></i><b>1.7</b> Getting help</a></li>
-<li class="chapter" data-level="1.8" data-path="introduction.html"><a href="introduction.html#intro-ack"><i class="fa fa-check"></i><b>1.8</b> Acknowledgments</a></li>
-<li class="chapter" data-level="1.9" data-path="introduction.html"><a href="introduction.html#conventions"><i class="fa fa-check"></i><b>1.9</b> Conventions</a></li>
-<li class="chapter" data-level="1.10" data-path="introduction.html"><a href="introduction.html#colophon"><i class="fa fa-check"></i><b>1.10</b> Colophon</a></li>
-</ul></li>
-<li class="part"><span><b>I Foundations</b></span></li>
-<li class="chapter" data-level="" data-path="foundations-intro.html"><a href="foundations-intro.html"><i class="fa fa-check"></i>Introduction</a></li>
-<li class="chapter" data-level="2" data-path="names-values.html"><a href="names-values.html"><i class="fa fa-check"></i><b>2</b> Names and values</a>
-<ul>
-<li class="chapter" data-level="2.1" data-path="names-values.html"><a href="names-values.html#introduction-1"><i class="fa fa-check"></i><b>2.1</b> Introduction</a>
-<ul>
-<li class="chapter" data-level="" data-path="names-values.html"><a href="names-values.html#quiz"><i class="fa fa-check"></i>Quiz</a></li>
-<li class="chapter" data-level="" data-path="names-values.html"><a href="names-values.html#outline"><i class="fa fa-check"></i>Outline</a></li>
-<li class="chapter" data-level="" data-path="names-values.html"><a href="names-values.html#prerequisites"><i class="fa fa-check"></i>Prerequisites</a></li>
-<li class="chapter" data-level="" data-path="names-values.html"><a href="names-values.html#sources"><i class="fa fa-check"></i>Sources</a></li>
-</ul></li>
-<li class="chapter" data-level="2.2" data-path="names-values.html"><a href="names-values.html#binding-basics"><i class="fa fa-check"></i><b>2.2</b> Binding basics</a>
-<ul>
-<li class="chapter" data-level="2.2.1" data-path="names-values.html"><a href="names-values.html#non-syntactic"><i class="fa fa-check"></i><b>2.2.1</b> Non-syntactic names</a></li>
-<li class="chapter" data-level="2.2.2" data-path="names-values.html"><a href="names-values.html#exercises"><i class="fa fa-check"></i><b>2.2.2</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="2.3" data-path="names-values.html"><a href="names-values.html#copy-on-modify"><i class="fa fa-check"></i><b>2.3</b> Copy-on-modify</a>
-<ul>
-<li class="chapter" data-level="2.3.1" data-path="names-values.html"><a href="names-values.html#tracemem"><i class="fa fa-check"></i><b>2.3.1</b> <code>tracemem()</code></a></li>
-<li class="chapter" data-level="2.3.2" data-path="names-values.html"><a href="names-values.html#function-calls"><i class="fa fa-check"></i><b>2.3.2</b> Function calls</a></li>
-<li class="chapter" data-level="2.3.3" data-path="names-values.html"><a href="names-values.html#list-references"><i class="fa fa-check"></i><b>2.3.3</b> Lists</a></li>
-<li class="chapter" data-level="2.3.4" data-path="names-values.html"><a href="names-values.html#df-modify"><i class="fa fa-check"></i><b>2.3.4</b> Data frames</a></li>
-<li class="chapter" data-level="2.3.5" data-path="names-values.html"><a href="names-values.html#character-vectors"><i class="fa fa-check"></i><b>2.3.5</b> Character vectors</a></li>
-<li class="chapter" data-level="2.3.6" data-path="names-values.html"><a href="names-values.html#exercises-1"><i class="fa fa-check"></i><b>2.3.6</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="2.4" data-path="names-values.html"><a href="names-values.html#object-size"><i class="fa fa-check"></i><b>2.4</b> Object size</a>
-<ul>
-<li class="chapter" data-level="2.4.1" data-path="names-values.html"><a href="names-values.html#exercises-2"><i class="fa fa-check"></i><b>2.4.1</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="2.5" data-path="names-values.html"><a href="names-values.html#modify-in-place"><i class="fa fa-check"></i><b>2.5</b> Modify-in-place</a>
-<ul>
-<li class="chapter" data-level="2.5.1" data-path="names-values.html"><a href="names-values.html#single-binding"><i class="fa fa-check"></i><b>2.5.1</b> Objects with a single binding</a></li>
-<li class="chapter" data-level="2.5.2" data-path="names-values.html"><a href="names-values.html#env-modify"><i class="fa fa-check"></i><b>2.5.2</b> Environments</a></li>
-<li class="chapter" data-level="2.5.3" data-path="names-values.html"><a href="names-values.html#exercises-3"><i class="fa fa-check"></i><b>2.5.3</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="2.6" data-path="names-values.html"><a href="names-values.html#gc"><i class="fa fa-check"></i><b>2.6</b> Unbinding and the garbage collector</a></li>
-<li class="chapter" data-level="2.7" data-path="names-values.html"><a href="names-values.html#names-values-answers"><i class="fa fa-check"></i><b>2.7</b> Quiz answers</a></li>
-</ul></li>
-<li class="chapter" data-level="3" data-path="vectors-chap.html"><a href="vectors-chap.html"><i class="fa fa-check"></i><b>3</b> Vectors</a>
-<ul>
-<li class="chapter" data-level="3.1" data-path="vectors-chap.html"><a href="vectors-chap.html#introduction-2"><i class="fa fa-check"></i><b>3.1</b> Introduction</a>
-<ul>
-<li class="chapter" data-level="" data-path="vectors-chap.html"><a href="vectors-chap.html#quiz-1"><i class="fa fa-check"></i>Quiz</a></li>
-<li class="chapter" data-level="" data-path="vectors-chap.html"><a href="vectors-chap.html#outline-1"><i class="fa fa-check"></i>Outline</a></li>
-</ul></li>
-<li class="chapter" data-level="3.2" data-path="vectors-chap.html"><a href="vectors-chap.html#atomic-vectors"><i class="fa fa-check"></i><b>3.2</b> Atomic vectors</a>
-<ul>
-<li class="chapter" data-level="3.2.1" data-path="vectors-chap.html"><a href="vectors-chap.html#scalars"><i class="fa fa-check"></i><b>3.2.1</b> Scalars</a></li>
-<li class="chapter" data-level="3.2.2" data-path="vectors-chap.html"><a href="vectors-chap.html#atomic-constructing"><i class="fa fa-check"></i><b>3.2.2</b> Making longer vectors with <code>c()</code></a></li>
-<li class="chapter" data-level="3.2.3" data-path="vectors-chap.html"><a href="vectors-chap.html#missing-values"><i class="fa fa-check"></i><b>3.2.3</b> Missing values</a></li>
-<li class="chapter" data-level="3.2.4" data-path="vectors-chap.html"><a href="vectors-chap.html#testing-and-coercion"><i class="fa fa-check"></i><b>3.2.4</b> Testing and coercion</a></li>
-<li class="chapter" data-level="3.2.5" data-path="vectors-chap.html"><a href="vectors-chap.html#exercises-4"><i class="fa fa-check"></i><b>3.2.5</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="3.3" data-path="vectors-chap.html"><a href="vectors-chap.html#attributes"><i class="fa fa-check"></i><b>3.3</b> Attributes</a>
-<ul>
-<li class="chapter" data-level="3.3.1" data-path="vectors-chap.html"><a href="vectors-chap.html#getting-and-setting"><i class="fa fa-check"></i><b>3.3.1</b> Getting and setting</a></li>
-<li class="chapter" data-level="3.3.2" data-path="vectors-chap.html"><a href="vectors-chap.html#attr-names"><i class="fa fa-check"></i><b>3.3.2</b> Names</a></li>
-<li class="chapter" data-level="3.3.3" data-path="vectors-chap.html"><a href="vectors-chap.html#attr-dims"><i class="fa fa-check"></i><b>3.3.3</b> Dimensions</a></li>
-<li class="chapter" data-level="3.3.4" data-path="vectors-chap.html"><a href="vectors-chap.html#exercises-5"><i class="fa fa-check"></i><b>3.3.4</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="3.4" data-path="vectors-chap.html"><a href="vectors-chap.html#s3-atomic-vectors"><i class="fa fa-check"></i><b>3.4</b> S3 atomic vectors</a>
-<ul>
-<li class="chapter" data-level="3.4.1" data-path="vectors-chap.html"><a href="vectors-chap.html#factors"><i class="fa fa-check"></i><b>3.4.1</b> Factors</a></li>
-<li class="chapter" data-level="3.4.2" data-path="vectors-chap.html"><a href="vectors-chap.html#dates"><i class="fa fa-check"></i><b>3.4.2</b> Dates</a></li>
-<li class="chapter" data-level="3.4.3" data-path="vectors-chap.html"><a href="vectors-chap.html#date-times"><i class="fa fa-check"></i><b>3.4.3</b> Date-times</a></li>
-<li class="chapter" data-level="3.4.4" data-path="vectors-chap.html"><a href="vectors-chap.html#durations"><i class="fa fa-check"></i><b>3.4.4</b> Durations</a></li>
-<li class="chapter" data-level="3.4.5" data-path="vectors-chap.html"><a href="vectors-chap.html#exercises-6"><i class="fa fa-check"></i><b>3.4.5</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="3.5" data-path="vectors-chap.html"><a href="vectors-chap.html#lists"><i class="fa fa-check"></i><b>3.5</b> Lists</a>
-<ul>
-<li class="chapter" data-level="3.5.1" data-path="vectors-chap.html"><a href="vectors-chap.html#list-creating"><i class="fa fa-check"></i><b>3.5.1</b> Creating</a></li>
-<li class="chapter" data-level="3.5.2" data-path="vectors-chap.html"><a href="vectors-chap.html#list-types"><i class="fa fa-check"></i><b>3.5.2</b> Testing and coercion</a></li>
-<li class="chapter" data-level="3.5.3" data-path="vectors-chap.html"><a href="vectors-chap.html#list-array"><i class="fa fa-check"></i><b>3.5.3</b> Matrices and arrays</a></li>
-<li class="chapter" data-level="3.5.4" data-path="vectors-chap.html"><a href="vectors-chap.html#exercises-7"><i class="fa fa-check"></i><b>3.5.4</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="3.6" data-path="vectors-chap.html"><a href="vectors-chap.html#tibble"><i class="fa fa-check"></i><b>3.6</b> Data frames and tibbles</a>
-<ul>
-<li class="chapter" data-level="3.6.1" data-path="vectors-chap.html"><a href="vectors-chap.html#df-create"><i class="fa fa-check"></i><b>3.6.1</b> Creating</a></li>
-<li class="chapter" data-level="3.6.2" data-path="vectors-chap.html"><a href="vectors-chap.html#rownames"><i class="fa fa-check"></i><b>3.6.2</b> Row names</a></li>
-<li class="chapter" data-level="3.6.3" data-path="vectors-chap.html"><a href="vectors-chap.html#printing"><i class="fa fa-check"></i><b>3.6.3</b> Printing</a></li>
-<li class="chapter" data-level="3.6.4" data-path="vectors-chap.html"><a href="vectors-chap.html#safe-subsetting"><i class="fa fa-check"></i><b>3.6.4</b> Subsetting</a></li>
-<li class="chapter" data-level="3.6.5" data-path="vectors-chap.html"><a href="vectors-chap.html#df-test-coerce"><i class="fa fa-check"></i><b>3.6.5</b> Testing and coercing</a></li>
-<li class="chapter" data-level="3.6.6" data-path="vectors-chap.html"><a href="vectors-chap.html#list-columns"><i class="fa fa-check"></i><b>3.6.6</b> List columns</a></li>
-<li class="chapter" data-level="3.6.7" data-path="vectors-chap.html"><a href="vectors-chap.html#matrix-and-data-frame-columns"><i class="fa fa-check"></i><b>3.6.7</b> Matrix and data frame columns</a></li>
-<li class="chapter" data-level="3.6.8" data-path="vectors-chap.html"><a href="vectors-chap.html#exercises-8"><i class="fa fa-check"></i><b>3.6.8</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="3.7" data-path="vectors-chap.html"><a href="vectors-chap.html#null"><i class="fa fa-check"></i><b>3.7</b> <code>NULL</code></a></li>
-<li class="chapter" data-level="3.8" data-path="vectors-chap.html"><a href="vectors-chap.html#data-structure-answers"><i class="fa fa-check"></i><b>3.8</b> Quiz answers</a></li>
-</ul></li>
-<li class="chapter" data-level="4" data-path="subsetting.html"><a href="subsetting.html"><i class="fa fa-check"></i><b>4</b> Subsetting</a>
-<ul>
-<li class="chapter" data-level="4.1" data-path="subsetting.html"><a href="subsetting.html#introduction-3"><i class="fa fa-check"></i><b>4.1</b> Introduction</a>
-<ul>
-<li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#quiz-2"><i class="fa fa-check"></i>Quiz</a></li>
-<li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#outline-2"><i class="fa fa-check"></i>Outline</a></li>
-</ul></li>
-<li class="chapter" data-level="4.2" data-path="subsetting.html"><a href="subsetting.html#subset-multiple"><i class="fa fa-check"></i><b>4.2</b> Selecting multiple elements</a>
-<ul>
-<li class="chapter" data-level="4.2.1" data-path="subsetting.html"><a href="subsetting.html#atomic-vectors-1"><i class="fa fa-check"></i><b>4.2.1</b> Atomic vectors</a></li>
-<li class="chapter" data-level="4.2.2" data-path="subsetting.html"><a href="subsetting.html#lists-1"><i class="fa fa-check"></i><b>4.2.2</b> Lists</a></li>
-<li class="chapter" data-level="4.2.3" data-path="subsetting.html"><a href="subsetting.html#matrix-subsetting"><i class="fa fa-check"></i><b>4.2.3</b> Matrices and arrays</a></li>
-<li class="chapter" data-level="4.2.4" data-path="subsetting.html"><a href="subsetting.html#df-subsetting"><i class="fa fa-check"></i><b>4.2.4</b> Data frames and tibbles</a></li>
-<li class="chapter" data-level="4.2.5" data-path="subsetting.html"><a href="subsetting.html#simplify-preserve"><i class="fa fa-check"></i><b>4.2.5</b> Preserving dimensionality</a></li>
-<li class="chapter" data-level="4.2.6" data-path="subsetting.html"><a href="subsetting.html#exercises-9"><i class="fa fa-check"></i><b>4.2.6</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="4.3" data-path="subsetting.html"><a href="subsetting.html#subset-single"><i class="fa fa-check"></i><b>4.3</b> Selecting a single element</a>
-<ul>
-<li class="chapter" data-level="4.3.1" data-path="subsetting.html"><a href="subsetting.html#section"><i class="fa fa-check"></i><b>4.3.1</b> <code>[[</code></a></li>
-<li class="chapter" data-level="4.3.2" data-path="subsetting.html"><a href="subsetting.html#section-1"><i class="fa fa-check"></i><b>4.3.2</b> <code>$</code></a></li>
-<li class="chapter" data-level="4.3.3" data-path="subsetting.html"><a href="subsetting.html#subsetting-oob"><i class="fa fa-check"></i><b>4.3.3</b> Missing and out-of-bounds indices</a></li>
-<li class="chapter" data-level="4.3.4" data-path="subsetting.html"><a href="subsetting.html#and-slot"><i class="fa fa-check"></i><b>4.3.4</b> <code>@</code> and <code>slot()</code></a></li>
-<li class="chapter" data-level="4.3.5" data-path="subsetting.html"><a href="subsetting.html#exercises-10"><i class="fa fa-check"></i><b>4.3.5</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="4.4" data-path="subsetting.html"><a href="subsetting.html#subassignment"><i class="fa fa-check"></i><b>4.4</b> Subsetting and assignment</a></li>
-<li class="chapter" data-level="4.5" data-path="subsetting.html"><a href="subsetting.html#applications"><i class="fa fa-check"></i><b>4.5</b> Applications</a>
-<ul>
-<li class="chapter" data-level="4.5.1" data-path="subsetting.html"><a href="subsetting.html#lookup-tables"><i class="fa fa-check"></i><b>4.5.1</b> Lookup tables (character subsetting)</a></li>
-<li class="chapter" data-level="4.5.2" data-path="subsetting.html"><a href="subsetting.html#matching-merging"><i class="fa fa-check"></i><b>4.5.2</b> Matching and merging by hand (integer subsetting)</a></li>
-<li class="chapter" data-level="4.5.3" data-path="subsetting.html"><a href="subsetting.html#random-samples-and-bootstraps-integer-subsetting"><i class="fa fa-check"></i><b>4.5.3</b> Random samples and bootstraps (integer subsetting)</a></li>
-<li class="chapter" data-level="4.5.4" data-path="subsetting.html"><a href="subsetting.html#ordering-integer-subsetting"><i class="fa fa-check"></i><b>4.5.4</b> Ordering (integer subsetting)</a></li>
-<li class="chapter" data-level="4.5.5" data-path="subsetting.html"><a href="subsetting.html#expanding-aggregated-counts-integer-subsetting"><i class="fa fa-check"></i><b>4.5.5</b> Expanding aggregated counts (integer subsetting)</a></li>
-<li class="chapter" data-level="4.5.6" data-path="subsetting.html"><a href="subsetting.html#removing-columns-from-data-frames-character"><i class="fa fa-check"></i><b>4.5.6</b> Removing columns from data frames (character )</a></li>
-<li class="chapter" data-level="4.5.7" data-path="subsetting.html"><a href="subsetting.html#selecting-rows-based-on-a-condition-logical-subsetting"><i class="fa fa-check"></i><b>4.5.7</b> Selecting rows based on a condition (logical subsetting)</a></li>
-<li class="chapter" data-level="4.5.8" data-path="subsetting.html"><a href="subsetting.html#boolean-algebra-versus-sets-logical-and-integer"><i class="fa fa-check"></i><b>4.5.8</b> Boolean algebra versus sets (logical and integer )</a></li>
-<li class="chapter" data-level="4.5.9" data-path="subsetting.html"><a href="subsetting.html#exercises-11"><i class="fa fa-check"></i><b>4.5.9</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="4.6" data-path="subsetting.html"><a href="subsetting.html#subsetting-answers"><i class="fa fa-check"></i><b>4.6</b> Quiz answers</a></li>
-</ul></li>
-<li class="chapter" data-level="5" data-path="control-flow.html"><a href="control-flow.html"><i class="fa fa-check"></i><b>5</b> Control flow</a>
-<ul>
-<li class="chapter" data-level="5.1" data-path="control-flow.html"><a href="control-flow.html#introduction-4"><i class="fa fa-check"></i><b>5.1</b> Introduction</a>
-<ul>
-<li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#quiz-3"><i class="fa fa-check"></i>Quiz</a></li>
-<li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#outline-3"><i class="fa fa-check"></i>Outline</a></li>
-</ul></li>
-<li class="chapter" data-level="5.2" data-path="control-flow.html"><a href="control-flow.html#choices"><i class="fa fa-check"></i><b>5.2</b> Choices</a>
-<ul>
-<li class="chapter" data-level="5.2.1" data-path="control-flow.html"><a href="control-flow.html#invalid-inputs"><i class="fa fa-check"></i><b>5.2.1</b> Invalid inputs</a></li>
-<li class="chapter" data-level="5.2.2" data-path="control-flow.html"><a href="control-flow.html#vectorised-if"><i class="fa fa-check"></i><b>5.2.2</b> Vectorised if</a></li>
-<li class="chapter" data-level="5.2.3" data-path="control-flow.html"><a href="control-flow.html#switch"><i class="fa fa-check"></i><b>5.2.3</b> <code>switch()</code> statement</a></li>
-<li class="chapter" data-level="5.2.4" data-path="control-flow.html"><a href="control-flow.html#exercises-12"><i class="fa fa-check"></i><b>5.2.4</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="5.3" data-path="control-flow.html"><a href="control-flow.html#loops"><i class="fa fa-check"></i><b>5.3</b> Loops</a>
-<ul>
-<li class="chapter" data-level="5.3.1" data-path="control-flow.html"><a href="control-flow.html#common-pitfalls"><i class="fa fa-check"></i><b>5.3.1</b> Common pitfalls</a></li>
-<li class="chapter" data-level="5.3.2" data-path="control-flow.html"><a href="control-flow.html#for-family"><i class="fa fa-check"></i><b>5.3.2</b> Related tools</a></li>
-<li class="chapter" data-level="5.3.3" data-path="control-flow.html"><a href="control-flow.html#exercises-13"><i class="fa fa-check"></i><b>5.3.3</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="5.4" data-path="control-flow.html"><a href="control-flow.html#control-flow-answers"><i class="fa fa-check"></i><b>5.4</b> Quiz answers</a></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="functions.html"><a href="functions.html"><i class="fa fa-check"></i><b>6</b> Functions</a>
-<ul>
-<li class="chapter" data-level="6.1" data-path="functions.html"><a href="functions.html#introduction-5"><i class="fa fa-check"></i><b>6.1</b> Introduction</a>
-<ul>
-<li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#quiz-4"><i class="fa fa-check"></i>Quiz</a></li>
-<li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#outline-4"><i class="fa fa-check"></i>Outline</a></li>
-</ul></li>
-<li class="chapter" data-level="6.2" data-path="functions.html"><a href="functions.html#function-fundamentals"><i class="fa fa-check"></i><b>6.2</b> Function fundamentals</a>
-<ul>
-<li class="chapter" data-level="6.2.1" data-path="functions.html"><a href="functions.html#fun-components"><i class="fa fa-check"></i><b>6.2.1</b> Function components</a></li>
-<li class="chapter" data-level="6.2.2" data-path="functions.html"><a href="functions.html#primitive-functions"><i class="fa fa-check"></i><b>6.2.2</b> Primitive functions</a></li>
-<li class="chapter" data-level="6.2.3" data-path="functions.html"><a href="functions.html#first-class-functions"><i class="fa fa-check"></i><b>6.2.3</b> First-class functions</a></li>
-<li class="chapter" data-level="6.2.4" data-path="functions.html"><a href="functions.html#invoking-a-function"><i class="fa fa-check"></i><b>6.2.4</b> Invoking a function</a></li>
-<li class="chapter" data-level="6.2.5" data-path="functions.html"><a href="functions.html#exercises-14"><i class="fa fa-check"></i><b>6.2.5</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="6.3" data-path="functions.html"><a href="functions.html#function-composition"><i class="fa fa-check"></i><b>6.3</b> Function composition</a></li>
-<li class="chapter" data-level="6.4" data-path="functions.html"><a href="functions.html#lexical-scoping"><i class="fa fa-check"></i><b>6.4</b> Lexical scoping</a>
-<ul>
-<li class="chapter" data-level="6.4.1" data-path="functions.html"><a href="functions.html#name-masking"><i class="fa fa-check"></i><b>6.4.1</b> Name masking</a></li>
-<li class="chapter" data-level="6.4.2" data-path="functions.html"><a href="functions.html#functions-versus-variables"><i class="fa fa-check"></i><b>6.4.2</b> Functions versus variables</a></li>
-<li class="chapter" data-level="6.4.3" data-path="functions.html"><a href="functions.html#fresh-start"><i class="fa fa-check"></i><b>6.4.3</b> A fresh start</a></li>
-<li class="chapter" data-level="6.4.4" data-path="functions.html"><a href="functions.html#dynamic-lookup"><i class="fa fa-check"></i><b>6.4.4</b> Dynamic lookup</a></li>
-<li class="chapter" data-level="6.4.5" data-path="functions.html"><a href="functions.html#exercises-15"><i class="fa fa-check"></i><b>6.4.5</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="6.5" data-path="functions.html"><a href="functions.html#lazy-evaluation"><i class="fa fa-check"></i><b>6.5</b> Lazy evaluation</a>
-<ul>
-<li class="chapter" data-level="6.5.1" data-path="functions.html"><a href="functions.html#promises"><i class="fa fa-check"></i><b>6.5.1</b> Promises</a></li>
-<li class="chapter" data-level="6.5.2" data-path="functions.html"><a href="functions.html#default-arguments"><i class="fa fa-check"></i><b>6.5.2</b> Default arguments</a></li>
-<li class="chapter" data-level="6.5.3" data-path="functions.html"><a href="functions.html#missing-arguments"><i class="fa fa-check"></i><b>6.5.3</b> Missing arguments</a></li>
-<li class="chapter" data-level="6.5.4" data-path="functions.html"><a href="functions.html#exercises-16"><i class="fa fa-check"></i><b>6.5.4</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="6.6" data-path="functions.html"><a href="functions.html#fun-dot-dot-dot"><i class="fa fa-check"></i><b>6.6</b> <code>...</code> (dot-dot-dot)</a>
-<ul>
-<li class="chapter" data-level="6.6.1" data-path="functions.html"><a href="functions.html#exercises-17"><i class="fa fa-check"></i><b>6.6.1</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="6.7" data-path="functions.html"><a href="functions.html#exiting-a-function"><i class="fa fa-check"></i><b>6.7</b> Exiting a function</a>
-<ul>
-<li class="chapter" data-level="6.7.1" data-path="functions.html"><a href="functions.html#implicit-versus-explicit-returns"><i class="fa fa-check"></i><b>6.7.1</b> Implicit versus explicit returns</a></li>
-<li class="chapter" data-level="6.7.2" data-path="functions.html"><a href="functions.html#invisible"><i class="fa fa-check"></i><b>6.7.2</b> Invisible values</a></li>
-<li class="chapter" data-level="6.7.3" data-path="functions.html"><a href="functions.html#errors"><i class="fa fa-check"></i><b>6.7.3</b> Errors</a></li>
-<li class="chapter" data-level="6.7.4" data-path="functions.html"><a href="functions.html#on-exit"><i class="fa fa-check"></i><b>6.7.4</b> Exit handlers</a></li>
-<li class="chapter" data-level="6.7.5" data-path="functions.html"><a href="functions.html#exercises-18"><i class="fa fa-check"></i><b>6.7.5</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="6.8" data-path="functions.html"><a href="functions.html#function-forms"><i class="fa fa-check"></i><b>6.8</b> Function forms</a>
-<ul>
-<li class="chapter" data-level="6.8.1" data-path="functions.html"><a href="functions.html#prefix-transform"><i class="fa fa-check"></i><b>6.8.1</b> Rewriting to prefix form</a></li>
-<li class="chapter" data-level="6.8.2" data-path="functions.html"><a href="functions.html#prefix-form"><i class="fa fa-check"></i><b>6.8.2</b> Prefix form</a></li>
-<li class="chapter" data-level="6.8.3" data-path="functions.html"><a href="functions.html#infix-functions"><i class="fa fa-check"></i><b>6.8.3</b> Infix functions</a></li>
-<li class="chapter" data-level="6.8.4" data-path="functions.html"><a href="functions.html#replacement-functions"><i class="fa fa-check"></i><b>6.8.4</b> Replacement functions</a></li>
-<li class="chapter" data-level="6.8.5" data-path="functions.html"><a href="functions.html#special-forms"><i class="fa fa-check"></i><b>6.8.5</b> Special forms</a></li>
-<li class="chapter" data-level="6.8.6" data-path="functions.html"><a href="functions.html#exercises-19"><i class="fa fa-check"></i><b>6.8.6</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="6.9" data-path="functions.html"><a href="functions.html#function-answers"><i class="fa fa-check"></i><b>6.9</b> Quiz answers</a></li>
-</ul></li>
-<li class="chapter" data-level="7" data-path="environments.html"><a href="environments.html"><i class="fa fa-check"></i><b>7</b> Environments</a>
-<ul>
-<li class="chapter" data-level="7.1" data-path="environments.html"><a href="environments.html#introduction-6"><i class="fa fa-check"></i><b>7.1</b> Introduction</a>
-<ul>
-<li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#quiz-5"><i class="fa fa-check"></i>Quiz</a></li>
-<li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#outline-5"><i class="fa fa-check"></i>Outline</a></li>
-<li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#prerequisites-1"><i class="fa fa-check"></i>Prerequisites</a></li>
-</ul></li>
-<li class="chapter" data-level="7.2" data-path="environments.html"><a href="environments.html#env-basics"><i class="fa fa-check"></i><b>7.2</b> Environment basics</a>
-<ul>
-<li class="chapter" data-level="7.2.1" data-path="environments.html"><a href="environments.html#basics"><i class="fa fa-check"></i><b>7.2.1</b> Basics</a></li>
-<li class="chapter" data-level="7.2.2" data-path="environments.html"><a href="environments.html#important-environments"><i class="fa fa-check"></i><b>7.2.2</b> Important environments</a></li>
-<li class="chapter" data-level="7.2.3" data-path="environments.html"><a href="environments.html#parents"><i class="fa fa-check"></i><b>7.2.3</b> Parents</a></li>
-<li class="chapter" data-level="7.2.4" data-path="environments.html"><a href="environments.html#super-assignment--"><i class="fa fa-check"></i><b>7.2.4</b> Super assignment, <code>&lt;&lt;-</code></a></li>
-<li class="chapter" data-level="7.2.5" data-path="environments.html"><a href="environments.html#getting-and-setting-1"><i class="fa fa-check"></i><b>7.2.5</b> Getting and setting</a></li>
-<li class="chapter" data-level="7.2.6" data-path="environments.html"><a href="environments.html#advanced-bindings"><i class="fa fa-check"></i><b>7.2.6</b> Advanced bindings</a></li>
-<li class="chapter" data-level="7.2.7" data-path="environments.html"><a href="environments.html#exercises-20"><i class="fa fa-check"></i><b>7.2.7</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="7.3" data-path="environments.html"><a href="environments.html#env-recursion"><i class="fa fa-check"></i><b>7.3</b> Recursing over environments</a>
-<ul>
-<li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#iteration-versus-recursion"><i class="fa fa-check"></i>Iteration versus recursion</a></li>
-<li class="chapter" data-level="7.3.1" data-path="environments.html"><a href="environments.html#exercises-21"><i class="fa fa-check"></i><b>7.3.1</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="7.4" data-path="environments.html"><a href="environments.html#special-environments"><i class="fa fa-check"></i><b>7.4</b> Special environments</a>
-<ul>
-<li class="chapter" data-level="7.4.1" data-path="environments.html"><a href="environments.html#search-path"><i class="fa fa-check"></i><b>7.4.1</b> Package environments and the search path</a></li>
-<li class="chapter" data-level="7.4.2" data-path="environments.html"><a href="environments.html#function-environments"><i class="fa fa-check"></i><b>7.4.2</b> The function environment</a></li>
-<li class="chapter" data-level="7.4.3" data-path="environments.html"><a href="environments.html#namespaces"><i class="fa fa-check"></i><b>7.4.3</b> Namespaces</a></li>
-<li class="chapter" data-level="7.4.4" data-path="environments.html"><a href="environments.html#execution-environments"><i class="fa fa-check"></i><b>7.4.4</b> Execution environments</a></li>
-<li class="chapter" data-level="7.4.5" data-path="environments.html"><a href="environments.html#exercises-22"><i class="fa fa-check"></i><b>7.4.5</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="7.5" data-path="environments.html"><a href="environments.html#call-stack"><i class="fa fa-check"></i><b>7.5</b> Call stacks</a>
-<ul>
-<li class="chapter" data-level="7.5.1" data-path="environments.html"><a href="environments.html#simple-stack"><i class="fa fa-check"></i><b>7.5.1</b> Simple call stacks</a></li>
-<li class="chapter" data-level="7.5.2" data-path="environments.html"><a href="environments.html#lazy-call-stack"><i class="fa fa-check"></i><b>7.5.2</b> Lazy evaluation</a></li>
-<li class="chapter" data-level="7.5.3" data-path="environments.html"><a href="environments.html#frames"><i class="fa fa-check"></i><b>7.5.3</b> Frames</a></li>
-<li class="chapter" data-level="7.5.4" data-path="environments.html"><a href="environments.html#dynamic-scope"><i class="fa fa-check"></i><b>7.5.4</b> Dynamic scope</a></li>
-<li class="chapter" data-level="7.5.5" data-path="environments.html"><a href="environments.html#exercises-23"><i class="fa fa-check"></i><b>7.5.5</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="7.6" data-path="environments.html"><a href="environments.html#explicit-envs"><i class="fa fa-check"></i><b>7.6</b> As data structures</a></li>
-<li class="chapter" data-level="7.7" data-path="environments.html"><a href="environments.html#env-answers"><i class="fa fa-check"></i><b>7.7</b> Quiz answers</a></li>
-</ul></li>
-<li class="chapter" data-level="8" data-path="conditions.html"><a href="conditions.html"><i class="fa fa-check"></i><b>8</b> Conditions</a>
-<ul>
-<li class="chapter" data-level="8.1" data-path="conditions.html"><a href="conditions.html#introduction-7"><i class="fa fa-check"></i><b>8.1</b> Introduction</a>
-<ul>
-<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#quiz-6"><i class="fa fa-check"></i>Quiz</a></li>
-<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#outline-6"><i class="fa fa-check"></i>Outline</a></li>
-<li class="chapter" data-level="8.1.1" data-path="conditions.html"><a href="conditions.html#prerequisites-2"><i class="fa fa-check"></i><b>8.1.1</b> Prerequisites</a></li>
-</ul></li>
-<li class="chapter" data-level="8.2" data-path="conditions.html"><a href="conditions.html#signalling-conditions"><i class="fa fa-check"></i><b>8.2</b> Signalling conditions</a>
-<ul>
-<li class="chapter" data-level="8.2.1" data-path="conditions.html"><a href="conditions.html#errors-1"><i class="fa fa-check"></i><b>8.2.1</b> Errors</a></li>
-<li class="chapter" data-level="8.2.2" data-path="conditions.html"><a href="conditions.html#warnings"><i class="fa fa-check"></i><b>8.2.2</b> Warnings</a></li>
-<li class="chapter" data-level="8.2.3" data-path="conditions.html"><a href="conditions.html#messages"><i class="fa fa-check"></i><b>8.2.3</b> Messages</a></li>
-<li class="chapter" data-level="8.2.4" data-path="conditions.html"><a href="conditions.html#exercises-24"><i class="fa fa-check"></i><b>8.2.4</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="8.3" data-path="conditions.html"><a href="conditions.html#ignoring-conditions"><i class="fa fa-check"></i><b>8.3</b> Ignoring conditions</a></li>
-<li class="chapter" data-level="8.4" data-path="conditions.html"><a href="conditions.html#handling-conditions"><i class="fa fa-check"></i><b>8.4</b> Handling conditions</a>
-<ul>
-<li class="chapter" data-level="8.4.1" data-path="conditions.html"><a href="conditions.html#condition-objects"><i class="fa fa-check"></i><b>8.4.1</b> Condition objects</a></li>
-<li class="chapter" data-level="8.4.2" data-path="conditions.html"><a href="conditions.html#exiting-handlers"><i class="fa fa-check"></i><b>8.4.2</b> Exiting handlers</a></li>
-<li class="chapter" data-level="8.4.3" data-path="conditions.html"><a href="conditions.html#calling-handlers"><i class="fa fa-check"></i><b>8.4.3</b> Calling handlers</a></li>
-<li class="chapter" data-level="8.4.4" data-path="conditions.html"><a href="conditions.html#call-stacks"><i class="fa fa-check"></i><b>8.4.4</b> Call stacks</a></li>
-<li class="chapter" data-level="8.4.5" data-path="conditions.html"><a href="conditions.html#exercises-25"><i class="fa fa-check"></i><b>8.4.5</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="8.5" data-path="conditions.html"><a href="conditions.html#custom-conditions"><i class="fa fa-check"></i><b>8.5</b> Custom conditions</a>
-<ul>
-<li class="chapter" data-level="8.5.1" data-path="conditions.html"><a href="conditions.html#motivation"><i class="fa fa-check"></i><b>8.5.1</b> Motivation</a></li>
-<li class="chapter" data-level="8.5.2" data-path="conditions.html"><a href="conditions.html#signalling"><i class="fa fa-check"></i><b>8.5.2</b> Signalling</a></li>
-<li class="chapter" data-level="8.5.3" data-path="conditions.html"><a href="conditions.html#handling"><i class="fa fa-check"></i><b>8.5.3</b> Handling</a></li>
-<li class="chapter" data-level="8.5.4" data-path="conditions.html"><a href="conditions.html#exercises-26"><i class="fa fa-check"></i><b>8.5.4</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="8.6" data-path="conditions.html"><a href="conditions.html#condition-applications"><i class="fa fa-check"></i><b>8.6</b> Applications</a>
-<ul>
-<li class="chapter" data-level="8.6.1" data-path="conditions.html"><a href="conditions.html#failure-value"><i class="fa fa-check"></i><b>8.6.1</b> Failure value</a></li>
-<li class="chapter" data-level="8.6.2" data-path="conditions.html"><a href="conditions.html#try-success-failure"><i class="fa fa-check"></i><b>8.6.2</b> Success and failure values</a></li>
-<li class="chapter" data-level="8.6.3" data-path="conditions.html"><a href="conditions.html#resignal"><i class="fa fa-check"></i><b>8.6.3</b> Resignal</a></li>
-<li class="chapter" data-level="8.6.4" data-path="conditions.html"><a href="conditions.html#record"><i class="fa fa-check"></i><b>8.6.4</b> Record</a></li>
-<li class="chapter" data-level="8.6.5" data-path="conditions.html"><a href="conditions.html#no-default-behaviour"><i class="fa fa-check"></i><b>8.6.5</b> No default behaviour</a></li>
-<li class="chapter" data-level="8.6.6" data-path="conditions.html"><a href="conditions.html#exercises-27"><i class="fa fa-check"></i><b>8.6.6</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="8.7" data-path="conditions.html"><a href="conditions.html#conditions-answers"><i class="fa fa-check"></i><b>8.7</b> Quiz answers</a></li>
-</ul></li>
-<li class="part"><span><b>II Functional programming</b></span></li>
-<li class="chapter" data-level="" data-path="fp.html"><a href="fp.html"><i class="fa fa-check"></i>Introduction</a>
-<ul>
-<li class="chapter" data-level="" data-path="fp.html"><a href="fp.html#functional-programming-languages"><i class="fa fa-check"></i>Functional programming languages</a></li>
-<li class="chapter" data-level="" data-path="fp.html"><a href="fp.html#functional-style"><i class="fa fa-check"></i>Functional style</a></li>
-</ul></li>
-<li class="chapter" data-level="9" data-path="functionals.html"><a href="functionals.html"><i class="fa fa-check"></i><b>9</b> Functionals</a>
-<ul>
-<li class="chapter" data-level="9.1" data-path="functionals.html"><a href="functionals.html#introduction-8"><i class="fa fa-check"></i><b>9.1</b> Introduction</a>
-<ul>
-<li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#outline-7"><i class="fa fa-check"></i>Outline</a></li>
-<li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#prerequisites-3"><i class="fa fa-check"></i>Prerequisites</a></li>
-</ul></li>
-<li class="chapter" data-level="9.2" data-path="functionals.html"><a href="functionals.html#map"><i class="fa fa-check"></i><b>9.2</b> My first functional: <code>map()</code></a>
-<ul>
-<li class="chapter" data-level="9.2.1" data-path="functionals.html"><a href="functionals.html#map-atomic"><i class="fa fa-check"></i><b>9.2.1</b> Producing atomic vectors</a></li>
-<li class="chapter" data-level="9.2.2" data-path="functionals.html"><a href="functionals.html#purrr-shortcuts"><i class="fa fa-check"></i><b>9.2.2</b> Anonymous functions and shortcuts</a></li>
-<li class="chapter" data-level="9.2.3" data-path="functionals.html"><a href="functionals.html#passing-arguments"><i class="fa fa-check"></i><b>9.2.3</b> Passing arguments with <code>...</code></a></li>
-<li class="chapter" data-level="9.2.4" data-path="functionals.html"><a href="functionals.html#argument-names"><i class="fa fa-check"></i><b>9.2.4</b> Argument names</a></li>
-<li class="chapter" data-level="9.2.5" data-path="functionals.html"><a href="functionals.html#change-argument"><i class="fa fa-check"></i><b>9.2.5</b> Varying another argument</a></li>
-<li class="chapter" data-level="9.2.6" data-path="functionals.html"><a href="functionals.html#exercises-28"><i class="fa fa-check"></i><b>9.2.6</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="9.3" data-path="functionals.html"><a href="functionals.html#purrr-style"><i class="fa fa-check"></i><b>9.3</b> Purrr style</a></li>
-<li class="chapter" data-level="9.4" data-path="functionals.html"><a href="functionals.html#map-variants"><i class="fa fa-check"></i><b>9.4</b> Map variants</a>
-<ul>
-<li class="chapter" data-level="9.4.1" data-path="functionals.html"><a href="functionals.html#modify"><i class="fa fa-check"></i><b>9.4.1</b> Same type of output as input: <code>modify()</code></a></li>
-<li class="chapter" data-level="9.4.2" data-path="functionals.html"><a href="functionals.html#map2"><i class="fa fa-check"></i><b>9.4.2</b> Two inputs: <code>map2()</code> and friends</a></li>
-<li class="chapter" data-level="9.4.3" data-path="functionals.html"><a href="functionals.html#no-outputs-walk-and-friends"><i class="fa fa-check"></i><b>9.4.3</b> No outputs: <code>walk()</code> and friends</a></li>
-<li class="chapter" data-level="9.4.4" data-path="functionals.html"><a href="functionals.html#iterating-over-values-and-indices"><i class="fa fa-check"></i><b>9.4.4</b> Iterating over values and indices</a></li>
-<li class="chapter" data-level="9.4.5" data-path="functionals.html"><a href="functionals.html#pmap"><i class="fa fa-check"></i><b>9.4.5</b> Any number of inputs: <code>pmap()</code> and friends</a></li>
-<li class="chapter" data-level="9.4.6" data-path="functionals.html"><a href="functionals.html#exercises-29"><i class="fa fa-check"></i><b>9.4.6</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="9.5" data-path="functionals.html"><a href="functionals.html#reduce"><i class="fa fa-check"></i><b>9.5</b> Reduce family</a>
-<ul>
-<li class="chapter" data-level="9.5.1" data-path="functionals.html"><a href="functionals.html#basics-1"><i class="fa fa-check"></i><b>9.5.1</b> Basics</a></li>
-<li class="chapter" data-level="9.5.2" data-path="functionals.html"><a href="functionals.html#accumulate"><i class="fa fa-check"></i><b>9.5.2</b> Accumulate</a></li>
-<li class="chapter" data-level="9.5.3" data-path="functionals.html"><a href="functionals.html#output-types"><i class="fa fa-check"></i><b>9.5.3</b> Output types</a></li>
-<li class="chapter" data-level="9.5.4" data-path="functionals.html"><a href="functionals.html#multiple-inputs"><i class="fa fa-check"></i><b>9.5.4</b> Multiple inputs</a></li>
-<li class="chapter" data-level="9.5.5" data-path="functionals.html"><a href="functionals.html#map-reduce"><i class="fa fa-check"></i><b>9.5.5</b> Map-reduce</a></li>
-</ul></li>
-<li class="chapter" data-level="9.6" data-path="functionals.html"><a href="functionals.html#predicate-functionals"><i class="fa fa-check"></i><b>9.6</b> Predicate functionals</a>
-<ul>
-<li class="chapter" data-level="9.6.1" data-path="functionals.html"><a href="functionals.html#basics-2"><i class="fa fa-check"></i><b>9.6.1</b> Basics</a></li>
-<li class="chapter" data-level="9.6.2" data-path="functionals.html"><a href="functionals.html#predicate-map"><i class="fa fa-check"></i><b>9.6.2</b> Map variants</a></li>
-<li class="chapter" data-level="9.6.3" data-path="functionals.html"><a href="functionals.html#exercises-30"><i class="fa fa-check"></i><b>9.6.3</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="9.7" data-path="functionals.html"><a href="functionals.html#base-functionals"><i class="fa fa-check"></i><b>9.7</b> Base functionals</a>
-<ul>
-<li class="chapter" data-level="9.7.1" data-path="functionals.html"><a href="functionals.html#matrices-and-arrays"><i class="fa fa-check"></i><b>9.7.1</b> Matrices and arrays</a></li>
-<li class="chapter" data-level="9.7.2" data-path="functionals.html"><a href="functionals.html#mathematical-concerns"><i class="fa fa-check"></i><b>9.7.2</b> Mathematical concerns</a></li>
-<li class="chapter" data-level="9.7.3" data-path="functionals.html"><a href="functionals.html#exercises-31"><i class="fa fa-check"></i><b>9.7.3</b> Exercises</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="10" data-path="function-factories.html"><a href="function-factories.html"><i class="fa fa-check"></i><b>10</b> Function factories</a>
-<ul>
-<li class="chapter" data-level="10.1" data-path="function-factories.html"><a href="function-factories.html#introduction-9"><i class="fa fa-check"></i><b>10.1</b> Introduction</a>
-<ul>
-<li class="chapter" data-level="" data-path="function-factories.html"><a href="function-factories.html#outline-8"><i class="fa fa-check"></i>Outline</a></li>
-<li class="chapter" data-level="" data-path="function-factories.html"><a href="function-factories.html#prerequisites-4"><i class="fa fa-check"></i>Prerequisites</a></li>
-</ul></li>
-<li class="chapter" data-level="10.2" data-path="function-factories.html"><a href="function-factories.html#factory-fundamentals"><i class="fa fa-check"></i><b>10.2</b> Factory fundamentals</a>
-<ul>
-<li class="chapter" data-level="10.2.1" data-path="function-factories.html"><a href="function-factories.html#environments-1"><i class="fa fa-check"></i><b>10.2.1</b> Environments</a></li>
-<li class="chapter" data-level="10.2.2" data-path="function-factories.html"><a href="function-factories.html#diagram-conventions"><i class="fa fa-check"></i><b>10.2.2</b> Diagram conventions</a></li>
-<li class="chapter" data-level="10.2.3" data-path="function-factories.html"><a href="function-factories.html#forcing-evaluation"><i class="fa fa-check"></i><b>10.2.3</b> Forcing evaluation</a></li>
-<li class="chapter" data-level="10.2.4" data-path="function-factories.html"><a href="function-factories.html#stateful-funs"><i class="fa fa-check"></i><b>10.2.4</b> Stateful functions</a></li>
-<li class="chapter" data-level="10.2.5" data-path="function-factories.html"><a href="function-factories.html#factory-pitfalls"><i class="fa fa-check"></i><b>10.2.5</b> Garbage collection</a></li>
-<li class="chapter" data-level="10.2.6" data-path="function-factories.html"><a href="function-factories.html#exercises-32"><i class="fa fa-check"></i><b>10.2.6</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="10.3" data-path="function-factories.html"><a href="function-factories.html#graph-fact"><i class="fa fa-check"></i><b>10.3</b> Graphical factories</a>
-<ul>
-<li class="chapter" data-level="10.3.1" data-path="function-factories.html"><a href="function-factories.html#labelling"><i class="fa fa-check"></i><b>10.3.1</b> Labelling</a></li>
-<li class="chapter" data-level="10.3.2" data-path="function-factories.html"><a href="function-factories.html#histogram-bins"><i class="fa fa-check"></i><b>10.3.2</b> Histogram bins</a></li>
-<li class="chapter" data-level="10.3.3" data-path="function-factories.html"><a href="function-factories.html#ggsave"><i class="fa fa-check"></i><b>10.3.3</b> <code>ggsave()</code></a></li>
-<li class="chapter" data-level="10.3.4" data-path="function-factories.html"><a href="function-factories.html#exercises-33"><i class="fa fa-check"></i><b>10.3.4</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="10.4" data-path="function-factories.html"><a href="function-factories.html#stat-fact"><i class="fa fa-check"></i><b>10.4</b> Statistical factories</a>
-<ul>
-<li class="chapter" data-level="10.4.1" data-path="function-factories.html"><a href="function-factories.html#box-cox-transformation"><i class="fa fa-check"></i><b>10.4.1</b> Box-Cox transformation</a></li>
-<li class="chapter" data-level="10.4.2" data-path="function-factories.html"><a href="function-factories.html#bootstrap-generators"><i class="fa fa-check"></i><b>10.4.2</b> Bootstrap generators</a></li>
-<li class="chapter" data-level="10.4.3" data-path="function-factories.html"><a href="function-factories.html#MLE"><i class="fa fa-check"></i><b>10.4.3</b> Maximum likelihood estimation</a></li>
-<li class="chapter" data-level="10.4.4" data-path="function-factories.html"><a href="function-factories.html#exercises-34"><i class="fa fa-check"></i><b>10.4.4</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="10.5" data-path="function-factories.html"><a href="function-factories.html#functional-factories"><i class="fa fa-check"></i><b>10.5</b> Function factories + functionals</a>
-<ul>
-<li class="chapter" data-level="10.5.1" data-path="function-factories.html"><a href="function-factories.html#exercises-35"><i class="fa fa-check"></i><b>10.5.1</b> Exercises</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="11" data-path="function-operators.html"><a href="function-operators.html"><i class="fa fa-check"></i><b>11</b> Function operators</a>
-<ul>
-<li class="chapter" data-level="11.1" data-path="function-operators.html"><a href="function-operators.html#introduction-10"><i class="fa fa-check"></i><b>11.1</b> Introduction</a>
-<ul>
-<li class="chapter" data-level="" data-path="function-operators.html"><a href="function-operators.html#outline-9"><i class="fa fa-check"></i>Outline</a></li>
-<li class="chapter" data-level="" data-path="function-operators.html"><a href="function-operators.html#prerequisites-5"><i class="fa fa-check"></i>Prerequisites</a></li>
-</ul></li>
-<li class="chapter" data-level="11.2" data-path="function-operators.html"><a href="function-operators.html#existing-fos"><i class="fa fa-check"></i><b>11.2</b> Existing function operators</a>
-<ul>
-<li class="chapter" data-level="11.2.1" data-path="function-operators.html"><a href="function-operators.html#safely"><i class="fa fa-check"></i><b>11.2.1</b> Capturing errors with <code>purrr::safely()</code></a></li>
-<li class="chapter" data-level="11.2.2" data-path="function-operators.html"><a href="function-operators.html#memoise"><i class="fa fa-check"></i><b>11.2.2</b> Caching computations with <code>memoise::memoise()</code></a></li>
-<li class="chapter" data-level="11.2.3" data-path="function-operators.html"><a href="function-operators.html#exercises-36"><i class="fa fa-check"></i><b>11.2.3</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="11.3" data-path="function-operators.html"><a href="function-operators.html#fo-case-study"><i class="fa fa-check"></i><b>11.3</b> Case study: Creating your own function operators</a>
-<ul>
-<li class="chapter" data-level="11.3.1" data-path="function-operators.html"><a href="function-operators.html#exercises-37"><i class="fa fa-check"></i><b>11.3.1</b> Exercises</a></li>
-</ul></li>
-</ul></li>
-<li class="part"><span><b>III Object-oriented programming</b></span></li>
-<li class="chapter" data-level="" data-path="oo.html"><a href="oo.html"><i class="fa fa-check"></i>Introduction</a>
-<ul>
-<li class="chapter" data-level="" data-path="oo.html"><a href="oo.html#oop-systems"><i class="fa fa-check"></i>OOP systems</a></li>
-<li class="chapter" data-level="" data-path="oo.html"><a href="oo.html#oop-in-r"><i class="fa fa-check"></i>OOP in R</a></li>
-<li class="chapter" data-level="" data-path="oo.html"><a href="oo.html#sloop"><i class="fa fa-check"></i>sloop</a></li>
-</ul></li>
-<li class="chapter" data-level="12" data-path="base-types.html"><a href="base-types.html"><i class="fa fa-check"></i><b>12</b> Base types</a>
-<ul>
-<li class="chapter" data-level="12.1" data-path="base-types.html"><a href="base-types.html#introduction-11"><i class="fa fa-check"></i><b>12.1</b> Introduction</a>
-<ul>
-<li class="chapter" data-level="" data-path="base-types.html"><a href="base-types.html#outline-10"><i class="fa fa-check"></i>Outline</a></li>
-</ul></li>
-<li class="chapter" data-level="12.2" data-path="base-types.html"><a href="base-types.html#base-vs-oo"><i class="fa fa-check"></i><b>12.2</b> Base versus OO objects</a></li>
-<li class="chapter" data-level="12.3" data-path="base-types.html"><a href="base-types.html#base-types-2"><i class="fa fa-check"></i><b>12.3</b> Base types</a>
-<ul>
-<li class="chapter" data-level="12.3.1" data-path="base-types.html"><a href="base-types.html#numeric-type"><i class="fa fa-check"></i><b>12.3.1</b> Numeric type</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="13" data-path="s3.html"><a href="s3.html"><i class="fa fa-check"></i><b>13</b> S3</a>
-<ul>
-<li class="chapter" data-level="13.1" data-path="s3.html"><a href="s3.html#introduction-12"><i class="fa fa-check"></i><b>13.1</b> Introduction</a>
-<ul>
-<li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#outline-11"><i class="fa fa-check"></i>Outline</a></li>
-<li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#prerequisites-6"><i class="fa fa-check"></i>Prerequisites</a></li>
-</ul></li>
-<li class="chapter" data-level="13.2" data-path="s3.html"><a href="s3.html#s3-basics"><i class="fa fa-check"></i><b>13.2</b> Basics</a>
-<ul>
-<li class="chapter" data-level="13.2.1" data-path="s3.html"><a href="s3.html#exercises-38"><i class="fa fa-check"></i><b>13.2.1</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="13.3" data-path="s3.html"><a href="s3.html#s3-classes"><i class="fa fa-check"></i><b>13.3</b> Classes</a>
-<ul>
-<li class="chapter" data-level="13.3.1" data-path="s3.html"><a href="s3.html#s3-constructor"><i class="fa fa-check"></i><b>13.3.1</b> Constructors</a></li>
-<li class="chapter" data-level="13.3.2" data-path="s3.html"><a href="s3.html#validators"><i class="fa fa-check"></i><b>13.3.2</b> Validators</a></li>
-<li class="chapter" data-level="13.3.3" data-path="s3.html"><a href="s3.html#helpers"><i class="fa fa-check"></i><b>13.3.3</b> Helpers</a></li>
-<li class="chapter" data-level="13.3.4" data-path="s3.html"><a href="s3.html#exercises-39"><i class="fa fa-check"></i><b>13.3.4</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="13.4" data-path="s3.html"><a href="s3.html#s3-methods"><i class="fa fa-check"></i><b>13.4</b> Generics and methods</a>
-<ul>
-<li class="chapter" data-level="13.4.1" data-path="s3.html"><a href="s3.html#method-dispatch"><i class="fa fa-check"></i><b>13.4.1</b> Method dispatch</a></li>
-<li class="chapter" data-level="13.4.2" data-path="s3.html"><a href="s3.html#finding-methods"><i class="fa fa-check"></i><b>13.4.2</b> Finding methods</a></li>
-<li class="chapter" data-level="13.4.3" data-path="s3.html"><a href="s3.html#s3-arguments"><i class="fa fa-check"></i><b>13.4.3</b> Creating methods</a></li>
-<li class="chapter" data-level="13.4.4" data-path="s3.html"><a href="s3.html#exercises-40"><i class="fa fa-check"></i><b>13.4.4</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="13.5" data-path="s3.html"><a href="s3.html#object-styles"><i class="fa fa-check"></i><b>13.5</b> Object styles</a>
-<ul>
-<li class="chapter" data-level="13.5.1" data-path="s3.html"><a href="s3.html#exercises-41"><i class="fa fa-check"></i><b>13.5.1</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="13.6" data-path="s3.html"><a href="s3.html#s3-inheritance"><i class="fa fa-check"></i><b>13.6</b> Inheritance</a>
-<ul>
-<li class="chapter" data-level="13.6.1" data-path="s3.html"><a href="s3.html#nextmethod"><i class="fa fa-check"></i><b>13.6.1</b> <code>NextMethod()</code></a></li>
-<li class="chapter" data-level="13.6.2" data-path="s3.html"><a href="s3.html#s3-subclassing"><i class="fa fa-check"></i><b>13.6.2</b> Allowing subclassing</a></li>
-<li class="chapter" data-level="13.6.3" data-path="s3.html"><a href="s3.html#exercises-42"><i class="fa fa-check"></i><b>13.6.3</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="13.7" data-path="s3.html"><a href="s3.html#s3-dispatch"><i class="fa fa-check"></i><b>13.7</b> Dispatch details</a>
-<ul>
-<li class="chapter" data-level="13.7.1" data-path="s3.html"><a href="s3.html#implicit-class"><i class="fa fa-check"></i><b>13.7.1</b> S3 and base types</a></li>
-<li class="chapter" data-level="13.7.2" data-path="s3.html"><a href="s3.html#internal-generics"><i class="fa fa-check"></i><b>13.7.2</b> Internal generics</a></li>
-<li class="chapter" data-level="13.7.3" data-path="s3.html"><a href="s3.html#group-generics"><i class="fa fa-check"></i><b>13.7.3</b> Group generics</a></li>
-<li class="chapter" data-level="13.7.4" data-path="s3.html"><a href="s3.html#double-dispatch"><i class="fa fa-check"></i><b>13.7.4</b> Double dispatch</a></li>
-<li class="chapter" data-level="13.7.5" data-path="s3.html"><a href="s3.html#exercises-43"><i class="fa fa-check"></i><b>13.7.5</b> Exercises</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="14" data-path="r6.html"><a href="r6.html"><i class="fa fa-check"></i><b>14</b> R6</a>
-<ul>
-<li class="chapter" data-level="14.1" data-path="r6.html"><a href="r6.html#introduction-13"><i class="fa fa-check"></i><b>14.1</b> Introduction</a>
-<ul>
-<li class="chapter" data-level="" data-path="r6.html"><a href="r6.html#outline-12"><i class="fa fa-check"></i>Outline</a></li>
-<li class="chapter" data-level="" data-path="r6.html"><a href="r6.html#prerequisites-7"><i class="fa fa-check"></i>Prerequisites</a></li>
-</ul></li>
-<li class="chapter" data-level="14.2" data-path="r6.html"><a href="r6.html#r6-classes"><i class="fa fa-check"></i><b>14.2</b> Classes and methods</a>
-<ul>
-<li class="chapter" data-level="14.2.1" data-path="r6.html"><a href="r6.html#method-chaining"><i class="fa fa-check"></i><b>14.2.1</b> Method chaining</a></li>
-<li class="chapter" data-level="14.2.2" data-path="r6.html"><a href="r6.html#r6-important-methods"><i class="fa fa-check"></i><b>14.2.2</b> Important methods</a></li>
-<li class="chapter" data-level="14.2.3" data-path="r6.html"><a href="r6.html#adding-methods-after-creation"><i class="fa fa-check"></i><b>14.2.3</b> Adding methods after creation</a></li>
-<li class="chapter" data-level="14.2.4" data-path="r6.html"><a href="r6.html#inheritance"><i class="fa fa-check"></i><b>14.2.4</b> Inheritance</a></li>
-<li class="chapter" data-level="14.2.5" data-path="r6.html"><a href="r6.html#introspection"><i class="fa fa-check"></i><b>14.2.5</b> Introspection</a></li>
-<li class="chapter" data-level="14.2.6" data-path="r6.html"><a href="r6.html#exercises-44"><i class="fa fa-check"></i><b>14.2.6</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="14.3" data-path="r6.html"><a href="r6.html#r6-access"><i class="fa fa-check"></i><b>14.3</b> Controlling access</a>
-<ul>
-<li class="chapter" data-level="14.3.1" data-path="r6.html"><a href="r6.html#privacy"><i class="fa fa-check"></i><b>14.3.1</b> Privacy</a></li>
-<li class="chapter" data-level="14.3.2" data-path="r6.html"><a href="r6.html#active-fields"><i class="fa fa-check"></i><b>14.3.2</b> Active fields</a></li>
-<li class="chapter" data-level="14.3.3" data-path="r6.html"><a href="r6.html#exercises-45"><i class="fa fa-check"></i><b>14.3.3</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="14.4" data-path="r6.html"><a href="r6.html#r6-semantics"><i class="fa fa-check"></i><b>14.4</b> Reference semantics</a>
-<ul>
-<li class="chapter" data-level="14.4.1" data-path="r6.html"><a href="r6.html#reasoning"><i class="fa fa-check"></i><b>14.4.1</b> Reasoning</a></li>
-<li class="chapter" data-level="14.4.2" data-path="r6.html"><a href="r6.html#finalizer"><i class="fa fa-check"></i><b>14.4.2</b> Finalizer</a></li>
-<li class="chapter" data-level="14.4.3" data-path="r6.html"><a href="r6.html#r6-fields"><i class="fa fa-check"></i><b>14.4.3</b> R6 fields</a></li>
-<li class="chapter" data-level="14.4.4" data-path="r6.html"><a href="r6.html#exercises-46"><i class="fa fa-check"></i><b>14.4.4</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="14.5" data-path="r6.html"><a href="r6.html#why-r6"><i class="fa fa-check"></i><b>14.5</b> Why R6?</a></li>
-</ul></li>
-<li class="chapter" data-level="15" data-path="s4.html"><a href="s4.html"><i class="fa fa-check"></i><b>15</b> S4</a>
-<ul>
-<li class="chapter" data-level="15.1" data-path="s4.html"><a href="s4.html#introduction-14"><i class="fa fa-check"></i><b>15.1</b> Introduction</a>
-<ul>
-<li class="chapter" data-level="" data-path="s4.html"><a href="s4.html#outline-13"><i class="fa fa-check"></i>Outline</a></li>
-<li class="chapter" data-level="" data-path="s4.html"><a href="s4.html#learning-more"><i class="fa fa-check"></i>Learning more</a></li>
-<li class="chapter" data-level="" data-path="s4.html"><a href="s4.html#prerequisites-8"><i class="fa fa-check"></i>Prerequisites</a></li>
-</ul></li>
-<li class="chapter" data-level="15.2" data-path="s4.html"><a href="s4.html#s4-basics"><i class="fa fa-check"></i><b>15.2</b> Basics</a>
-<ul>
-<li class="chapter" data-level="15.2.1" data-path="s4.html"><a href="s4.html#exercises-47"><i class="fa fa-check"></i><b>15.2.1</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="15.3" data-path="s4.html"><a href="s4.html#s4-classes"><i class="fa fa-check"></i><b>15.3</b> Classes</a>
-<ul>
-<li class="chapter" data-level="15.3.1" data-path="s4.html"><a href="s4.html#inheritance-1"><i class="fa fa-check"></i><b>15.3.1</b> Inheritance</a></li>
-<li class="chapter" data-level="15.3.2" data-path="s4.html"><a href="s4.html#introspection-1"><i class="fa fa-check"></i><b>15.3.2</b> Introspection</a></li>
-<li class="chapter" data-level="15.3.3" data-path="s4.html"><a href="s4.html#redefinition"><i class="fa fa-check"></i><b>15.3.3</b> Redefinition</a></li>
-<li class="chapter" data-level="15.3.4" data-path="s4.html"><a href="s4.html#helper"><i class="fa fa-check"></i><b>15.3.4</b> Helper</a></li>
-<li class="chapter" data-level="15.3.5" data-path="s4.html"><a href="s4.html#validator"><i class="fa fa-check"></i><b>15.3.5</b> Validator</a></li>
-<li class="chapter" data-level="15.3.6" data-path="s4.html"><a href="s4.html#exercises-48"><i class="fa fa-check"></i><b>15.3.6</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="15.4" data-path="s4.html"><a href="s4.html#s4-generics"><i class="fa fa-check"></i><b>15.4</b> Generics and methods</a>
-<ul>
-<li class="chapter" data-level="15.4.1" data-path="s4.html"><a href="s4.html#signature"><i class="fa fa-check"></i><b>15.4.1</b> Signature</a></li>
-<li class="chapter" data-level="15.4.2" data-path="s4.html"><a href="s4.html#methods"><i class="fa fa-check"></i><b>15.4.2</b> Methods</a></li>
-<li class="chapter" data-level="15.4.3" data-path="s4.html"><a href="s4.html#show-method"><i class="fa fa-check"></i><b>15.4.3</b> Show method</a></li>
-<li class="chapter" data-level="15.4.4" data-path="s4.html"><a href="s4.html#accessors"><i class="fa fa-check"></i><b>15.4.4</b> Accessors</a></li>
-<li class="chapter" data-level="15.4.5" data-path="s4.html"><a href="s4.html#exercises-49"><i class="fa fa-check"></i><b>15.4.5</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="15.5" data-path="s4.html"><a href="s4.html#s4-dispatch"><i class="fa fa-check"></i><b>15.5</b> Method dispatch</a>
-<ul>
-<li class="chapter" data-level="15.5.1" data-path="s4.html"><a href="s4.html#single-dispatch"><i class="fa fa-check"></i><b>15.5.1</b> Single dispatch</a></li>
-<li class="chapter" data-level="15.5.2" data-path="s4.html"><a href="s4.html#multiple-inheritance"><i class="fa fa-check"></i><b>15.5.2</b> Multiple inheritance</a></li>
-<li class="chapter" data-level="15.5.3" data-path="s4.html"><a href="s4.html#multiple-dispatch"><i class="fa fa-check"></i><b>15.5.3</b> Multiple dispatch</a></li>
-<li class="chapter" data-level="15.5.4" data-path="s4.html"><a href="s4.html#multiple-dispatch-and-multiple-inheritance"><i class="fa fa-check"></i><b>15.5.4</b> Multiple dispatch and multiple inheritance</a></li>
-<li class="chapter" data-level="15.5.5" data-path="s4.html"><a href="s4.html#exercises-50"><i class="fa fa-check"></i><b>15.5.5</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="15.6" data-path="s4.html"><a href="s4.html#s4-s3"><i class="fa fa-check"></i><b>15.6</b> S4 and S3</a>
-<ul>
-<li class="chapter" data-level="15.6.1" data-path="s4.html"><a href="s4.html#classes"><i class="fa fa-check"></i><b>15.6.1</b> Classes</a></li>
-<li class="chapter" data-level="15.6.2" data-path="s4.html"><a href="s4.html#generics"><i class="fa fa-check"></i><b>15.6.2</b> Generics</a></li>
-<li class="chapter" data-level="15.6.3" data-path="s4.html"><a href="s4.html#exercises-51"><i class="fa fa-check"></i><b>15.6.3</b> Exercises</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="16" data-path="oo-tradeoffs.html"><a href="oo-tradeoffs.html"><i class="fa fa-check"></i><b>16</b> Trade-offs</a>
-<ul>
-<li class="chapter" data-level="16.1" data-path="oo-tradeoffs.html"><a href="oo-tradeoffs.html#introduction-15"><i class="fa fa-check"></i><b>16.1</b> Introduction</a>
-<ul>
-<li class="chapter" data-level="" data-path="oo-tradeoffs.html"><a href="oo-tradeoffs.html#outline-14"><i class="fa fa-check"></i>Outline</a></li>
-<li class="chapter" data-level="" data-path="oo-tradeoffs.html"><a href="oo-tradeoffs.html#prerequisites-9"><i class="fa fa-check"></i>Prerequisites</a></li>
-</ul></li>
-<li class="chapter" data-level="16.2" data-path="oo-tradeoffs.html"><a href="oo-tradeoffs.html#s3-s4"><i class="fa fa-check"></i><b>16.2</b> S4 versus S3</a></li>
-<li class="chapter" data-level="16.3" data-path="oo-tradeoffs.html"><a href="oo-tradeoffs.html#s3-r6"><i class="fa fa-check"></i><b>16.3</b> R6 versus S3</a>
-<ul>
-<li class="chapter" data-level="16.3.1" data-path="oo-tradeoffs.html"><a href="oo-tradeoffs.html#namespacing"><i class="fa fa-check"></i><b>16.3.1</b> Namespacing</a></li>
-<li class="chapter" data-level="16.3.2" data-path="oo-tradeoffs.html"><a href="oo-tradeoffs.html#threading-state"><i class="fa fa-check"></i><b>16.3.2</b> Threading state</a></li>
-<li class="chapter" data-level="16.3.3" data-path="oo-tradeoffs.html"><a href="oo-tradeoffs.html#tradeoffs-pipe"><i class="fa fa-check"></i><b>16.3.3</b> Method chaining</a></li>
-</ul></li>
-</ul></li>
-<li class="part"><span><b>IV Metaprogramming</b></span></li>
-<li class="chapter" data-level="" data-path="metaprogramming.html"><a href="metaprogramming.html"><i class="fa fa-check"></i>Introduction</a></li>
-<li class="chapter" data-level="17" data-path="meta-big-picture.html"><a href="meta-big-picture.html"><i class="fa fa-check"></i><b>17</b> Big picture</a>
-<ul>
-<li class="chapter" data-level="17.1" data-path="meta-big-picture.html"><a href="meta-big-picture.html#introduction-16"><i class="fa fa-check"></i><b>17.1</b> Introduction</a>
-<ul>
-<li class="chapter" data-level="" data-path="meta-big-picture.html"><a href="meta-big-picture.html#outline-15"><i class="fa fa-check"></i>Outline</a></li>
-<li class="chapter" data-level="" data-path="meta-big-picture.html"><a href="meta-big-picture.html#prerequisites-10"><i class="fa fa-check"></i>Prerequisites</a></li>
-</ul></li>
-<li class="chapter" data-level="17.2" data-path="meta-big-picture.html"><a href="meta-big-picture.html#code-data"><i class="fa fa-check"></i><b>17.2</b> Code is data</a></li>
-<li class="chapter" data-level="17.3" data-path="meta-big-picture.html"><a href="meta-big-picture.html#code-tree"><i class="fa fa-check"></i><b>17.3</b> Code is a tree</a></li>
-<li class="chapter" data-level="17.4" data-path="meta-big-picture.html"><a href="meta-big-picture.html#coding-code"><i class="fa fa-check"></i><b>17.4</b> Code can generate code</a></li>
-<li class="chapter" data-level="17.5" data-path="meta-big-picture.html"><a href="meta-big-picture.html#eval-intro"><i class="fa fa-check"></i><b>17.5</b> Evaluation runs code</a></li>
-<li class="chapter" data-level="17.6" data-path="meta-big-picture.html"><a href="meta-big-picture.html#eval-funs"><i class="fa fa-check"></i><b>17.6</b> Customising evaluation with functions</a></li>
-<li class="chapter" data-level="17.7" data-path="meta-big-picture.html"><a href="meta-big-picture.html#eval-data"><i class="fa fa-check"></i><b>17.7</b> Customising evaluation with data</a></li>
-<li class="chapter" data-level="17.8" data-path="meta-big-picture.html"><a href="meta-big-picture.html#quosure-intro"><i class="fa fa-check"></i><b>17.8</b> Quosures</a></li>
-</ul></li>
-<li class="chapter" data-level="18" data-path="expressions.html"><a href="expressions.html"><i class="fa fa-check"></i><b>18</b> Expressions</a>
-<ul>
-<li class="chapter" data-level="18.1" data-path="expressions.html"><a href="expressions.html#introduction-17"><i class="fa fa-check"></i><b>18.1</b> Introduction</a>
-<ul>
-<li class="chapter" data-level="" data-path="expressions.html"><a href="expressions.html#outline-16"><i class="fa fa-check"></i>Outline</a></li>
-<li class="chapter" data-level="" data-path="expressions.html"><a href="expressions.html#prerequisites-11"><i class="fa fa-check"></i>Prerequisites</a></li>
-</ul></li>
-<li class="chapter" data-level="18.2" data-path="expressions.html"><a href="expressions.html#ast"><i class="fa fa-check"></i><b>18.2</b> Abstract syntax trees</a>
-<ul>
-<li class="chapter" data-level="18.2.1" data-path="expressions.html"><a href="expressions.html#drawing"><i class="fa fa-check"></i><b>18.2.1</b> Drawing</a></li>
-<li class="chapter" data-level="18.2.2" data-path="expressions.html"><a href="expressions.html#non-code-components"><i class="fa fa-check"></i><b>18.2.2</b> Non-code components</a></li>
-<li class="chapter" data-level="18.2.3" data-path="expressions.html"><a href="expressions.html#infix-calls"><i class="fa fa-check"></i><b>18.2.3</b> Infix calls</a></li>
-<li class="chapter" data-level="18.2.4" data-path="expressions.html"><a href="expressions.html#exercises-52"><i class="fa fa-check"></i><b>18.2.4</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="18.3" data-path="expressions.html"><a href="expressions.html#expression-details"><i class="fa fa-check"></i><b>18.3</b> Expressions</a>
-<ul>
-<li class="chapter" data-level="18.3.1" data-path="expressions.html"><a href="expressions.html#constants"><i class="fa fa-check"></i><b>18.3.1</b> Constants</a></li>
-<li class="chapter" data-level="18.3.2" data-path="expressions.html"><a href="expressions.html#symbols"><i class="fa fa-check"></i><b>18.3.2</b> Symbols</a></li>
-<li class="chapter" data-level="18.3.3" data-path="expressions.html"><a href="expressions.html#calls"><i class="fa fa-check"></i><b>18.3.3</b> Calls</a></li>
-<li class="chapter" data-level="18.3.4" data-path="expressions.html"><a href="expressions.html#summary"><i class="fa fa-check"></i><b>18.3.4</b> Summary</a></li>
-<li class="chapter" data-level="18.3.5" data-path="expressions.html"><a href="expressions.html#exercises-53"><i class="fa fa-check"></i><b>18.3.5</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="18.4" data-path="expressions.html"><a href="expressions.html#grammar"><i class="fa fa-check"></i><b>18.4</b> Parsing and grammar</a>
-<ul>
-<li class="chapter" data-level="18.4.1" data-path="expressions.html"><a href="expressions.html#operator-precedence"><i class="fa fa-check"></i><b>18.4.1</b> Operator precedence</a></li>
-<li class="chapter" data-level="18.4.2" data-path="expressions.html"><a href="expressions.html#associativity"><i class="fa fa-check"></i><b>18.4.2</b> Associativity</a></li>
-<li class="chapter" data-level="18.4.3" data-path="expressions.html"><a href="expressions.html#parsing"><i class="fa fa-check"></i><b>18.4.3</b> Parsing and deparsing</a></li>
-<li class="chapter" data-level="18.4.4" data-path="expressions.html"><a href="expressions.html#exercises-54"><i class="fa fa-check"></i><b>18.4.4</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="18.5" data-path="expressions.html"><a href="expressions.html#ast-funs"><i class="fa fa-check"></i><b>18.5</b> Walking AST with recursive functions</a>
-<ul>
-<li class="chapter" data-level="18.5.1" data-path="expressions.html"><a href="expressions.html#finding-f-and-t"><i class="fa fa-check"></i><b>18.5.1</b> Finding F and T</a></li>
-<li class="chapter" data-level="18.5.2" data-path="expressions.html"><a href="expressions.html#finding-all-variables-created-by-assignment"><i class="fa fa-check"></i><b>18.5.2</b> Finding all variables created by assignment</a></li>
-<li class="chapter" data-level="18.5.3" data-path="expressions.html"><a href="expressions.html#exercises-55"><i class="fa fa-check"></i><b>18.5.3</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="18.6" data-path="expressions.html"><a href="expressions.html#expression-special"><i class="fa fa-check"></i><b>18.6</b> Specialised data structures</a>
-<ul>
-<li class="chapter" data-level="18.6.1" data-path="expressions.html"><a href="expressions.html#pairlists"><i class="fa fa-check"></i><b>18.6.1</b> Pairlists</a></li>
-<li class="chapter" data-level="18.6.2" data-path="expressions.html"><a href="expressions.html#empty-symbol"><i class="fa fa-check"></i><b>18.6.2</b> Missing arguments</a></li>
-<li class="chapter" data-level="18.6.3" data-path="expressions.html"><a href="expressions.html#expression-vectors"><i class="fa fa-check"></i><b>18.6.3</b> Expression vectors</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="19" data-path="quasiquotation.html"><a href="quasiquotation.html"><i class="fa fa-check"></i><b>19</b> Quasiquotation</a>
-<ul>
-<li class="chapter" data-level="19.1" data-path="quasiquotation.html"><a href="quasiquotation.html#introduction-18"><i class="fa fa-check"></i><b>19.1</b> Introduction</a>
-<ul>
-<li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#outline-17"><i class="fa fa-check"></i>Outline</a></li>
-<li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#prerequisites-12"><i class="fa fa-check"></i>Prerequisites</a></li>
-<li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#related-work"><i class="fa fa-check"></i>Related work</a></li>
-</ul></li>
-<li class="chapter" data-level="19.2" data-path="quasiquotation.html"><a href="quasiquotation.html#quasi-motivation"><i class="fa fa-check"></i><b>19.2</b> Motivation</a>
-<ul>
-<li class="chapter" data-level="19.2.1" data-path="quasiquotation.html"><a href="quasiquotation.html#vocabulary"><i class="fa fa-check"></i><b>19.2.1</b> Vocabulary</a></li>
-<li class="chapter" data-level="19.2.2" data-path="quasiquotation.html"><a href="quasiquotation.html#exercises-56"><i class="fa fa-check"></i><b>19.2.2</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="19.3" data-path="quasiquotation.html"><a href="quasiquotation.html#quoting"><i class="fa fa-check"></i><b>19.3</b> Quoting</a>
-<ul>
-<li class="chapter" data-level="19.3.1" data-path="quasiquotation.html"><a href="quasiquotation.html#capturing-expressions"><i class="fa fa-check"></i><b>19.3.1</b> Capturing expressions</a></li>
-<li class="chapter" data-level="19.3.2" data-path="quasiquotation.html"><a href="quasiquotation.html#capturing-symbols"><i class="fa fa-check"></i><b>19.3.2</b> Capturing symbols</a></li>
-<li class="chapter" data-level="19.3.3" data-path="quasiquotation.html"><a href="quasiquotation.html#with-base-r"><i class="fa fa-check"></i><b>19.3.3</b> With base R</a></li>
-<li class="chapter" data-level="19.3.4" data-path="quasiquotation.html"><a href="quasiquotation.html#substitution"><i class="fa fa-check"></i><b>19.3.4</b> Substitution</a></li>
-<li class="chapter" data-level="19.3.5" data-path="quasiquotation.html"><a href="quasiquotation.html#summary-1"><i class="fa fa-check"></i><b>19.3.5</b> Summary</a></li>
-<li class="chapter" data-level="19.3.6" data-path="quasiquotation.html"><a href="quasiquotation.html#exercises-57"><i class="fa fa-check"></i><b>19.3.6</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="19.4" data-path="quasiquotation.html"><a href="quasiquotation.html#unquoting"><i class="fa fa-check"></i><b>19.4</b> Unquoting</a>
-<ul>
-<li class="chapter" data-level="19.4.1" data-path="quasiquotation.html"><a href="quasiquotation.html#unquoting-one-argument"><i class="fa fa-check"></i><b>19.4.1</b> Unquoting one argument</a></li>
-<li class="chapter" data-level="19.4.2" data-path="quasiquotation.html"><a href="quasiquotation.html#unquoting-a-function"><i class="fa fa-check"></i><b>19.4.2</b> Unquoting a function</a></li>
-<li class="chapter" data-level="19.4.3" data-path="quasiquotation.html"><a href="quasiquotation.html#unquote-missing"><i class="fa fa-check"></i><b>19.4.3</b> Unquoting a missing argument</a></li>
-<li class="chapter" data-level="19.4.4" data-path="quasiquotation.html"><a href="quasiquotation.html#unquoting-in-special-forms"><i class="fa fa-check"></i><b>19.4.4</b> Unquoting in special forms</a></li>
-<li class="chapter" data-level="19.4.5" data-path="quasiquotation.html"><a href="quasiquotation.html#unquoting-many-arguments"><i class="fa fa-check"></i><b>19.4.5</b> Unquoting many arguments</a></li>
-<li class="chapter" data-level="19.4.6" data-path="quasiquotation.html"><a href="quasiquotation.html#the-polite-fiction-of"><i class="fa fa-check"></i><b>19.4.6</b> The polite fiction of <code>!!</code></a></li>
-<li class="chapter" data-level="19.4.7" data-path="quasiquotation.html"><a href="quasiquotation.html#non-standard-ast"><i class="fa fa-check"></i><b>19.4.7</b> Non-standard ASTs</a></li>
-<li class="chapter" data-level="19.4.8" data-path="quasiquotation.html"><a href="quasiquotation.html#exercises-58"><i class="fa fa-check"></i><b>19.4.8</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="19.5" data-path="quasiquotation.html"><a href="quasiquotation.html#base-nonquote"><i class="fa fa-check"></i><b>19.5</b> Non-quoting</a></li>
-<li class="chapter" data-level="19.6" data-path="quasiquotation.html"><a href="quasiquotation.html#tidy-dots"><i class="fa fa-check"></i><b>19.6</b> <code>...</code> (dot-dot-dot)</a>
-<ul>
-<li class="chapter" data-level="19.6.1" data-path="quasiquotation.html"><a href="quasiquotation.html#examples"><i class="fa fa-check"></i><b>19.6.1</b> Examples</a></li>
-<li class="chapter" data-level="19.6.2" data-path="quasiquotation.html"><a href="quasiquotation.html#exec"><i class="fa fa-check"></i><b>19.6.2</b> <code>exec()</code></a></li>
-<li class="chapter" data-level="19.6.3" data-path="quasiquotation.html"><a href="quasiquotation.html#dots_list"><i class="fa fa-check"></i><b>19.6.3</b> <code>dots_list()</code></a></li>
-<li class="chapter" data-level="19.6.4" data-path="quasiquotation.html"><a href="quasiquotation.html#do-call"><i class="fa fa-check"></i><b>19.6.4</b> With base R</a></li>
-<li class="chapter" data-level="19.6.5" data-path="quasiquotation.html"><a href="quasiquotation.html#exercises-59"><i class="fa fa-check"></i><b>19.6.5</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="19.7" data-path="quasiquotation.html"><a href="quasiquotation.html#expr-case-studies"><i class="fa fa-check"></i><b>19.7</b> Case studies</a>
-<ul>
-<li class="chapter" data-level="19.7.1" data-path="quasiquotation.html"><a href="quasiquotation.html#lobstrast"><i class="fa fa-check"></i><b>19.7.1</b> <code>lobstr::ast()</code></a></li>
-<li class="chapter" data-level="19.7.2" data-path="quasiquotation.html"><a href="quasiquotation.html#map-reduce-to-generate-code"><i class="fa fa-check"></i><b>19.7.2</b> Map-reduce to generate code</a></li>
-<li class="chapter" data-level="19.7.3" data-path="quasiquotation.html"><a href="quasiquotation.html#slicing-an-array"><i class="fa fa-check"></i><b>19.7.3</b> Slicing an array</a></li>
-<li class="chapter" data-level="19.7.4" data-path="quasiquotation.html"><a href="quasiquotation.html#new-function"><i class="fa fa-check"></i><b>19.7.4</b> Creating functions</a></li>
-<li class="chapter" data-level="19.7.5" data-path="quasiquotation.html"><a href="quasiquotation.html#exercises-60"><i class="fa fa-check"></i><b>19.7.5</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="19.8" data-path="quasiquotation.html"><a href="quasiquotation.html#history"><i class="fa fa-check"></i><b>19.8</b> History</a></li>
-</ul></li>
-<li class="chapter" data-level="20" data-path="evaluation.html"><a href="evaluation.html"><i class="fa fa-check"></i><b>20</b> Evaluation</a>
-<ul>
-<li class="chapter" data-level="20.1" data-path="evaluation.html"><a href="evaluation.html#introduction-19"><i class="fa fa-check"></i><b>20.1</b> Introduction</a>
-<ul>
-<li class="chapter" data-level="" data-path="evaluation.html"><a href="evaluation.html#outline-18"><i class="fa fa-check"></i>Outline</a></li>
-<li class="chapter" data-level="" data-path="evaluation.html"><a href="evaluation.html#prerequisites-13"><i class="fa fa-check"></i>Prerequisites</a></li>
-</ul></li>
-<li class="chapter" data-level="20.2" data-path="evaluation.html"><a href="evaluation.html#eval"><i class="fa fa-check"></i><b>20.2</b> Evaluation basics</a>
-<ul>
-<li class="chapter" data-level="20.2.1" data-path="evaluation.html"><a href="evaluation.html#application-local"><i class="fa fa-check"></i><b>20.2.1</b> Application: <code>local()</code></a></li>
-<li class="chapter" data-level="20.2.2" data-path="evaluation.html"><a href="evaluation.html#application-source"><i class="fa fa-check"></i><b>20.2.2</b> Application: <code>source()</code></a></li>
-<li class="chapter" data-level="20.2.3" data-path="evaluation.html"><a href="evaluation.html#gotcha-function"><i class="fa fa-check"></i><b>20.2.3</b> Gotcha: <code>function()</code></a></li>
-<li class="chapter" data-level="20.2.4" data-path="evaluation.html"><a href="evaluation.html#exercises-61"><i class="fa fa-check"></i><b>20.2.4</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="20.3" data-path="evaluation.html"><a href="evaluation.html#quosures"><i class="fa fa-check"></i><b>20.3</b> Quosures</a>
-<ul>
-<li class="chapter" data-level="20.3.1" data-path="evaluation.html"><a href="evaluation.html#creating"><i class="fa fa-check"></i><b>20.3.1</b> Creating</a></li>
-<li class="chapter" data-level="20.3.2" data-path="evaluation.html"><a href="evaluation.html#evaluating"><i class="fa fa-check"></i><b>20.3.2</b> Evaluating</a></li>
-<li class="chapter" data-level="20.3.3" data-path="evaluation.html"><a href="evaluation.html#quosure-dots"><i class="fa fa-check"></i><b>20.3.3</b> Dots</a></li>
-<li class="chapter" data-level="20.3.4" data-path="evaluation.html"><a href="evaluation.html#quosure-impl"><i class="fa fa-check"></i><b>20.3.4</b> Under the hood</a></li>
-<li class="chapter" data-level="20.3.5" data-path="evaluation.html"><a href="evaluation.html#nested-quosures"><i class="fa fa-check"></i><b>20.3.5</b> Nested quosures</a></li>
-<li class="chapter" data-level="20.3.6" data-path="evaluation.html"><a href="evaluation.html#exercises-62"><i class="fa fa-check"></i><b>20.3.6</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="20.4" data-path="evaluation.html"><a href="evaluation.html#data-masks"><i class="fa fa-check"></i><b>20.4</b> Data masks</a>
-<ul>
-<li class="chapter" data-level="20.4.1" data-path="evaluation.html"><a href="evaluation.html#basics-3"><i class="fa fa-check"></i><b>20.4.1</b> Basics</a></li>
-<li class="chapter" data-level="20.4.2" data-path="evaluation.html"><a href="evaluation.html#pronouns"><i class="fa fa-check"></i><b>20.4.2</b> Pronouns</a></li>
-<li class="chapter" data-level="20.4.3" data-path="evaluation.html"><a href="evaluation.html#subset"><i class="fa fa-check"></i><b>20.4.3</b> Application: <code>subset()</code></a></li>
-<li class="chapter" data-level="20.4.4" data-path="evaluation.html"><a href="evaluation.html#application-transform"><i class="fa fa-check"></i><b>20.4.4</b> Application: transform</a></li>
-<li class="chapter" data-level="20.4.5" data-path="evaluation.html"><a href="evaluation.html#select"><i class="fa fa-check"></i><b>20.4.5</b> Application: <code>select()</code></a></li>
-<li class="chapter" data-level="20.4.6" data-path="evaluation.html"><a href="evaluation.html#exercises-63"><i class="fa fa-check"></i><b>20.4.6</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="20.5" data-path="evaluation.html"><a href="evaluation.html#tidy-evaluation"><i class="fa fa-check"></i><b>20.5</b> Using tidy evaluation</a>
-<ul>
-<li class="chapter" data-level="20.5.1" data-path="evaluation.html"><a href="evaluation.html#quoting-and-unquoting"><i class="fa fa-check"></i><b>20.5.1</b> Quoting and unquoting</a></li>
-<li class="chapter" data-level="20.5.2" data-path="evaluation.html"><a href="evaluation.html#handling-ambiguity"><i class="fa fa-check"></i><b>20.5.2</b> Handling ambiguity</a></li>
-<li class="chapter" data-level="20.5.3" data-path="evaluation.html"><a href="evaluation.html#quoting-and-ambiguity"><i class="fa fa-check"></i><b>20.5.3</b> Quoting and ambiguity</a></li>
-<li class="chapter" data-level="20.5.4" data-path="evaluation.html"><a href="evaluation.html#exercises-64"><i class="fa fa-check"></i><b>20.5.4</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="20.6" data-path="evaluation.html"><a href="evaluation.html#base-evaluation"><i class="fa fa-check"></i><b>20.6</b> Base evaluation</a>
-<ul>
-<li class="chapter" data-level="20.6.1" data-path="evaluation.html"><a href="evaluation.html#substitute"><i class="fa fa-check"></i><b>20.6.1</b> <code>substitute()</code></a></li>
-<li class="chapter" data-level="20.6.2" data-path="evaluation.html"><a href="evaluation.html#match.call"><i class="fa fa-check"></i><b>20.6.2</b> <code>match.call()</code></a></li>
-<li class="chapter" data-level="20.6.3" data-path="evaluation.html"><a href="evaluation.html#exercises-65"><i class="fa fa-check"></i><b>20.6.3</b> Exercises</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="21" data-path="translation.html"><a href="translation.html"><i class="fa fa-check"></i><b>21</b> Translating R code</a>
-<ul>
-<li class="chapter" data-level="21.1" data-path="translation.html"><a href="translation.html#introduction-20"><i class="fa fa-check"></i><b>21.1</b> Introduction</a>
-<ul>
-<li class="chapter" data-level="" data-path="translation.html"><a href="translation.html#outline-19"><i class="fa fa-check"></i>Outline</a></li>
-<li class="chapter" data-level="" data-path="translation.html"><a href="translation.html#prerequisites-14"><i class="fa fa-check"></i>Prerequisites</a></li>
-</ul></li>
-<li class="chapter" data-level="21.2" data-path="translation.html"><a href="translation.html#html"><i class="fa fa-check"></i><b>21.2</b> HTML</a>
-<ul>
-<li class="chapter" data-level="21.2.1" data-path="translation.html"><a href="translation.html#goal"><i class="fa fa-check"></i><b>21.2.1</b> Goal</a></li>
-<li class="chapter" data-level="21.2.2" data-path="translation.html"><a href="translation.html#escaping"><i class="fa fa-check"></i><b>21.2.2</b> Escaping</a></li>
-<li class="chapter" data-level="21.2.3" data-path="translation.html"><a href="translation.html#basic-tag-functions"><i class="fa fa-check"></i><b>21.2.3</b> Basic tag functions</a></li>
-<li class="chapter" data-level="21.2.4" data-path="translation.html"><a href="translation.html#tag-functions"><i class="fa fa-check"></i><b>21.2.4</b> Tag functions</a></li>
-<li class="chapter" data-level="21.2.5" data-path="translation.html"><a href="translation.html#html-env"><i class="fa fa-check"></i><b>21.2.5</b> Processing all tags</a></li>
-<li class="chapter" data-level="21.2.6" data-path="translation.html"><a href="translation.html#exercises-66"><i class="fa fa-check"></i><b>21.2.6</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="21.3" data-path="translation.html"><a href="translation.html#latex"><i class="fa fa-check"></i><b>21.3</b> LaTeX</a>
-<ul>
-<li class="chapter" data-level="21.3.1" data-path="translation.html"><a href="translation.html#latex-mathematics"><i class="fa fa-check"></i><b>21.3.1</b> LaTeX mathematics</a></li>
-<li class="chapter" data-level="21.3.2" data-path="translation.html"><a href="translation.html#goal-1"><i class="fa fa-check"></i><b>21.3.2</b> Goal</a></li>
-<li class="chapter" data-level="21.3.3" data-path="translation.html"><a href="translation.html#to_math"><i class="fa fa-check"></i><b>21.3.3</b> <code>to_math</code>()</a></li>
-<li class="chapter" data-level="21.3.4" data-path="translation.html"><a href="translation.html#known-symbols"><i class="fa fa-check"></i><b>21.3.4</b> Known symbols</a></li>
-<li class="chapter" data-level="21.3.5" data-path="translation.html"><a href="translation.html#unknown-symbols"><i class="fa fa-check"></i><b>21.3.5</b> Unknown symbols</a></li>
-<li class="chapter" data-level="21.3.6" data-path="translation.html"><a href="translation.html#known-functions"><i class="fa fa-check"></i><b>21.3.6</b> Known functions</a></li>
-<li class="chapter" data-level="21.3.7" data-path="translation.html"><a href="translation.html#unknown-functions"><i class="fa fa-check"></i><b>21.3.7</b> Unknown functions</a></li>
-<li class="chapter" data-level="21.3.8" data-path="translation.html"><a href="translation.html#exercises-67"><i class="fa fa-check"></i><b>21.3.8</b> Exercises</a></li>
-</ul></li>
-</ul></li>
-<li class="part"><span><b>V Techniques</b></span></li>
-<li class="chapter" data-level="" data-path="techniques.html"><a href="techniques.html"><i class="fa fa-check"></i>Introduction</a></li>
-<li class="chapter" data-level="22" data-path="debugging.html"><a href="debugging.html"><i class="fa fa-check"></i><b>22</b> Debugging</a>
-<ul>
-<li class="chapter" data-level="22.1" data-path="debugging.html"><a href="debugging.html#introduction-21"><i class="fa fa-check"></i><b>22.1</b> Introduction</a>
-<ul>
-<li class="chapter" data-level="" data-path="debugging.html"><a href="debugging.html#outline-20"><i class="fa fa-check"></i>Outline</a></li>
-</ul></li>
-<li class="chapter" data-level="22.2" data-path="debugging.html"><a href="debugging.html#debugging-strategy"><i class="fa fa-check"></i><b>22.2</b> Overall approach</a></li>
-<li class="chapter" data-level="22.3" data-path="debugging.html"><a href="debugging.html#traceback"><i class="fa fa-check"></i><b>22.3</b> Locating errors</a>
-<ul>
-<li class="chapter" data-level="22.3.1" data-path="debugging.html"><a href="debugging.html#debug-lazy"><i class="fa fa-check"></i><b>22.3.1</b> Lazy evaluation</a></li>
-</ul></li>
-<li class="chapter" data-level="22.4" data-path="debugging.html"><a href="debugging.html#browser"><i class="fa fa-check"></i><b>22.4</b> Interactive debugger</a>
-<ul>
-<li class="chapter" data-level="22.4.1" data-path="debugging.html"><a href="debugging.html#browser-commands"><i class="fa fa-check"></i><b>22.4.1</b> <code>browser()</code> commands</a></li>
-<li class="chapter" data-level="22.4.2" data-path="debugging.html"><a href="debugging.html#alternatives"><i class="fa fa-check"></i><b>22.4.2</b> Alternatives</a></li>
-<li class="chapter" data-level="22.4.3" data-path="debugging.html"><a href="debugging.html#debug-compiled"><i class="fa fa-check"></i><b>22.4.3</b> Compiled code</a></li>
-</ul></li>
-<li class="chapter" data-level="22.5" data-path="debugging.html"><a href="debugging.html#non-interactive-debugging"><i class="fa fa-check"></i><b>22.5</b> Non-interactive debugging</a>
-<ul>
-<li class="chapter" data-level="22.5.1" data-path="debugging.html"><a href="debugging.html#dump.frames"><i class="fa fa-check"></i><b>22.5.1</b> <code>dump.frames()</code></a></li>
-<li class="chapter" data-level="22.5.2" data-path="debugging.html"><a href="debugging.html#print-debugging"><i class="fa fa-check"></i><b>22.5.2</b> Print debugging</a></li>
-<li class="chapter" data-level="22.5.3" data-path="debugging.html"><a href="debugging.html#rmarkdown"><i class="fa fa-check"></i><b>22.5.3</b> RMarkdown</a></li>
-</ul></li>
-<li class="chapter" data-level="22.6" data-path="debugging.html"><a href="debugging.html#non-error-failures"><i class="fa fa-check"></i><b>22.6</b> Non-error failures</a></li>
-</ul></li>
-<li class="chapter" data-level="23" data-path="perf-measure.html"><a href="perf-measure.html"><i class="fa fa-check"></i><b>23</b> Measuring performance</a>
-<ul>
-<li class="chapter" data-level="23.1" data-path="perf-measure.html"><a href="perf-measure.html#introduction-22"><i class="fa fa-check"></i><b>23.1</b> Introduction</a>
-<ul>
-<li class="chapter" data-level="" data-path="perf-measure.html"><a href="perf-measure.html#outline-21"><i class="fa fa-check"></i>Outline</a></li>
-<li class="chapter" data-level="" data-path="perf-measure.html"><a href="perf-measure.html#prerequisites-15"><i class="fa fa-check"></i>Prerequisites</a></li>
-</ul></li>
-<li class="chapter" data-level="23.2" data-path="perf-measure.html"><a href="perf-measure.html#profiling"><i class="fa fa-check"></i><b>23.2</b> Profiling</a>
-<ul>
-<li class="chapter" data-level="23.2.1" data-path="perf-measure.html"><a href="perf-measure.html#visualising-profiles"><i class="fa fa-check"></i><b>23.2.1</b> Visualising profiles</a></li>
-<li class="chapter" data-level="23.2.2" data-path="perf-measure.html"><a href="perf-measure.html#memory-profiling"><i class="fa fa-check"></i><b>23.2.2</b> Memory profiling</a></li>
-<li class="chapter" data-level="23.2.3" data-path="perf-measure.html"><a href="perf-measure.html#limitations"><i class="fa fa-check"></i><b>23.2.3</b> Limitations</a></li>
-<li class="chapter" data-level="23.2.4" data-path="perf-measure.html"><a href="perf-measure.html#exercises-68"><i class="fa fa-check"></i><b>23.2.4</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="23.3" data-path="perf-measure.html"><a href="perf-measure.html#microbenchmarking"><i class="fa fa-check"></i><b>23.3</b> Microbenchmarking</a>
-<ul>
-<li class="chapter" data-level="23.3.1" data-path="perf-measure.html"><a href="perf-measure.html#benchmark-results"><i class="fa fa-check"></i><b>23.3.1</b> <code>bench::mark()</code> results</a></li>
-<li class="chapter" data-level="23.3.2" data-path="perf-measure.html"><a href="perf-measure.html#interpreting-results"><i class="fa fa-check"></i><b>23.3.2</b> Interpreting results</a></li>
-<li class="chapter" data-level="23.3.3" data-path="perf-measure.html"><a href="perf-measure.html#exercises-69"><i class="fa fa-check"></i><b>23.3.3</b> Exercises</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="24" data-path="perf-improve.html"><a href="perf-improve.html"><i class="fa fa-check"></i><b>24</b> Improving performance</a>
-<ul>
-<li class="chapter" data-level="24.1" data-path="perf-improve.html"><a href="perf-improve.html#introduction-23"><i class="fa fa-check"></i><b>24.1</b> Introduction</a>
-<ul>
-<li class="chapter" data-level="" data-path="perf-improve.html"><a href="perf-improve.html#outline-22"><i class="fa fa-check"></i>Outline</a></li>
-<li class="chapter" data-level="" data-path="perf-improve.html"><a href="perf-improve.html#prerequisites-16"><i class="fa fa-check"></i>Prerequisites</a></li>
-</ul></li>
-<li class="chapter" data-level="24.2" data-path="perf-improve.html"><a href="perf-improve.html#code-organisation"><i class="fa fa-check"></i><b>24.2</b> Code organisation</a></li>
-<li class="chapter" data-level="24.3" data-path="perf-improve.html"><a href="perf-improve.html#already-solved"><i class="fa fa-check"></i><b>24.3</b> Checking for existing solutions</a>
-<ul>
-<li class="chapter" data-level="24.3.1" data-path="perf-improve.html"><a href="perf-improve.html#exercises-70"><i class="fa fa-check"></i><b>24.3.1</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="24.4" data-path="perf-improve.html"><a href="perf-improve.html#be-lazy"><i class="fa fa-check"></i><b>24.4</b> Doing as little as possible</a>
-<ul>
-<li class="chapter" data-level="24.4.1" data-path="perf-improve.html"><a href="perf-improve.html#mean"><i class="fa fa-check"></i><b>24.4.1</b> <code>mean()</code></a></li>
-<li class="chapter" data-level="24.4.2" data-path="perf-improve.html"><a href="perf-improve.html#as.data.frame"><i class="fa fa-check"></i><b>24.4.2</b> <code>as.data.frame()</code></a></li>
-<li class="chapter" data-level="24.4.3" data-path="perf-improve.html"><a href="perf-improve.html#exercises-71"><i class="fa fa-check"></i><b>24.4.3</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="24.5" data-path="perf-improve.html"><a href="perf-improve.html#vectorise"><i class="fa fa-check"></i><b>24.5</b> Vectorise</a>
-<ul>
-<li class="chapter" data-level="24.5.1" data-path="perf-improve.html"><a href="perf-improve.html#exercises-72"><i class="fa fa-check"></i><b>24.5.1</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="24.6" data-path="perf-improve.html"><a href="perf-improve.html#avoid-copies"><i class="fa fa-check"></i><b>24.6</b> Avoiding copies</a></li>
-<li class="chapter" data-level="24.7" data-path="perf-improve.html"><a href="perf-improve.html#t-test"><i class="fa fa-check"></i><b>24.7</b> Case study: t-test</a></li>
-<li class="chapter" data-level="24.8" data-path="perf-improve.html"><a href="perf-improve.html#more-techniques"><i class="fa fa-check"></i><b>24.8</b> Other techniques</a></li>
-</ul></li>
-<li class="chapter" data-level="25" data-path="rcpp.html"><a href="rcpp.html"><i class="fa fa-check"></i><b>25</b> Rewriting R code in C++</a>
-<ul>
-<li class="chapter" data-level="25.1" data-path="rcpp.html"><a href="rcpp.html#introduction-24"><i class="fa fa-check"></i><b>25.1</b> Introduction</a>
-<ul>
-<li class="chapter" data-level="" data-path="rcpp.html"><a href="rcpp.html#outline-23"><i class="fa fa-check"></i>Outline</a></li>
-<li class="chapter" data-level="" data-path="rcpp.html"><a href="rcpp.html#prerequisites-17"><i class="fa fa-check"></i>Prerequisites</a></li>
-</ul></li>
-<li class="chapter" data-level="25.2" data-path="rcpp.html"><a href="rcpp.html#rcpp-intro"><i class="fa fa-check"></i><b>25.2</b> Getting started with C++</a>
-<ul>
-<li class="chapter" data-level="25.2.1" data-path="rcpp.html"><a href="rcpp.html#no-inputs-scalar-output"><i class="fa fa-check"></i><b>25.2.1</b> No inputs, scalar output</a></li>
-<li class="chapter" data-level="25.2.2" data-path="rcpp.html"><a href="rcpp.html#scalar-input-scalar-output"><i class="fa fa-check"></i><b>25.2.2</b> Scalar input, scalar output</a></li>
-<li class="chapter" data-level="25.2.3" data-path="rcpp.html"><a href="rcpp.html#vector-input-scalar-output"><i class="fa fa-check"></i><b>25.2.3</b> Vector input, scalar output</a></li>
-<li class="chapter" data-level="25.2.4" data-path="rcpp.html"><a href="rcpp.html#vector-input-vector-output"><i class="fa fa-check"></i><b>25.2.4</b> Vector input, vector output</a></li>
-<li class="chapter" data-level="25.2.5" data-path="rcpp.html"><a href="rcpp.html#sourceCpp"><i class="fa fa-check"></i><b>25.2.5</b> Using sourceCpp</a></li>
-<li class="chapter" data-level="25.2.6" data-path="rcpp.html"><a href="rcpp.html#exercise-started"><i class="fa fa-check"></i><b>25.2.6</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="25.3" data-path="rcpp.html"><a href="rcpp.html#rcpp-classes"><i class="fa fa-check"></i><b>25.3</b> Other classes</a>
-<ul>
-<li class="chapter" data-level="25.3.1" data-path="rcpp.html"><a href="rcpp.html#lists-and-data-frames"><i class="fa fa-check"></i><b>25.3.1</b> Lists and data frames</a></li>
-<li class="chapter" data-level="25.3.2" data-path="rcpp.html"><a href="rcpp.html#functions-rcpp"><i class="fa fa-check"></i><b>25.3.2</b> Functions</a></li>
-<li class="chapter" data-level="25.3.3" data-path="rcpp.html"><a href="rcpp.html#attributes-1"><i class="fa fa-check"></i><b>25.3.3</b> Attributes</a></li>
-</ul></li>
-<li class="chapter" data-level="25.4" data-path="rcpp.html"><a href="rcpp.html#rcpp-na"><i class="fa fa-check"></i><b>25.4</b> Missing values</a>
-<ul>
-<li class="chapter" data-level="25.4.1" data-path="rcpp.html"><a href="rcpp.html#scalars-1"><i class="fa fa-check"></i><b>25.4.1</b> Scalars</a></li>
-<li class="chapter" data-level="25.4.2" data-path="rcpp.html"><a href="rcpp.html#strings"><i class="fa fa-check"></i><b>25.4.2</b> Strings</a></li>
-<li class="chapter" data-level="25.4.3" data-path="rcpp.html"><a href="rcpp.html#boolean"><i class="fa fa-check"></i><b>25.4.3</b> Boolean</a></li>
-<li class="chapter" data-level="25.4.4" data-path="rcpp.html"><a href="rcpp.html#vectors-rcpp"><i class="fa fa-check"></i><b>25.4.4</b> Vectors</a></li>
-<li class="chapter" data-level="25.4.5" data-path="rcpp.html"><a href="rcpp.html#exercises-73"><i class="fa fa-check"></i><b>25.4.5</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="25.5" data-path="rcpp.html"><a href="rcpp.html#stl"><i class="fa fa-check"></i><b>25.5</b> Standard Template Library</a>
-<ul>
-<li class="chapter" data-level="25.5.1" data-path="rcpp.html"><a href="rcpp.html#using-iterators"><i class="fa fa-check"></i><b>25.5.1</b> Using iterators</a></li>
-<li class="chapter" data-level="25.5.2" data-path="rcpp.html"><a href="rcpp.html#algorithms"><i class="fa fa-check"></i><b>25.5.2</b> Algorithms</a></li>
-<li class="chapter" data-level="25.5.3" data-path="rcpp.html"><a href="rcpp.html#data-structures-rcpp"><i class="fa fa-check"></i><b>25.5.3</b> Data structures</a></li>
-<li class="chapter" data-level="25.5.4" data-path="rcpp.html"><a href="rcpp.html#vectors-stl"><i class="fa fa-check"></i><b>25.5.4</b> Vectors</a></li>
-<li class="chapter" data-level="25.5.5" data-path="rcpp.html"><a href="rcpp.html#sets"><i class="fa fa-check"></i><b>25.5.5</b> Sets</a></li>
-<li class="chapter" data-level="25.5.6" data-path="rcpp.html"><a href="rcpp.html#map-1"><i class="fa fa-check"></i><b>25.5.6</b> Map</a></li>
-<li class="chapter" data-level="25.5.7" data-path="rcpp.html"><a href="rcpp.html#exercises-74"><i class="fa fa-check"></i><b>25.5.7</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="25.6" data-path="rcpp.html"><a href="rcpp.html#rcpp-case-studies"><i class="fa fa-check"></i><b>25.6</b> Case studies</a>
-<ul>
-<li class="chapter" data-level="25.6.1" data-path="rcpp.html"><a href="rcpp.html#gibbs-sampler"><i class="fa fa-check"></i><b>25.6.1</b> Gibbs sampler</a></li>
-<li class="chapter" data-level="25.6.2" data-path="rcpp.html"><a href="rcpp.html#r-vectorisation-versus-c-vectorisation"><i class="fa fa-check"></i><b>25.6.2</b> R vectorisation versus C++ vectorisation</a></li>
-</ul></li>
-<li class="chapter" data-level="25.7" data-path="rcpp.html"><a href="rcpp.html#rcpp-package"><i class="fa fa-check"></i><b>25.7</b> Using Rcpp in a package</a></li>
-<li class="chapter" data-level="25.8" data-path="rcpp.html"><a href="rcpp.html#rcpp-more"><i class="fa fa-check"></i><b>25.8</b> Learning more</a></li>
-<li class="chapter" data-level="25.9" data-path="rcpp.html"><a href="rcpp.html#acknowledgments"><i class="fa fa-check"></i><b>25.9</b> Acknowledgments</a></li>
-</ul></li>
-<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
-</ul>
-
-      </nav>
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Advanced R</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
     </div>
 
-    <div class="book-body">
-      <div class="body-inner">
-        <div class="book-header" role="navigation">
-          <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Advanced R</a>
-          </h1>
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">환영합니다</a></li>
+<li><a class="" href="preface.html">Preface</a></li>
+<li><a class="" href="introduction.html"><span class="header-section-number">1</span> Introduction</a></li>
+<li class="book-part">Foundations</li>
+<li><a class="active" href="foundations-intro.html">Introduction</a></li>
+<li><a class="" href="names-values.html"><span class="header-section-number">2</span> Names and values</a></li>
+<li><a class="" href="functions.html"><span class="header-section-number">3</span> 함수</a></li>
+<li><a class="" href="environments.html"><span class="header-section-number">4</span> 환경</a></li>
+<li class="book-part">Functional programming</li>
+<li><a class="" href="fp.html">Introduction</a></li>
+<li><a class="" href="functionals.html"><span class="header-section-number">5</span> Functionals</a></li>
+<li><a class="" href="%ED%95%A8%EC%88%98-%EA%B3%B5%EC%9E%A5.html"><span class="header-section-number">6</span> 함수 공장</a></li>
+<li><a class="" href="function-operators.html"><span class="header-section-number">7</span> 함수 연산자</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/hadley/adv-r">View book source <i class="fab fa-github"></i></a></p>
         </div>
-
-        <div class="page-wrapper" tabindex="-1" role="main">
-          <div class="page-inner">
-
-            <section class="normal" id="section-">
-<div id="foundations-intro" class="section level1 unnumbered">
-<h1>Introduction</h1>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="foundations-intro" class="section level1 unnumbered">
+<h1>Introduction<a class="anchor" aria-label="anchor" href="#foundations-intro"><i class="fas fa-link"></i></a>
+</h1>
 <p>To start your journey in mastering R, the following six chapters will help you learn the foundational components of R. I expect that you’ve already seen many of these pieces before, but you probably have not studied them deeply. To help check your existing knowledge, each chapter starts with a quiz; if you get all the questions right, feel free to skip to the next chapter!</p>
 <ol style="list-style-type: decimal">
 <li><p>Chapter <a href="names-values.html#names-values">2</a> teaches you about an important distinction
@@ -1047,90 +74,68 @@ that you probably haven’t thought deeply about: the difference between an
 object and its name. Improving your mental model here will help you make
 better predictions about when R copies data and hence which basic
 operations are cheap and which are expensive.</p></li>
-<li><p>Chapter <a href="vectors-chap.html#vectors-chap">3</a> dives into the details of vectors, helping you
+<li><p>Chapter <a href="#vectors-chap"><strong>??</strong></a> dives into the details of vectors, helping you
 learn how the different types of vector fit
 together. You’ll also learn about attributes, which allow you to store
 arbitrary metadata, and form the basis for two of R’s object-oriented
 programming toolkits.</p></li>
-<li><p>Chapter <a href="subsetting.html#subsetting">4</a> describes how to use subsetting to write
+<li><p>Chapter <a href="#subsetting"><strong>??</strong></a> describes how to use subsetting to write
 clear, concise, and efficient R code. Understanding the fundamental
 components will allow you to solve new problems by combining the building
 blocks in novel ways.</p></li>
-<li><p>Chapter <a href="control-flow.html#control-flow">5</a> presents tools of control flow that allow you to
+<li><p>Chapter <a href="#control-flow"><strong>??</strong></a> presents tools of control flow that allow you to
 only execute code under certain conditions, or to repeatedly execute code
 with changing inputs. These include the important <code>if</code> and <code>for</code> constructs, as well as
-related tools like <code>switch()</code> and <code>while</code>.</p></li>
-<li><p>Chapter <a href="functions.html#functions">6</a> deals with functions, the most important building
+related tools like <code><a href="https://rdrr.io/r/base/switch.html">switch()</a></code> and <code>while</code>.</p></li>
+<li><p>Chapter <a href="functions.html#functions">3</a> deals with functions, the most important building
 blocks of R code. You’ll learn exactly how they work, including the
 scoping rules, which govern how R looks up values from names. You’ll also
 learn more of the details behind lazy evaluation, and how you can
 control what happens when you exit a function.</p></li>
-<li><p>Chapter <a href="environments.html#environments">7</a> describes a data structure that is crucial for
+<li><p>Chapter <a href="environments.html#environments">4</a> describes a data structure that is crucial for
 understanding how R works, but quite unimportant for data analysis: the
 environment. Environments are the data structure that binds
 names to values, and they power important tools like package namespaces.
 Unlike most programming languages, environments in R are “first class”
 which means that you can manipulate them just like other objects.</p></li>
-<li><p>Chapter <a href="conditions.html#conditions">8</a> concludes the foundations of R with an
+<li><p>Chapter <a href="#conditions"><strong>??</strong></a> concludes the foundations of R with an
 exploration of “conditions,” the umbrella term used to describe errors,
 warnings, and messages. You’ve certainly encountered these before, so in
 this chapter you learn how to signal them appropriately in your own
 functions, and how to handle them when signalled elsewhere.</p></li>
 </ol>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="introduction.html"><span class="header-section-number">1</span> Introduction</a></div>
+<div class="next"><a href="names-values.html"><span class="header-section-number">2</span> Names and values</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav"><li><a class="nav-link" href="#foundations-intro">Introduction</a></li></ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/hadley/adv-r/blob/master/Foundations.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/hadley/adv-r/edit/master/Foundations.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
 
 </div>
-            </section>
+</div> <!-- .container -->
 
-          </div>
-        </div>
-      </div>
-<a href="introduction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="names-values.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
-    </div>
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Advanced R</strong>" was written by Hadley Wickham. </p>
   </div>
-<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
-<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
-<script>
-gitbook.require(["gitbook"], function(gitbook) {
-gitbook.start({
-"sharing": false,
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": "https://github.com/hadley/adv-r/edit/master/Foundations.Rmd",
-"text": "Edit"
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": null,
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "section"
-}
-});
-});
-</script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
@@ -1142,7 +147,22 @@ gitbook.start({
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
 </script>
 </body>
-
 </html>
