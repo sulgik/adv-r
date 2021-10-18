@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>3 Function operators | Advanced R</title>
+<meta name="author" content="Hadley Wickham">
+<meta name="generator" content="bookdown 0.24 with bs4_book()">
+<meta property="og:title" content="3 Function operators | Advanced R">
+<meta property="og:type" content="book">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="3 Function operators | Advanced R">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.10/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-141212623-1"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-141212623-1');
+    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><meta name="description" content="3.1 Introduction  In this chapter, you’ll learn about function operators. A function operator is a function that takes one (or more) functions as input and returns a function as output. The...">
+<meta property="og:description" content="3.1 Introduction  In this chapter, you’ll learn about function operators. A function operator is a function that takes one (or more) functions as input and returns a function as output. The...">
+<meta name="twitter:description" content="3.1 Introduction  In this chapter, you’ll learn about function operators. A function operator is a function that takes one (or more) functions as input and returns a function as output. The...">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Advanced R</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Welcome</a></li>
+<li class="book-part">Functional programming</li>
+<li><a class="" href="fp.html">Introduction</a></li>
+<li><a class="" href="functionals.html"><span class="header-section-number">1</span> Functionals</a></li>
+<li><a class="" href="function-factories.html"><span class="header-section-number">2</span> Function factories</a></li>
+<li><a class="active" href="function-operators.html"><span class="header-section-number">3</span> Function operators</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/hadley/adv-r">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="function-operators" class="section level1" number="3">
+<h1>
+<span class="header-section-number">3</span> Function operators<a class="anchor" aria-label="anchor" href="#function-operators"><i class="fas fa-link"></i></a>
+</h1>
+<div id="introduction-2" class="section level2" number="3.1">
+<h2>
+<span class="header-section-number">3.1</span> Introduction<a class="anchor" aria-label="anchor" href="#introduction-2"><i class="fas fa-link"></i></a>
+</h2>
+<p></p>
+<p>In this chapter, you’ll learn about function operators. A <strong>function operator</strong> is a function that takes one (or more) functions as input and returns a function as output. The following code shows a simple function operator, <code>chatty()</code>. It wraps a function, making a new function that prints out its first argument. You might create a function like this because it gives you a window to see how functionals, like <code><a href="https://purrr.tidyverse.org/reference/map.html">map_int()</a></code>, work.</p>
+<div class="sourceCode" id="cb118"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">chatty</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">f</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/force.html">force</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span>
+  
+  <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">f</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Processing "</span>, <span class="va">x</span>, <span class="st">"\n"</span>, sep <span class="op">=</span> <span class="st">""</span><span class="op">)</span>
+    <span class="va">res</span>
+  <span class="op">}</span>
+<span class="op">}</span>
+<span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span> <span class="op">^</span> <span class="fl">2</span>
+<span class="va">s</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span>
+
+<span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl</a></span><span class="op">(</span><span class="va">s</span>, <span class="fu">chatty</span><span class="op">(</span><span class="va">f</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; Processing 3</span>
+<span class="co">#&gt; Processing 2</span>
+<span class="co">#&gt; Processing 1</span>
+<span class="co">#&gt; [1] 9 4 1</span></code></pre></div>
+<p>Function operators are closely related to function factories; indeed they’re just a function factory that takes a function as input. Like factories, there’s nothing you can’t do without them, but they often allow you to factor out complexity in order to make your code more readable and reusable.</p>
+<p>Function operators are typically paired with functionals. If you’re using a for-loop, there’s rarely a reason to use a function operator, as it will make your code more complex for little gain.</p>
+<p>If you’re familiar with Python, decorators is just another name for function operators.</p>
+<div id="outline-2" class="section level3 unnumbered">
+<h3>Outline<a class="anchor" aria-label="anchor" href="#outline-2"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li><p>Section <a href="function-operators.html#existing-fos">3.2</a> introduces you to two extremely useful existing
+function operators, and shows you how to use them to solve real problems.</p></li>
+<li><p>Section <a href="function-operators.html#fo-case-study">3.3</a> works through a problem amenable to solution
+with function operators: downloading many web pages.</p></li>
+</ul>
+</div>
+<div id="prerequisites-2" class="section level3 unnumbered">
+<h3>Prerequisites<a class="anchor" aria-label="anchor" href="#prerequisites-2"><i class="fas fa-link"></i></a>
+</h3>
+<p>Function operators are a type of function factory, so make sure you’re familiar with at least Section <a href="#function-fundamentals"><strong>??</strong></a> before you go on.</p>
+<p>We’ll use <a href="https://purrr.tidyverse.org">purrr</a> for a couple of functionals that you learned about in Chapter <a href="functionals.html#functionals">1</a>, and some function operators that you’ll learn about below. We’ll also use the <a href="https://memoise.r-lib.org">memoise package</a><span class="citation"><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Hadley Wickham et al., &lt;em&gt;Memoise: Memoisation of Functions&lt;/em&gt;, 2018, &lt;a href="https://github.com/r-lib/memoise" role="doc-biblioref"&gt;https://github.com/r-lib/memoise&lt;/a&gt;.&lt;/p&gt;'><sup>9</sup></a></span> for the <code><a href="https://rdrr.io/pkg/memoise/man/memoise.html">memoise()</a></code> operator.</p>
+<div class="sourceCode" id="cb119"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org">purrr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r-lib/memoise">memoise</a></span><span class="op">)</span></code></pre></div>
+<!--
+### In other languages
+
+Function operators are used extensively in FP languages like Haskell, and commonly in Lisp, Scheme and Clojure. They are also an important part of modern JavaScript programming, like in the [underscore.js](http://underscorejs.org/) library. They are particularly common in CoffeeScript because its syntax for anonymous functions is so concise. In stack-based languages like Forth and Factor, function operators are used almost exclusively because it's rare to refer to variables by name. Python's decorators are just function operators by a [different name](http://stackoverflow.com/questions/739654/). In Java, they are very rare because it's difficult to manipulate functions (although possible if you wrap them up in strategy-type objects). They are also rare in C++ because, while it's possible to create objects that work like functions ("functors") by overloading the `()` operator, modifying these objects with other functions is not a common programming technique. That said, C++ 11 includes partial application (`std::bind`) as part of the standard library.
+-->
+</div>
+</div>
+<div id="existing-fos" class="section level2" number="3.2">
+<h2>
+<span class="header-section-number">3.2</span> Existing function operators<a class="anchor" aria-label="anchor" href="#existing-fos"><i class="fas fa-link"></i></a>
+</h2>
+<p>There are two very useful function operators that will both help you solve common recurring problems, and give you a sense for what function operators can do: <code><a href="https://purrr.tidyverse.org/reference/safely.html">purrr::safely()</a></code> and <code><a href="https://rdrr.io/pkg/memoise/man/memoise.html">memoise::memoise()</a></code>.</p>
+<div id="safely" class="section level3" number="3.2.1">
+<h3>
+<span class="header-section-number">3.2.1</span> Capturing errors with <code>purrr::safely()</code><a class="anchor" aria-label="anchor" href="#safely"><i class="fas fa-link"></i></a>
+</h3>
+<p></p>
+<p>One advantage of for-loops is that if one of the iterations fails, you can still access all the results up to the failure:</p>
+<div class="sourceCode" id="cb120"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.512</span>, <span class="fl">0.165</span>, <span class="fl">0.717</span><span class="op">)</span>,
+  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.064</span>, <span class="fl">0.781</span>, <span class="fl">0.427</span><span class="op">)</span>,
+  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.890</span>, <span class="fl">0.785</span>, <span class="fl">0.495</span><span class="op">)</span>,
+  <span class="st">"oops"</span>
+<span class="op">)</span>
+
+<span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="cn">NA_real_</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
+<span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">out</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">x</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>
+<span class="op">}</span>
+<span class="co">#&gt; Error in sum(x[[i]]): invalid 'type' (character) of argument</span>
+<span class="va">out</span>
+<span class="co">#&gt; [1] 1.39 1.27 2.17   NA</span></code></pre></div>
+<p>If you do the same thing with a functional, you get no output, making it hard to figure out where the problem lies:</p>
+<div class="sourceCode" id="cb121"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">sum</span><span class="op">)</span>
+<span class="co">#&gt; Error in .Primitive("sum")(..., na.rm = na.rm): invalid 'type' (character) of argument</span></code></pre></div>
+<p><code><a href="https://purrr.tidyverse.org/reference/safely.html">purrr::safely()</a></code> provides a tool to help with this problem. <code><a href="https://purrr.tidyverse.org/reference/safely.html">safely()</a></code> is a function operator that transforms a function to turn errors into data. (You can learn the basic idea that makes it work in Section <a href="#try-success-failure"><strong>??</strong></a>.) Let’s start by taking a look at it outside of <code><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl()</a></code>:</p>
+<div class="sourceCode" id="cb122"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">safe_sum</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/safely.html">safely</a></span><span class="op">(</span><span class="va">sum</span><span class="op">)</span>
+<span class="va">safe_sum</span>
+<span class="co">#&gt; function (...) </span>
+<span class="co">#&gt; capture_error(.f(...), otherwise, quiet)</span>
+<span class="co">#&gt; &lt;bytecode: 0x55dd0415f418&gt;</span>
+<span class="co">#&gt; &lt;environment: 0x55dd0415ef80&gt;</span></code></pre></div>
+<p>Like all function operators, <code><a href="https://purrr.tidyverse.org/reference/safely.html">safely()</a></code> takes a function and returns a wrapped function which we can call as usual:</p>
+<div class="sourceCode" id="cb123"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="fu">safe_sum</span><span class="op">(</span><span class="va">x</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; List of 2</span>
+<span class="co">#&gt;  $ result: num 1.39</span>
+<span class="co">#&gt;  $ error : NULL</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="fu">safe_sum</span><span class="op">(</span><span class="va">x</span><span class="op">[[</span><span class="fl">4</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; List of 2</span>
+<span class="co">#&gt;  $ result: NULL</span>
+<span class="co">#&gt;  $ error :List of 2</span>
+<span class="co">#&gt;   ..$ message: chr "invalid 'type' (character) of argument"</span>
+<span class="co">#&gt;   ..$ call   : language .Primitive("sum")(..., na.rm = na.rm)</span>
+<span class="co">#&gt;   ..- attr(*, "class")= chr [1:3] "simpleError" "error" "condition"</span></code></pre></div>
+<p>You can see that a function transformed by <code><a href="https://purrr.tidyverse.org/reference/safely.html">safely()</a></code> always returns a list with two elements, <code>result</code> and <code>error</code>. If the function runs successfully, <code>error</code> is <code>NULL</code> and <code>result</code> contains the result; if the function fails, <code>result</code> is <code>NULL</code> and <code>error</code> contains the error.</p>
+<p>Now lets use <code><a href="https://purrr.tidyverse.org/reference/safely.html">safely()</a></code> with a functional:</p>
+<div class="sourceCode" id="cb124"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://purrr.tidyverse.org/reference/safely.html">safely</a></span><span class="op">(</span><span class="va">sum</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span>
+<span class="co">#&gt; List of 4</span>
+<span class="co">#&gt;  $ :List of 2</span>
+<span class="co">#&gt;   ..$ result: num 1.39</span>
+<span class="co">#&gt;   ..$ error : NULL</span>
+<span class="co">#&gt;  $ :List of 2</span>
+<span class="co">#&gt;   ..$ result: num 1.27</span>
+<span class="co">#&gt;   ..$ error : NULL</span>
+<span class="co">#&gt;  $ :List of 2</span>
+<span class="co">#&gt;   ..$ result: num 2.17</span>
+<span class="co">#&gt;   ..$ error : NULL</span>
+<span class="co">#&gt;  $ :List of 2</span>
+<span class="co">#&gt;   ..$ result: NULL</span>
+<span class="co">#&gt;   ..$ error :List of 2</span>
+<span class="co">#&gt;   .. ..$ message: chr "invalid 'type' (character) of argument"</span>
+<span class="co">#&gt;   .. ..$ call   : language .Primitive("sum")(..., na.rm = na.rm)</span>
+<span class="co">#&gt;   .. ..- attr(*, "class")= chr [1:3] "simpleError" "error" "condition"</span></code></pre></div>
+<p>The output is in a slightly inconvenient form, since we have four lists, each of which is a list containing the <code>result</code> and the <code>error</code>. We can make the output easier to use by turning it “inside-out” with <code><a href="https://purrr.tidyverse.org/reference/transpose.html">purrr::transpose()</a></code>, so that we get a list of <code>result</code>s and a list of <code>error</code>s:</p>
+<div class="sourceCode" id="cb125"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/transpose.html">transpose</a></span><span class="op">(</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://purrr.tidyverse.org/reference/safely.html">safely</a></span><span class="op">(</span><span class="va">sum</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span>
+<span class="co">#&gt; List of 2</span>
+<span class="co">#&gt;  $ result:List of 4</span>
+<span class="co">#&gt;   ..$ : num 1.39</span>
+<span class="co">#&gt;   ..$ : num 1.27</span>
+<span class="co">#&gt;   ..$ : num 2.17</span>
+<span class="co">#&gt;   ..$ : NULL</span>
+<span class="co">#&gt;  $ error :List of 4</span>
+<span class="co">#&gt;   ..$ : NULL</span>
+<span class="co">#&gt;   ..$ : NULL</span>
+<span class="co">#&gt;   ..$ : NULL</span>
+<span class="co">#&gt;   ..$ :List of 2</span>
+<span class="co">#&gt;   .. ..$ message: chr "invalid 'type' (character) of argument"</span>
+<span class="co">#&gt;   .. ..$ call   : language .Primitive("sum")(..., na.rm = na.rm)</span>
+<span class="co">#&gt;   .. ..- attr(*, "class")= chr [1:3] "simpleError" "error" "condition"</span></code></pre></div>
+<p>Now we can easily find the results that worked, or the inputs that failed:</p>
+<div class="sourceCode" id="cb126"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">ok</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_lgl</a></span><span class="op">(</span><span class="va">out</span><span class="op">$</span><span class="va">error</span>, <span class="va">is.null</span><span class="op">)</span>
+<span class="va">ok</span>
+<span class="co">#&gt; [1]  TRUE  TRUE  TRUE FALSE</span>
+
+<span class="va">x</span><span class="op">[</span><span class="op">!</span><span class="va">ok</span><span class="op">]</span>
+<span class="co">#&gt; [[1]]</span>
+<span class="co">#&gt; [1] "oops"</span>
+
+<span class="va">out</span><span class="op">$</span><span class="va">result</span><span class="op">[</span><span class="va">ok</span><span class="op">]</span>
+<span class="co">#&gt; [[1]]</span>
+<span class="co">#&gt; [1] 1.39</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[2]]</span>
+<span class="co">#&gt; [1] 1.27</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[3]]</span>
+<span class="co">#&gt; [1] 2.17</span></code></pre></div>
+<p>You can use this same technique in many different situations. For example, imagine you’re fitting a generalised linear model (GLM) to a list of data frames. GLMs can sometimes fail because of optimisation problems, but you still want to be able to try to fit all the models, and later look back at those that failed:</p>
+<div class="sourceCode" id="cb127"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">fit_model</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x1</span> <span class="op">+</span> <span class="va">x2</span> <span class="op">*</span> <span class="va">x3</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="va">models</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/transpose.html">transpose</a></span><span class="op">(</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">datasets</span>, <span class="fu"><a href="https://purrr.tidyverse.org/reference/safely.html">safely</a></span><span class="op">(</span><span class="va">fit_model</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="va">ok</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_lgl</a></span><span class="op">(</span><span class="va">models</span><span class="op">$</span><span class="va">error</span>, <span class="va">is.null</span><span class="op">)</span>
+
+<span class="co"># which data failed to converge?</span>
+<span class="va">datasets</span><span class="op">[</span><span class="op">!</span><span class="va">ok</span><span class="op">]</span>
+
+<span class="co"># which models were successful?</span>
+<span class="va">models</span><span class="op">[</span><span class="va">ok</span><span class="op">]</span></code></pre></div>
+<p>I think this is a great example of the power of combining functionals and function operators: <code><a href="https://purrr.tidyverse.org/reference/safely.html">safely()</a></code> lets you succinctly express what you need to solve a common data analysis problem.</p>
+<p>purrr comes with three other function operators in a similar vein:</p>
+<ul>
+<li><p><code><a href="https://purrr.tidyverse.org/reference/safely.html">possibly()</a></code>: returns a default value when there’s an error.
+It provides no way to tell if an error occured or not, so it’s best
+reserved for cases when there’s some obvious sentinel value (like <code>NA</code>).</p></li>
+<li><p><code><a href="https://purrr.tidyverse.org/reference/safely.html">quietly()</a></code>: turns output, messages, and warning side-effects into
+<code>output</code>, <code>message</code>, and <code>warning</code> components of the output.</p></li>
+<li><p><code>auto_browser()</code>: automatically executes <code><a href="https://rdrr.io/r/base/browser.html">browser()</a></code> inside the
+function when there’s an error.</p></li>
+</ul>
+<p>See their documentation for more details.</p>
+</div>
+<div id="memoise" class="section level3" number="3.2.2">
+<h3>
+<span class="header-section-number">3.2.2</span> Caching computations with <code>memoise::memoise()</code><a class="anchor" aria-label="anchor" href="#memoise"><i class="fas fa-link"></i></a>
+</h3>
+<p>
+</p>
+<p>Another handy function operator is <code><a href="https://rdrr.io/pkg/memoise/man/memoise.html">memoise::memoise()</a></code>. It <strong>memoises</strong> a function, meaning that the function will remember previous inputs and return cached results. Memoisation is an example of the classic computer science tradeoff of memory versus speed. A memoised function can run much faster, but because it stores all of the previous inputs and outputs, it uses more memory.</p>
+<p>Let’s explore this idea with a toy function that simulates an expensive operation:</p>
+<div class="sourceCode" id="cb128"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">slow_function</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html">Sys.sleep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
+  <span class="va">x</span> <span class="op">*</span> <span class="fl">10</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
+<span class="op">}</span>
+<span class="fu"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu">slow_function</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [1] 0.808</span>
+<span class="co">#&gt;    user  system elapsed </span>
+<span class="co">#&gt;       0       0       1</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu">slow_function</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [1] 8.34</span>
+<span class="co">#&gt;    user  system elapsed </span>
+<span class="co">#&gt;   0.003   0.000   1.004</span></code></pre></div>
+<p>When we memoise this function, it’s slow when we call it with new arguments. But when we call it with arguments that it’s seen before it’s instantaneous: it retrieves the previous value of the computation.</p>
+<div class="sourceCode" id="cb129"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">fast_function</span> <span class="op">&lt;-</span> <span class="fu">memoise</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/memoise/man/memoise.html">memoise</a></span><span class="op">(</span><span class="va">slow_function</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu">fast_function</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [1] 6.01</span>
+<span class="co">#&gt;    user  system elapsed </span>
+<span class="co">#&gt;   0.001   0.000   1.002</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu">fast_function</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [1] 6.01</span>
+<span class="co">#&gt;    user  system elapsed </span>
+<span class="co">#&gt;   0.017   0.000   0.017</span></code></pre></div>
+<p>A relatively realistic use of memoisation is computing the Fibonacci series. The Fibonacci series is defined recursively: the first two values are defined by convention, <span class="math inline">\(f(0) = 0\)</span>, <span class="math inline">\(f(1) = 1\)</span>, and then <span class="math inline">\(f(n) = f(n - 1) + f(n - 2)\)</span> (for any positive integer). A naive version is slow because, for example, <code>fib(10)</code> computes <code>fib(9)</code> and <code>fib(8)</code>, and <code>fib(9)</code> computes <code>fib(8)</code> and <code>fib(7)</code>, and so on.</p>
+<div class="sourceCode" id="cb130"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">fib</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">{</span>
+  <span class="kw">if</span> <span class="op">(</span><span class="va">n</span> <span class="op">&lt;</span> <span class="fl">2</span><span class="op">)</span> <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
+  <span class="fu">fib</span><span class="op">(</span><span class="va">n</span> <span class="op">-</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="fu">fib</span><span class="op">(</span><span class="va">n</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span>
+<span class="op">}</span>
+<span class="fu"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span><span class="op">(</span><span class="fu">fib</span><span class="op">(</span><span class="fl">23</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt;    user  system elapsed </span>
+<span class="co">#&gt;   0.047   0.000   0.047</span>
+<span class="fu"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span><span class="op">(</span><span class="fu">fib</span><span class="op">(</span><span class="fl">24</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt;    user  system elapsed </span>
+<span class="co">#&gt;    0.08    0.00    0.08</span></code></pre></div>
+<p>Memoising <code>fib()</code> makes the implementation much faster because each value is computed only once:</p>
+<div class="sourceCode" id="cb131"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">fib2</span> <span class="op">&lt;-</span> <span class="fu">memoise</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/memoise/man/memoise.html">memoise</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">{</span>
+  <span class="kw">if</span> <span class="op">(</span><span class="va">n</span> <span class="op">&lt;</span> <span class="fl">2</span><span class="op">)</span> <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
+  <span class="fu">fib2</span><span class="op">(</span><span class="va">n</span> <span class="op">-</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="fu">fib2</span><span class="op">(</span><span class="va">n</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span>
+<span class="op">}</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span><span class="op">(</span><span class="fu">fib2</span><span class="op">(</span><span class="fl">23</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt;    user  system elapsed </span>
+<span class="co">#&gt;   0.007   0.000   0.007</span></code></pre></div>
+<p>And future calls can rely on previous computations:</p>
+<div class="sourceCode" id="cb132"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span><span class="op">(</span><span class="fu">fib2</span><span class="op">(</span><span class="fl">24</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt;    user  system elapsed </span>
+<span class="co">#&gt;   0.001   0.000   0.001</span></code></pre></div>
+<p>This is an example of <strong>dynamic programming</strong>, where a complex problem can be broken down into many overlapping subproblems, and remembering the results of a subproblem considerably improves performance.</p>
+<p>Think carefully before memoising a function. If the function is not <strong>pure</strong>, i.e. the output does not depend only on the input, you will get misleading and confusing results. I created a subtle bug in devtools because I memoised the results of <code><a href="https://rdrr.io/r/utils/available.packages.html">available.packages()</a></code>, which is rather slow because it has to download a large file from CRAN. The available packages don’t change that frequently, but if you have an R process that’s been running for a few days, the changes can become important, and because the problem only arose in long-running R processes, the bug was very painful to find.</p>
+</div>
+<div id="exercises-8" class="section level3" number="3.2.3">
+<h3>
+<span class="header-section-number">3.2.3</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-8"><i class="fas fa-link"></i></a>
+</h3>
+<ol style="list-style-type: decimal">
+<li><p>Base R provides a function operator in the form of <code><a href="https://rdrr.io/r/base/Vectorize.html">Vectorize()</a></code>.
+What does it do? When might you use it?</p></li>
+<li><p>Read the source code for <code><a href="https://purrr.tidyverse.org/reference/safely.html">possibly()</a></code>. How does it work?</p></li>
+<li><p>Read the source code for <code><a href="https://purrr.tidyverse.org/reference/safely.html">safely()</a></code>. How does it work?</p></li>
+</ol>
+</div>
+</div>
+<div id="fo-case-study" class="section level2" number="3.3">
+<h2>
+<span class="header-section-number">3.3</span> Case study: Creating your own function operators<a class="anchor" aria-label="anchor" href="#fo-case-study"><i class="fas fa-link"></i></a>
+</h2>
+<p></p>
+<p><code>meomoise()</code> and <code><a href="https://purrr.tidyverse.org/reference/safely.html">safely()</a></code> are very useful but also quite complex. In this case study you’ll learn how to create your own simpler function operators. Imagine you have a named vector of URLs and you’d like to download each one to disk. That’s pretty simple with <code><a href="https://purrr.tidyverse.org/reference/map2.html">walk2()</a></code> and <code>file.download()</code>:</p>
+<div class="sourceCode" id="cb133"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">urls</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
+  <span class="st">"adv-r"</span> <span class="op">=</span> <span class="st">"https://adv-r.hadley.nz"</span>, 
+  <span class="st">"r4ds"</span> <span class="op">=</span> <span class="st">"http://r4ds.had.co.nz/"</span>
+  <span class="co"># and many many more</span>
+<span class="op">)</span>
+<span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">urls</span><span class="op">)</span>, <span class="st">".html"</span><span class="op">)</span>
+
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/map2.html">walk2</a></span><span class="op">(</span><span class="va">urls</span>, <span class="va">path</span>, <span class="va">download.file</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<p>This approach is fine for a handful of URLs, but as the vector gets longer, you might want to add a couple more features:</p>
+<ul>
+<li><p>Add a small delay between each request to avoid hammering the server.</p></li>
+<li><p>Display a <code>.</code> every few URLs so that we know that the function is still
+working.</p></li>
+</ul>
+<p>It’s relatively easy to add these extra features if we’re using a for loop:</p>
+<div class="sourceCode" id="cb134"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span><span class="op">(</span><span class="va">urls</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html">Sys.sleep</a></span><span class="op">(</span><span class="fl">0.1</span><span class="op">)</span>
+  <span class="kw">if</span> <span class="op">(</span><span class="va">i</span> <span class="op">%%</span> <span class="fl">10</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"."</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span><span class="op">(</span><span class="va">urls</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span>, <span class="va">paths</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>
+<span class="op">}</span></code></pre></div>
+<p>I think this for loop is suboptimal because it interleaves different concerns: pausing, showing progress, and downloading. This makes the code harder to read, and it makes it harder to reuse the components in new situations. Instead, let’s see if we can use function operators to extract out pausing and showing progress and make them reusable.</p>
+<p>First, let’s write a function operator that adds a small delay. I’m going to call it <code>delay_by()</code> for reasons that will be more clear shortly, and it has two arguments: the function to wrap, and the amount of delay to add. The actual implementation is quite simple. The main trick is forcing evaluation of all arguments as described in Section <a href="function-factories.html#factory-pitfalls">2.2.5</a>, because function operators are a special type of function factory:</p>
+<div class="sourceCode" id="cb135"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">delay_by</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">f</span>, <span class="va">amount</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/force.html">force</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/force.html">force</a></span><span class="op">(</span><span class="va">amount</span><span class="op">)</span>
+  
+  <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op">{</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html">Sys.sleep</a></span><span class="op">(</span><span class="va">amount</span><span class="op">)</span>
+    <span class="fu">f</span><span class="op">(</span><span class="va">...</span><span class="op">)</span>
+  <span class="op">}</span>
+<span class="op">}</span>
+<span class="fu"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt;    user  system elapsed </span>
+<span class="co">#&gt;       0       0       0</span>
+<span class="fu"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span><span class="op">(</span><span class="fu">delay_by</span><span class="op">(</span><span class="va">runif</span>, <span class="fl">0.1</span><span class="op">)</span><span class="op">(</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt;    user  system elapsed </span>
+<span class="co">#&gt;     0.0     0.0     0.1</span></code></pre></div>
+<p>And we can use it with the original <code><a href="https://purrr.tidyverse.org/reference/map2.html">walk2()</a></code>:</p>
+<div class="sourceCode" id="cb136"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://purrr.tidyverse.org/reference/map2.html">walk2</a></span><span class="op">(</span><span class="va">urls</span>, <span class="va">path</span>, <span class="fu">delay_by</span><span class="op">(</span><span class="va">download.file</span>, <span class="fl">0.1</span><span class="op">)</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<p>Creating a function to display the occasional dot is a little harder, because we can no longer rely on the index from the loop. We could pass the index along as another argument, but that breaks encapsulation: a concern of the progress function now becomes a problem that the higher level wrapper needs to handle. Instead, we’ll use another function factory trick (from Section <a href="function-factories.html#stateful-funs">2.2.4</a>), so that the progress wrapper can manage its own internal counter:</p>
+<div class="sourceCode" id="cb137"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">dot_every</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">f</span>, <span class="va">n</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/force.html">force</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/force.html">force</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span>
+  
+  <span class="va">i</span> <span class="op">&lt;-</span> <span class="fl">0</span>
+  <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">i</span> <span class="op">&lt;&lt;-</span> <span class="va">i</span> <span class="op">+</span> <span class="fl">1</span>
+    <span class="kw">if</span> <span class="op">(</span><span class="va">i</span> <span class="op">%%</span> <span class="va">n</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"."</span><span class="op">)</span>
+    <span class="fu">f</span><span class="op">(</span><span class="va">...</span><span class="op">)</span>
+  <span class="op">}</span>
+<span class="op">}</span>
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">walk</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>, <span class="va">runif</span><span class="op">)</span>
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">walk</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>, <span class="fu">dot_every</span><span class="op">(</span><span class="va">runif</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; ..........</span></code></pre></div>
+<p>Now we can express our original for loop as:</p>
+<div class="sourceCode" id="cb138"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://purrr.tidyverse.org/reference/map2.html">walk2</a></span><span class="op">(</span>
+  <span class="va">urls</span>, <span class="va">path</span>, 
+  <span class="fu">dot_every</span><span class="op">(</span><span class="fu">delay_by</span><span class="op">(</span><span class="va">download.file</span>, <span class="fl">0.1</span><span class="op">)</span>, <span class="fl">10</span><span class="op">)</span>, 
+  quiet <span class="op">=</span> <span class="cn">TRUE</span>
+<span class="op">)</span></code></pre></div>
+<p>This is starting to get a little hard to read because we are composing many function calls, and the arguments are getting spread out. One way to resolve that is to use the pipe:</p>
+<div class="sourceCode" id="cb139"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://purrr.tidyverse.org/reference/map2.html">walk2</a></span><span class="op">(</span>
+  <span class="va">urls</span>, <span class="va">path</span>, 
+  <span class="va">download.file</span> <span class="op">%&gt;%</span> <span class="fu">dot_every</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">delay_by</span><span class="op">(</span><span class="fl">0.1</span><span class="op">)</span>, 
+  quiet <span class="op">=</span> <span class="cn">TRUE</span>
+<span class="op">)</span></code></pre></div>
+<p>The pipe works well here because I’ve carefully chosen the function names to yield an (almost) readable sentence: take <code>download.file</code> then (add) a dot every 10 iterations, then delay by 0.1s. The more clearly you can express the intent of your code through function names, the more easily others (including future you!) can read and understand the code.</p>
+<div id="exercises-9" class="section level3" number="3.3.1">
+<h3>
+<span class="header-section-number">3.3.1</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-9"><i class="fas fa-link"></i></a>
+</h3>
+<ol style="list-style-type: decimal">
+<li><p>Weigh the pros and cons of
+<code>download.file %&gt;% dot_every(10) %&gt;% delay_by(0.1)</code> versus
+<code>download.file %&gt;% delay_by(0.1) %&gt;% dot_every(10)</code>.</p></li>
+<li><p>Should you memoise <code>file.download()</code>? Why or why not?</p></li>
+<li><p>Create a function operator that reports whenever a file is created or
+deleted in the working directory, using <code><a href="https://rdrr.io/r/base/list.files.html">dir()</a></code> and <code><a href="https://rdrr.io/r/base/sets.html">setdiff()</a></code>. What other
+global function effects might you want to track?</p></li>
+<li><p>Write a function operator that logs a timestamp and message to a file
+every time a function is run.</p></li>
+<li><p>Modify <code>delay_by()</code> so that instead of delaying by a fixed amount of time,
+it ensures that a certain amount of time has elapsed since the function
+was last called. That is, if you called
+<code>g &lt;- delay_by(1, f); g(); Sys.sleep(2); g()</code> there shouldn’t be an
+extra delay.</p></li>
+</ol>
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="chapter-nav">
+<div class="prev"><a href="function-factories.html"><span class="header-section-number">2</span> Function factories</a></div>
+<div class="empty"></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#function-operators"><span class="header-section-number">3</span> Function operators</a></li>
+<li>
+<a class="nav-link" href="#introduction-2"><span class="header-section-number">3.1</span> Introduction</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#outline-2">Outline</a></li>
+<li><a class="nav-link" href="#prerequisites-2">Prerequisites</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#existing-fos"><span class="header-section-number">3.2</span> Existing function operators</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#safely"><span class="header-section-number">3.2.1</span> Capturing errors with purrr::safely()</a></li>
+<li><a class="nav-link" href="#memoise"><span class="header-section-number">3.2.2</span> Caching computations with memoise::memoise()</a></li>
+<li><a class="nav-link" href="#exercises-8"><span class="header-section-number">3.2.3</span> Exercises</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#fo-case-study"><span class="header-section-number">3.3</span> Case study: Creating your own function operators</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#exercises-9"><span class="header-section-number">3.3.1</span> Exercises</a></li></ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/hadley/adv-r/blob/master/Function-operators.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/hadley/adv-r/edit/master/Function-operators.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Advanced R</strong>" was written by Hadley Wickham. </p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

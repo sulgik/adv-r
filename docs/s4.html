@@ -1,0 +1,1626 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>15 S4 | Advanced R</title>
+  <meta name="description" content="15 S4 | Advanced R" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="15 S4 | Advanced R" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="15 S4 | Advanced R" />
+  
+  
+  
+
+<meta name="author" content="Hadley Wickham" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="r6.html"/>
+<link rel="next" href="oo-tradeoffs.html"/>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-141212623-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-141212623-1');
+</script>
+
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="adv-r.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><strong><a href="./">Advanced R</a></strong></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#license"><i class="fa fa-check"></i>License</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#other-books"><i class="fa fa-check"></i>Other books</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#why-r"><i class="fa fa-check"></i><b>1.1</b> Why R?</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#who-should-read"><i class="fa fa-check"></i><b>1.2</b> Who should read this book</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#what-you-will-get"><i class="fa fa-check"></i><b>1.3</b> What you will get out of this book</a></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#what-you-will-not-learn"><i class="fa fa-check"></i><b>1.4</b> What you will not learn</a></li>
+<li class="chapter" data-level="1.5" data-path="introduction.html"><a href="introduction.html#meta-techniques"><i class="fa fa-check"></i><b>1.5</b> Meta-techniques</a></li>
+<li class="chapter" data-level="1.6" data-path="introduction.html"><a href="introduction.html#recommended-reading"><i class="fa fa-check"></i><b>1.6</b> Recommended reading</a></li>
+<li class="chapter" data-level="1.7" data-path="introduction.html"><a href="introduction.html#getting-help"><i class="fa fa-check"></i><b>1.7</b> Getting help</a></li>
+<li class="chapter" data-level="1.8" data-path="introduction.html"><a href="introduction.html#intro-ack"><i class="fa fa-check"></i><b>1.8</b> Acknowledgments</a></li>
+<li class="chapter" data-level="1.9" data-path="introduction.html"><a href="introduction.html#conventions"><i class="fa fa-check"></i><b>1.9</b> Conventions</a></li>
+<li class="chapter" data-level="1.10" data-path="introduction.html"><a href="introduction.html#colophon"><i class="fa fa-check"></i><b>1.10</b> Colophon</a></li>
+</ul></li>
+<li class="part"><span><b>I Foundations</b></span></li>
+<li class="chapter" data-level="" data-path="foundations-intro.html"><a href="foundations-intro.html"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="2" data-path="names-values.html"><a href="names-values.html"><i class="fa fa-check"></i><b>2</b> Names and values</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="names-values.html"><a href="names-values.html#introduction-1"><i class="fa fa-check"></i><b>2.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="names-values.html"><a href="names-values.html#quiz"><i class="fa fa-check"></i>Quiz</a></li>
+<li class="chapter" data-level="" data-path="names-values.html"><a href="names-values.html#outline"><i class="fa fa-check"></i>Outline</a></li>
+<li class="chapter" data-level="" data-path="names-values.html"><a href="names-values.html#prerequisites"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="" data-path="names-values.html"><a href="names-values.html#sources"><i class="fa fa-check"></i>Sources</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="names-values.html"><a href="names-values.html#binding-basics"><i class="fa fa-check"></i><b>2.2</b> Binding basics</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="names-values.html"><a href="names-values.html#non-syntactic"><i class="fa fa-check"></i><b>2.2.1</b> Non-syntactic names</a></li>
+<li class="chapter" data-level="2.2.2" data-path="names-values.html"><a href="names-values.html#exercises"><i class="fa fa-check"></i><b>2.2.2</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="names-values.html"><a href="names-values.html#copy-on-modify"><i class="fa fa-check"></i><b>2.3</b> Copy-on-modify</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="names-values.html"><a href="names-values.html#tracemem"><i class="fa fa-check"></i><b>2.3.1</b> <code>tracemem()</code></a></li>
+<li class="chapter" data-level="2.3.2" data-path="names-values.html"><a href="names-values.html#function-calls"><i class="fa fa-check"></i><b>2.3.2</b> Function calls</a></li>
+<li class="chapter" data-level="2.3.3" data-path="names-values.html"><a href="names-values.html#list-references"><i class="fa fa-check"></i><b>2.3.3</b> Lists</a></li>
+<li class="chapter" data-level="2.3.4" data-path="names-values.html"><a href="names-values.html#df-modify"><i class="fa fa-check"></i><b>2.3.4</b> Data frames</a></li>
+<li class="chapter" data-level="2.3.5" data-path="names-values.html"><a href="names-values.html#character-vectors"><i class="fa fa-check"></i><b>2.3.5</b> Character vectors</a></li>
+<li class="chapter" data-level="2.3.6" data-path="names-values.html"><a href="names-values.html#exercises-1"><i class="fa fa-check"></i><b>2.3.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="names-values.html"><a href="names-values.html#object-size"><i class="fa fa-check"></i><b>2.4</b> Object size</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="names-values.html"><a href="names-values.html#exercises-2"><i class="fa fa-check"></i><b>2.4.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="names-values.html"><a href="names-values.html#modify-in-place"><i class="fa fa-check"></i><b>2.5</b> Modify-in-place</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="names-values.html"><a href="names-values.html#single-binding"><i class="fa fa-check"></i><b>2.5.1</b> Objects with a single binding</a></li>
+<li class="chapter" data-level="2.5.2" data-path="names-values.html"><a href="names-values.html#env-modify"><i class="fa fa-check"></i><b>2.5.2</b> Environments</a></li>
+<li class="chapter" data-level="2.5.3" data-path="names-values.html"><a href="names-values.html#exercises-3"><i class="fa fa-check"></i><b>2.5.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="names-values.html"><a href="names-values.html#gc"><i class="fa fa-check"></i><b>2.6</b> Unbinding and the garbage collector</a></li>
+<li class="chapter" data-level="2.7" data-path="names-values.html"><a href="names-values.html#names-values-answers"><i class="fa fa-check"></i><b>2.7</b> Quiz answers</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="vectors-chap.html"><a href="vectors-chap.html"><i class="fa fa-check"></i><b>3</b> Vectors</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="vectors-chap.html"><a href="vectors-chap.html#introduction-2"><i class="fa fa-check"></i><b>3.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="vectors-chap.html"><a href="vectors-chap.html#quiz-1"><i class="fa fa-check"></i>Quiz</a></li>
+<li class="chapter" data-level="" data-path="vectors-chap.html"><a href="vectors-chap.html#outline-1"><i class="fa fa-check"></i>Outline</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="vectors-chap.html"><a href="vectors-chap.html#atomic-vectors"><i class="fa fa-check"></i><b>3.2</b> Atomic vectors</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="vectors-chap.html"><a href="vectors-chap.html#scalars"><i class="fa fa-check"></i><b>3.2.1</b> Scalars</a></li>
+<li class="chapter" data-level="3.2.2" data-path="vectors-chap.html"><a href="vectors-chap.html#atomic-constructing"><i class="fa fa-check"></i><b>3.2.2</b> Making longer vectors with <code>c()</code></a></li>
+<li class="chapter" data-level="3.2.3" data-path="vectors-chap.html"><a href="vectors-chap.html#missing-values"><i class="fa fa-check"></i><b>3.2.3</b> Missing values</a></li>
+<li class="chapter" data-level="3.2.4" data-path="vectors-chap.html"><a href="vectors-chap.html#testing-and-coercion"><i class="fa fa-check"></i><b>3.2.4</b> Testing and coercion</a></li>
+<li class="chapter" data-level="3.2.5" data-path="vectors-chap.html"><a href="vectors-chap.html#exercises-4"><i class="fa fa-check"></i><b>3.2.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="vectors-chap.html"><a href="vectors-chap.html#attributes"><i class="fa fa-check"></i><b>3.3</b> Attributes</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="vectors-chap.html"><a href="vectors-chap.html#getting-and-setting"><i class="fa fa-check"></i><b>3.3.1</b> Getting and setting</a></li>
+<li class="chapter" data-level="3.3.2" data-path="vectors-chap.html"><a href="vectors-chap.html#attr-names"><i class="fa fa-check"></i><b>3.3.2</b> Names</a></li>
+<li class="chapter" data-level="3.3.3" data-path="vectors-chap.html"><a href="vectors-chap.html#attr-dims"><i class="fa fa-check"></i><b>3.3.3</b> Dimensions</a></li>
+<li class="chapter" data-level="3.3.4" data-path="vectors-chap.html"><a href="vectors-chap.html#exercises-5"><i class="fa fa-check"></i><b>3.3.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="vectors-chap.html"><a href="vectors-chap.html#s3-atomic-vectors"><i class="fa fa-check"></i><b>3.4</b> S3 atomic vectors</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="vectors-chap.html"><a href="vectors-chap.html#factors"><i class="fa fa-check"></i><b>3.4.1</b> Factors</a></li>
+<li class="chapter" data-level="3.4.2" data-path="vectors-chap.html"><a href="vectors-chap.html#dates"><i class="fa fa-check"></i><b>3.4.2</b> Dates</a></li>
+<li class="chapter" data-level="3.4.3" data-path="vectors-chap.html"><a href="vectors-chap.html#date-times"><i class="fa fa-check"></i><b>3.4.3</b> Date-times</a></li>
+<li class="chapter" data-level="3.4.4" data-path="vectors-chap.html"><a href="vectors-chap.html#durations"><i class="fa fa-check"></i><b>3.4.4</b> Durations</a></li>
+<li class="chapter" data-level="3.4.5" data-path="vectors-chap.html"><a href="vectors-chap.html#exercises-6"><i class="fa fa-check"></i><b>3.4.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="vectors-chap.html"><a href="vectors-chap.html#lists"><i class="fa fa-check"></i><b>3.5</b> Lists</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="vectors-chap.html"><a href="vectors-chap.html#list-creating"><i class="fa fa-check"></i><b>3.5.1</b> Creating</a></li>
+<li class="chapter" data-level="3.5.2" data-path="vectors-chap.html"><a href="vectors-chap.html#list-types"><i class="fa fa-check"></i><b>3.5.2</b> Testing and coercion</a></li>
+<li class="chapter" data-level="3.5.3" data-path="vectors-chap.html"><a href="vectors-chap.html#list-array"><i class="fa fa-check"></i><b>3.5.3</b> Matrices and arrays</a></li>
+<li class="chapter" data-level="3.5.4" data-path="vectors-chap.html"><a href="vectors-chap.html#exercises-7"><i class="fa fa-check"></i><b>3.5.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="vectors-chap.html"><a href="vectors-chap.html#tibble"><i class="fa fa-check"></i><b>3.6</b> Data frames and tibbles</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="vectors-chap.html"><a href="vectors-chap.html#df-create"><i class="fa fa-check"></i><b>3.6.1</b> Creating</a></li>
+<li class="chapter" data-level="3.6.2" data-path="vectors-chap.html"><a href="vectors-chap.html#rownames"><i class="fa fa-check"></i><b>3.6.2</b> Row names</a></li>
+<li class="chapter" data-level="3.6.3" data-path="vectors-chap.html"><a href="vectors-chap.html#printing"><i class="fa fa-check"></i><b>3.6.3</b> Printing</a></li>
+<li class="chapter" data-level="3.6.4" data-path="vectors-chap.html"><a href="vectors-chap.html#safe-subsetting"><i class="fa fa-check"></i><b>3.6.4</b> Subsetting</a></li>
+<li class="chapter" data-level="3.6.5" data-path="vectors-chap.html"><a href="vectors-chap.html#df-test-coerce"><i class="fa fa-check"></i><b>3.6.5</b> Testing and coercing</a></li>
+<li class="chapter" data-level="3.6.6" data-path="vectors-chap.html"><a href="vectors-chap.html#list-columns"><i class="fa fa-check"></i><b>3.6.6</b> List columns</a></li>
+<li class="chapter" data-level="3.6.7" data-path="vectors-chap.html"><a href="vectors-chap.html#matrix-and-data-frame-columns"><i class="fa fa-check"></i><b>3.6.7</b> Matrix and data frame columns</a></li>
+<li class="chapter" data-level="3.6.8" data-path="vectors-chap.html"><a href="vectors-chap.html#exercises-8"><i class="fa fa-check"></i><b>3.6.8</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="vectors-chap.html"><a href="vectors-chap.html#null"><i class="fa fa-check"></i><b>3.7</b> <code>NULL</code></a></li>
+<li class="chapter" data-level="3.8" data-path="vectors-chap.html"><a href="vectors-chap.html#data-structure-answers"><i class="fa fa-check"></i><b>3.8</b> Quiz answers</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="subsetting.html"><a href="subsetting.html"><i class="fa fa-check"></i><b>4</b> Subsetting</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="subsetting.html"><a href="subsetting.html#introduction-3"><i class="fa fa-check"></i><b>4.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#quiz-2"><i class="fa fa-check"></i>Quiz</a></li>
+<li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#outline-2"><i class="fa fa-check"></i>Outline</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="subsetting.html"><a href="subsetting.html#subset-multiple"><i class="fa fa-check"></i><b>4.2</b> Selecting multiple elements</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="subsetting.html"><a href="subsetting.html#atomic-vectors-1"><i class="fa fa-check"></i><b>4.2.1</b> Atomic vectors</a></li>
+<li class="chapter" data-level="4.2.2" data-path="subsetting.html"><a href="subsetting.html#lists-1"><i class="fa fa-check"></i><b>4.2.2</b> Lists</a></li>
+<li class="chapter" data-level="4.2.3" data-path="subsetting.html"><a href="subsetting.html#matrix-subsetting"><i class="fa fa-check"></i><b>4.2.3</b> Matrices and arrays</a></li>
+<li class="chapter" data-level="4.2.4" data-path="subsetting.html"><a href="subsetting.html#df-subsetting"><i class="fa fa-check"></i><b>4.2.4</b> Data frames and tibbles</a></li>
+<li class="chapter" data-level="4.2.5" data-path="subsetting.html"><a href="subsetting.html#simplify-preserve"><i class="fa fa-check"></i><b>4.2.5</b> Preserving dimensionality</a></li>
+<li class="chapter" data-level="4.2.6" data-path="subsetting.html"><a href="subsetting.html#exercises-9"><i class="fa fa-check"></i><b>4.2.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="subsetting.html"><a href="subsetting.html#subset-single"><i class="fa fa-check"></i><b>4.3</b> Selecting a single element</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="subsetting.html"><a href="subsetting.html#section"><i class="fa fa-check"></i><b>4.3.1</b> <code>[[</code></a></li>
+<li class="chapter" data-level="4.3.2" data-path="subsetting.html"><a href="subsetting.html#section-1"><i class="fa fa-check"></i><b>4.3.2</b> <code>$</code></a></li>
+<li class="chapter" data-level="4.3.3" data-path="subsetting.html"><a href="subsetting.html#subsetting-oob"><i class="fa fa-check"></i><b>4.3.3</b> Missing and out-of-bounds indices</a></li>
+<li class="chapter" data-level="4.3.4" data-path="subsetting.html"><a href="subsetting.html#and-slot"><i class="fa fa-check"></i><b>4.3.4</b> <code>@</code> and <code>slot()</code></a></li>
+<li class="chapter" data-level="4.3.5" data-path="subsetting.html"><a href="subsetting.html#exercises-10"><i class="fa fa-check"></i><b>4.3.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="subsetting.html"><a href="subsetting.html#subassignment"><i class="fa fa-check"></i><b>4.4</b> Subsetting and assignment</a></li>
+<li class="chapter" data-level="4.5" data-path="subsetting.html"><a href="subsetting.html#applications"><i class="fa fa-check"></i><b>4.5</b> Applications</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="subsetting.html"><a href="subsetting.html#lookup-tables"><i class="fa fa-check"></i><b>4.5.1</b> Lookup tables (character subsetting)</a></li>
+<li class="chapter" data-level="4.5.2" data-path="subsetting.html"><a href="subsetting.html#matching-merging"><i class="fa fa-check"></i><b>4.5.2</b> Matching and merging by hand (integer subsetting)</a></li>
+<li class="chapter" data-level="4.5.3" data-path="subsetting.html"><a href="subsetting.html#random-samples-and-bootstraps-integer-subsetting"><i class="fa fa-check"></i><b>4.5.3</b> Random samples and bootstraps (integer subsetting)</a></li>
+<li class="chapter" data-level="4.5.4" data-path="subsetting.html"><a href="subsetting.html#ordering-integer-subsetting"><i class="fa fa-check"></i><b>4.5.4</b> Ordering (integer subsetting)</a></li>
+<li class="chapter" data-level="4.5.5" data-path="subsetting.html"><a href="subsetting.html#expanding-aggregated-counts-integer-subsetting"><i class="fa fa-check"></i><b>4.5.5</b> Expanding aggregated counts (integer subsetting)</a></li>
+<li class="chapter" data-level="4.5.6" data-path="subsetting.html"><a href="subsetting.html#removing-columns-from-data-frames-character"><i class="fa fa-check"></i><b>4.5.6</b> Removing columns from data frames (character )</a></li>
+<li class="chapter" data-level="4.5.7" data-path="subsetting.html"><a href="subsetting.html#selecting-rows-based-on-a-condition-logical-subsetting"><i class="fa fa-check"></i><b>4.5.7</b> Selecting rows based on a condition (logical subsetting)</a></li>
+<li class="chapter" data-level="4.5.8" data-path="subsetting.html"><a href="subsetting.html#boolean-algebra-versus-sets-logical-and-integer"><i class="fa fa-check"></i><b>4.5.8</b> Boolean algebra versus sets (logical and integer )</a></li>
+<li class="chapter" data-level="4.5.9" data-path="subsetting.html"><a href="subsetting.html#exercises-11"><i class="fa fa-check"></i><b>4.5.9</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="subsetting.html"><a href="subsetting.html#subsetting-answers"><i class="fa fa-check"></i><b>4.6</b> Quiz answers</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="control-flow.html"><a href="control-flow.html"><i class="fa fa-check"></i><b>5</b> Control flow</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="control-flow.html"><a href="control-flow.html#introduction-4"><i class="fa fa-check"></i><b>5.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#quiz-3"><i class="fa fa-check"></i>Quiz</a></li>
+<li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#outline-3"><i class="fa fa-check"></i>Outline</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="control-flow.html"><a href="control-flow.html#choices"><i class="fa fa-check"></i><b>5.2</b> Choices</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="control-flow.html"><a href="control-flow.html#invalid-inputs"><i class="fa fa-check"></i><b>5.2.1</b> Invalid inputs</a></li>
+<li class="chapter" data-level="5.2.2" data-path="control-flow.html"><a href="control-flow.html#vectorised-if"><i class="fa fa-check"></i><b>5.2.2</b> Vectorised if</a></li>
+<li class="chapter" data-level="5.2.3" data-path="control-flow.html"><a href="control-flow.html#switch"><i class="fa fa-check"></i><b>5.2.3</b> <code>switch()</code> statement</a></li>
+<li class="chapter" data-level="5.2.4" data-path="control-flow.html"><a href="control-flow.html#exercises-12"><i class="fa fa-check"></i><b>5.2.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="control-flow.html"><a href="control-flow.html#loops"><i class="fa fa-check"></i><b>5.3</b> Loops</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="control-flow.html"><a href="control-flow.html#common-pitfalls"><i class="fa fa-check"></i><b>5.3.1</b> Common pitfalls</a></li>
+<li class="chapter" data-level="5.3.2" data-path="control-flow.html"><a href="control-flow.html#for-family"><i class="fa fa-check"></i><b>5.3.2</b> Related tools</a></li>
+<li class="chapter" data-level="5.3.3" data-path="control-flow.html"><a href="control-flow.html#exercises-13"><i class="fa fa-check"></i><b>5.3.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="control-flow.html"><a href="control-flow.html#control-flow-answers"><i class="fa fa-check"></i><b>5.4</b> Quiz answers</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="functions.html"><a href="functions.html"><i class="fa fa-check"></i><b>6</b> Functions</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="functions.html"><a href="functions.html#introduction-5"><i class="fa fa-check"></i><b>6.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#quiz-4"><i class="fa fa-check"></i>Quiz</a></li>
+<li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#outline-4"><i class="fa fa-check"></i>Outline</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="functions.html"><a href="functions.html#function-fundamentals"><i class="fa fa-check"></i><b>6.2</b> Function fundamentals</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="functions.html"><a href="functions.html#fun-components"><i class="fa fa-check"></i><b>6.2.1</b> Function components</a></li>
+<li class="chapter" data-level="6.2.2" data-path="functions.html"><a href="functions.html#primitive-functions"><i class="fa fa-check"></i><b>6.2.2</b> Primitive functions</a></li>
+<li class="chapter" data-level="6.2.3" data-path="functions.html"><a href="functions.html#first-class-functions"><i class="fa fa-check"></i><b>6.2.3</b> First-class functions</a></li>
+<li class="chapter" data-level="6.2.4" data-path="functions.html"><a href="functions.html#invoking-a-function"><i class="fa fa-check"></i><b>6.2.4</b> Invoking a function</a></li>
+<li class="chapter" data-level="6.2.5" data-path="functions.html"><a href="functions.html#exercises-14"><i class="fa fa-check"></i><b>6.2.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="functions.html"><a href="functions.html#function-composition"><i class="fa fa-check"></i><b>6.3</b> Function composition</a></li>
+<li class="chapter" data-level="6.4" data-path="functions.html"><a href="functions.html#lexical-scoping"><i class="fa fa-check"></i><b>6.4</b> Lexical scoping</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="functions.html"><a href="functions.html#name-masking"><i class="fa fa-check"></i><b>6.4.1</b> Name masking</a></li>
+<li class="chapter" data-level="6.4.2" data-path="functions.html"><a href="functions.html#functions-versus-variables"><i class="fa fa-check"></i><b>6.4.2</b> Functions versus variables</a></li>
+<li class="chapter" data-level="6.4.3" data-path="functions.html"><a href="functions.html#fresh-start"><i class="fa fa-check"></i><b>6.4.3</b> A fresh start</a></li>
+<li class="chapter" data-level="6.4.4" data-path="functions.html"><a href="functions.html#dynamic-lookup"><i class="fa fa-check"></i><b>6.4.4</b> Dynamic lookup</a></li>
+<li class="chapter" data-level="6.4.5" data-path="functions.html"><a href="functions.html#exercises-15"><i class="fa fa-check"></i><b>6.4.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="functions.html"><a href="functions.html#lazy-evaluation"><i class="fa fa-check"></i><b>6.5</b> Lazy evaluation</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="functions.html"><a href="functions.html#promises"><i class="fa fa-check"></i><b>6.5.1</b> Promises</a></li>
+<li class="chapter" data-level="6.5.2" data-path="functions.html"><a href="functions.html#default-arguments"><i class="fa fa-check"></i><b>6.5.2</b> Default arguments</a></li>
+<li class="chapter" data-level="6.5.3" data-path="functions.html"><a href="functions.html#missing-arguments"><i class="fa fa-check"></i><b>6.5.3</b> Missing arguments</a></li>
+<li class="chapter" data-level="6.5.4" data-path="functions.html"><a href="functions.html#exercises-16"><i class="fa fa-check"></i><b>6.5.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="functions.html"><a href="functions.html#fun-dot-dot-dot"><i class="fa fa-check"></i><b>6.6</b> <code>...</code> (dot-dot-dot)</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="functions.html"><a href="functions.html#exercises-17"><i class="fa fa-check"></i><b>6.6.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="functions.html"><a href="functions.html#exiting-a-function"><i class="fa fa-check"></i><b>6.7</b> Exiting a function</a>
+<ul>
+<li class="chapter" data-level="6.7.1" data-path="functions.html"><a href="functions.html#implicit-versus-explicit-returns"><i class="fa fa-check"></i><b>6.7.1</b> Implicit versus explicit returns</a></li>
+<li class="chapter" data-level="6.7.2" data-path="functions.html"><a href="functions.html#invisible"><i class="fa fa-check"></i><b>6.7.2</b> Invisible values</a></li>
+<li class="chapter" data-level="6.7.3" data-path="functions.html"><a href="functions.html#errors"><i class="fa fa-check"></i><b>6.7.3</b> Errors</a></li>
+<li class="chapter" data-level="6.7.4" data-path="functions.html"><a href="functions.html#on-exit"><i class="fa fa-check"></i><b>6.7.4</b> Exit handlers</a></li>
+<li class="chapter" data-level="6.7.5" data-path="functions.html"><a href="functions.html#exercises-18"><i class="fa fa-check"></i><b>6.7.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="functions.html"><a href="functions.html#function-forms"><i class="fa fa-check"></i><b>6.8</b> Function forms</a>
+<ul>
+<li class="chapter" data-level="6.8.1" data-path="functions.html"><a href="functions.html#prefix-transform"><i class="fa fa-check"></i><b>6.8.1</b> Rewriting to prefix form</a></li>
+<li class="chapter" data-level="6.8.2" data-path="functions.html"><a href="functions.html#prefix-form"><i class="fa fa-check"></i><b>6.8.2</b> Prefix form</a></li>
+<li class="chapter" data-level="6.8.3" data-path="functions.html"><a href="functions.html#infix-functions"><i class="fa fa-check"></i><b>6.8.3</b> Infix functions</a></li>
+<li class="chapter" data-level="6.8.4" data-path="functions.html"><a href="functions.html#replacement-functions"><i class="fa fa-check"></i><b>6.8.4</b> Replacement functions</a></li>
+<li class="chapter" data-level="6.8.5" data-path="functions.html"><a href="functions.html#special-forms"><i class="fa fa-check"></i><b>6.8.5</b> Special forms</a></li>
+<li class="chapter" data-level="6.8.6" data-path="functions.html"><a href="functions.html#exercises-19"><i class="fa fa-check"></i><b>6.8.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="6.9" data-path="functions.html"><a href="functions.html#function-answers"><i class="fa fa-check"></i><b>6.9</b> Quiz answers</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="environments.html"><a href="environments.html"><i class="fa fa-check"></i><b>7</b> Environments</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="environments.html"><a href="environments.html#introduction-6"><i class="fa fa-check"></i><b>7.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#quiz-5"><i class="fa fa-check"></i>Quiz</a></li>
+<li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#outline-5"><i class="fa fa-check"></i>Outline</a></li>
+<li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#prerequisites-1"><i class="fa fa-check"></i>Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="environments.html"><a href="environments.html#env-basics"><i class="fa fa-check"></i><b>7.2</b> Environment basics</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="environments.html"><a href="environments.html#basics"><i class="fa fa-check"></i><b>7.2.1</b> Basics</a></li>
+<li class="chapter" data-level="7.2.2" data-path="environments.html"><a href="environments.html#important-environments"><i class="fa fa-check"></i><b>7.2.2</b> Important environments</a></li>
+<li class="chapter" data-level="7.2.3" data-path="environments.html"><a href="environments.html#parents"><i class="fa fa-check"></i><b>7.2.3</b> Parents</a></li>
+<li class="chapter" data-level="7.2.4" data-path="environments.html"><a href="environments.html#super-assignment--"><i class="fa fa-check"></i><b>7.2.4</b> Super assignment, <code>&lt;&lt;-</code></a></li>
+<li class="chapter" data-level="7.2.5" data-path="environments.html"><a href="environments.html#getting-and-setting-1"><i class="fa fa-check"></i><b>7.2.5</b> Getting and setting</a></li>
+<li class="chapter" data-level="7.2.6" data-path="environments.html"><a href="environments.html#advanced-bindings"><i class="fa fa-check"></i><b>7.2.6</b> Advanced bindings</a></li>
+<li class="chapter" data-level="7.2.7" data-path="environments.html"><a href="environments.html#exercises-20"><i class="fa fa-check"></i><b>7.2.7</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="environments.html"><a href="environments.html#env-recursion"><i class="fa fa-check"></i><b>7.3</b> Recursing over environments</a>
+<ul>
+<li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#iteration-versus-recursion"><i class="fa fa-check"></i>Iteration versus recursion</a></li>
+<li class="chapter" data-level="7.3.1" data-path="environments.html"><a href="environments.html#exercises-21"><i class="fa fa-check"></i><b>7.3.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="environments.html"><a href="environments.html#special-environments"><i class="fa fa-check"></i><b>7.4</b> Special environments</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="environments.html"><a href="environments.html#search-path"><i class="fa fa-check"></i><b>7.4.1</b> Package environments and the search path</a></li>
+<li class="chapter" data-level="7.4.2" data-path="environments.html"><a href="environments.html#function-environments"><i class="fa fa-check"></i><b>7.4.2</b> The function environment</a></li>
+<li class="chapter" data-level="7.4.3" data-path="environments.html"><a href="environments.html#namespaces"><i class="fa fa-check"></i><b>7.4.3</b> Namespaces</a></li>
+<li class="chapter" data-level="7.4.4" data-path="environments.html"><a href="environments.html#execution-environments"><i class="fa fa-check"></i><b>7.4.4</b> Execution environments</a></li>
+<li class="chapter" data-level="7.4.5" data-path="environments.html"><a href="environments.html#exercises-22"><i class="fa fa-check"></i><b>7.4.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="environments.html"><a href="environments.html#call-stack"><i class="fa fa-check"></i><b>7.5</b> Call stacks</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="environments.html"><a href="environments.html#simple-stack"><i class="fa fa-check"></i><b>7.5.1</b> Simple call stacks</a></li>
+<li class="chapter" data-level="7.5.2" data-path="environments.html"><a href="environments.html#lazy-call-stack"><i class="fa fa-check"></i><b>7.5.2</b> Lazy evaluation</a></li>
+<li class="chapter" data-level="7.5.3" data-path="environments.html"><a href="environments.html#frames"><i class="fa fa-check"></i><b>7.5.3</b> Frames</a></li>
+<li class="chapter" data-level="7.5.4" data-path="environments.html"><a href="environments.html#dynamic-scope"><i class="fa fa-check"></i><b>7.5.4</b> Dynamic scope</a></li>
+<li class="chapter" data-level="7.5.5" data-path="environments.html"><a href="environments.html#exercises-23"><i class="fa fa-check"></i><b>7.5.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="environments.html"><a href="environments.html#explicit-envs"><i class="fa fa-check"></i><b>7.6</b> As data structures</a></li>
+<li class="chapter" data-level="7.7" data-path="environments.html"><a href="environments.html#env-answers"><i class="fa fa-check"></i><b>7.7</b> Quiz answers</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="conditions.html"><a href="conditions.html"><i class="fa fa-check"></i><b>8</b> Conditions</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="conditions.html"><a href="conditions.html#introduction-7"><i class="fa fa-check"></i><b>8.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#quiz-6"><i class="fa fa-check"></i>Quiz</a></li>
+<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#outline-6"><i class="fa fa-check"></i>Outline</a></li>
+<li class="chapter" data-level="8.1.1" data-path="conditions.html"><a href="conditions.html#prerequisites-2"><i class="fa fa-check"></i><b>8.1.1</b> Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="conditions.html"><a href="conditions.html#signalling-conditions"><i class="fa fa-check"></i><b>8.2</b> Signalling conditions</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="conditions.html"><a href="conditions.html#errors-1"><i class="fa fa-check"></i><b>8.2.1</b> Errors</a></li>
+<li class="chapter" data-level="8.2.2" data-path="conditions.html"><a href="conditions.html#warnings"><i class="fa fa-check"></i><b>8.2.2</b> Warnings</a></li>
+<li class="chapter" data-level="8.2.3" data-path="conditions.html"><a href="conditions.html#messages"><i class="fa fa-check"></i><b>8.2.3</b> Messages</a></li>
+<li class="chapter" data-level="8.2.4" data-path="conditions.html"><a href="conditions.html#exercises-24"><i class="fa fa-check"></i><b>8.2.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="conditions.html"><a href="conditions.html#ignoring-conditions"><i class="fa fa-check"></i><b>8.3</b> Ignoring conditions</a></li>
+<li class="chapter" data-level="8.4" data-path="conditions.html"><a href="conditions.html#handling-conditions"><i class="fa fa-check"></i><b>8.4</b> Handling conditions</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="conditions.html"><a href="conditions.html#condition-objects"><i class="fa fa-check"></i><b>8.4.1</b> Condition objects</a></li>
+<li class="chapter" data-level="8.4.2" data-path="conditions.html"><a href="conditions.html#exiting-handlers"><i class="fa fa-check"></i><b>8.4.2</b> Exiting handlers</a></li>
+<li class="chapter" data-level="8.4.3" data-path="conditions.html"><a href="conditions.html#calling-handlers"><i class="fa fa-check"></i><b>8.4.3</b> Calling handlers</a></li>
+<li class="chapter" data-level="8.4.4" data-path="conditions.html"><a href="conditions.html#call-stacks"><i class="fa fa-check"></i><b>8.4.4</b> Call stacks</a></li>
+<li class="chapter" data-level="8.4.5" data-path="conditions.html"><a href="conditions.html#exercises-25"><i class="fa fa-check"></i><b>8.4.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="conditions.html"><a href="conditions.html#custom-conditions"><i class="fa fa-check"></i><b>8.5</b> Custom conditions</a>
+<ul>
+<li class="chapter" data-level="8.5.1" data-path="conditions.html"><a href="conditions.html#motivation"><i class="fa fa-check"></i><b>8.5.1</b> Motivation</a></li>
+<li class="chapter" data-level="8.5.2" data-path="conditions.html"><a href="conditions.html#signalling"><i class="fa fa-check"></i><b>8.5.2</b> Signalling</a></li>
+<li class="chapter" data-level="8.5.3" data-path="conditions.html"><a href="conditions.html#handling"><i class="fa fa-check"></i><b>8.5.3</b> Handling</a></li>
+<li class="chapter" data-level="8.5.4" data-path="conditions.html"><a href="conditions.html#exercises-26"><i class="fa fa-check"></i><b>8.5.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="conditions.html"><a href="conditions.html#condition-applications"><i class="fa fa-check"></i><b>8.6</b> Applications</a>
+<ul>
+<li class="chapter" data-level="8.6.1" data-path="conditions.html"><a href="conditions.html#failure-value"><i class="fa fa-check"></i><b>8.6.1</b> Failure value</a></li>
+<li class="chapter" data-level="8.6.2" data-path="conditions.html"><a href="conditions.html#try-success-failure"><i class="fa fa-check"></i><b>8.6.2</b> Success and failure values</a></li>
+<li class="chapter" data-level="8.6.3" data-path="conditions.html"><a href="conditions.html#resignal"><i class="fa fa-check"></i><b>8.6.3</b> Resignal</a></li>
+<li class="chapter" data-level="8.6.4" data-path="conditions.html"><a href="conditions.html#record"><i class="fa fa-check"></i><b>8.6.4</b> Record</a></li>
+<li class="chapter" data-level="8.6.5" data-path="conditions.html"><a href="conditions.html#no-default-behaviour"><i class="fa fa-check"></i><b>8.6.5</b> No default behaviour</a></li>
+<li class="chapter" data-level="8.6.6" data-path="conditions.html"><a href="conditions.html#exercises-27"><i class="fa fa-check"></i><b>8.6.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="8.7" data-path="conditions.html"><a href="conditions.html#conditions-answers"><i class="fa fa-check"></i><b>8.7</b> Quiz answers</a></li>
+</ul></li>
+<li class="part"><span><b>II Functional programming</b></span></li>
+<li class="chapter" data-level="" data-path="fp.html"><a href="fp.html"><i class="fa fa-check"></i>Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="fp.html"><a href="fp.html#functional-programming-languages"><i class="fa fa-check"></i>Functional programming languages</a></li>
+<li class="chapter" data-level="" data-path="fp.html"><a href="fp.html#functional-style"><i class="fa fa-check"></i>Functional style</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="functionals.html"><a href="functionals.html"><i class="fa fa-check"></i><b>9</b> Functionals</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="functionals.html"><a href="functionals.html#introduction-8"><i class="fa fa-check"></i><b>9.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#outline-7"><i class="fa fa-check"></i>Outline</a></li>
+<li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#prerequisites-3"><i class="fa fa-check"></i>Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="functionals.html"><a href="functionals.html#map"><i class="fa fa-check"></i><b>9.2</b> My first functional: <code>map()</code></a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="functionals.html"><a href="functionals.html#map-atomic"><i class="fa fa-check"></i><b>9.2.1</b> Producing atomic vectors</a></li>
+<li class="chapter" data-level="9.2.2" data-path="functionals.html"><a href="functionals.html#purrr-shortcuts"><i class="fa fa-check"></i><b>9.2.2</b> Anonymous functions and shortcuts</a></li>
+<li class="chapter" data-level="9.2.3" data-path="functionals.html"><a href="functionals.html#passing-arguments"><i class="fa fa-check"></i><b>9.2.3</b> Passing arguments with <code>...</code></a></li>
+<li class="chapter" data-level="9.2.4" data-path="functionals.html"><a href="functionals.html#argument-names"><i class="fa fa-check"></i><b>9.2.4</b> Argument names</a></li>
+<li class="chapter" data-level="9.2.5" data-path="functionals.html"><a href="functionals.html#change-argument"><i class="fa fa-check"></i><b>9.2.5</b> Varying another argument</a></li>
+<li class="chapter" data-level="9.2.6" data-path="functionals.html"><a href="functionals.html#exercises-28"><i class="fa fa-check"></i><b>9.2.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="functionals.html"><a href="functionals.html#purrr-style"><i class="fa fa-check"></i><b>9.3</b> Purrr style</a></li>
+<li class="chapter" data-level="9.4" data-path="functionals.html"><a href="functionals.html#map-variants"><i class="fa fa-check"></i><b>9.4</b> Map variants</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="functionals.html"><a href="functionals.html#modify"><i class="fa fa-check"></i><b>9.4.1</b> Same type of output as input: <code>modify()</code></a></li>
+<li class="chapter" data-level="9.4.2" data-path="functionals.html"><a href="functionals.html#map2"><i class="fa fa-check"></i><b>9.4.2</b> Two inputs: <code>map2()</code> and friends</a></li>
+<li class="chapter" data-level="9.4.3" data-path="functionals.html"><a href="functionals.html#no-outputs-walk-and-friends"><i class="fa fa-check"></i><b>9.4.3</b> No outputs: <code>walk()</code> and friends</a></li>
+<li class="chapter" data-level="9.4.4" data-path="functionals.html"><a href="functionals.html#iterating-over-values-and-indices"><i class="fa fa-check"></i><b>9.4.4</b> Iterating over values and indices</a></li>
+<li class="chapter" data-level="9.4.5" data-path="functionals.html"><a href="functionals.html#pmap"><i class="fa fa-check"></i><b>9.4.5</b> Any number of inputs: <code>pmap()</code> and friends</a></li>
+<li class="chapter" data-level="9.4.6" data-path="functionals.html"><a href="functionals.html#exercises-29"><i class="fa fa-check"></i><b>9.4.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="functionals.html"><a href="functionals.html#reduce"><i class="fa fa-check"></i><b>9.5</b> Reduce family</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="functionals.html"><a href="functionals.html#basics-1"><i class="fa fa-check"></i><b>9.5.1</b> Basics</a></li>
+<li class="chapter" data-level="9.5.2" data-path="functionals.html"><a href="functionals.html#accumulate"><i class="fa fa-check"></i><b>9.5.2</b> Accumulate</a></li>
+<li class="chapter" data-level="9.5.3" data-path="functionals.html"><a href="functionals.html#output-types"><i class="fa fa-check"></i><b>9.5.3</b> Output types</a></li>
+<li class="chapter" data-level="9.5.4" data-path="functionals.html"><a href="functionals.html#multiple-inputs"><i class="fa fa-check"></i><b>9.5.4</b> Multiple inputs</a></li>
+<li class="chapter" data-level="9.5.5" data-path="functionals.html"><a href="functionals.html#map-reduce"><i class="fa fa-check"></i><b>9.5.5</b> Map-reduce</a></li>
+</ul></li>
+<li class="chapter" data-level="9.6" data-path="functionals.html"><a href="functionals.html#predicate-functionals"><i class="fa fa-check"></i><b>9.6</b> Predicate functionals</a>
+<ul>
+<li class="chapter" data-level="9.6.1" data-path="functionals.html"><a href="functionals.html#basics-2"><i class="fa fa-check"></i><b>9.6.1</b> Basics</a></li>
+<li class="chapter" data-level="9.6.2" data-path="functionals.html"><a href="functionals.html#predicate-map"><i class="fa fa-check"></i><b>9.6.2</b> Map variants</a></li>
+<li class="chapter" data-level="9.6.3" data-path="functionals.html"><a href="functionals.html#exercises-30"><i class="fa fa-check"></i><b>9.6.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="9.7" data-path="functionals.html"><a href="functionals.html#base-functionals"><i class="fa fa-check"></i><b>9.7</b> Base functionals</a>
+<ul>
+<li class="chapter" data-level="9.7.1" data-path="functionals.html"><a href="functionals.html#matrices-and-arrays"><i class="fa fa-check"></i><b>9.7.1</b> Matrices and arrays</a></li>
+<li class="chapter" data-level="9.7.2" data-path="functionals.html"><a href="functionals.html#mathematical-concerns"><i class="fa fa-check"></i><b>9.7.2</b> Mathematical concerns</a></li>
+<li class="chapter" data-level="9.7.3" data-path="functionals.html"><a href="functionals.html#exercises-31"><i class="fa fa-check"></i><b>9.7.3</b> Exercises</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="function-factories.html"><a href="function-factories.html"><i class="fa fa-check"></i><b>10</b> Function factories</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="function-factories.html"><a href="function-factories.html#introduction-9"><i class="fa fa-check"></i><b>10.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="function-factories.html"><a href="function-factories.html#outline-8"><i class="fa fa-check"></i>Outline</a></li>
+<li class="chapter" data-level="" data-path="function-factories.html"><a href="function-factories.html#prerequisites-4"><i class="fa fa-check"></i>Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="function-factories.html"><a href="function-factories.html#factory-fundamentals"><i class="fa fa-check"></i><b>10.2</b> Factory fundamentals</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="function-factories.html"><a href="function-factories.html#environments-1"><i class="fa fa-check"></i><b>10.2.1</b> Environments</a></li>
+<li class="chapter" data-level="10.2.2" data-path="function-factories.html"><a href="function-factories.html#diagram-conventions"><i class="fa fa-check"></i><b>10.2.2</b> Diagram conventions</a></li>
+<li class="chapter" data-level="10.2.3" data-path="function-factories.html"><a href="function-factories.html#forcing-evaluation"><i class="fa fa-check"></i><b>10.2.3</b> Forcing evaluation</a></li>
+<li class="chapter" data-level="10.2.4" data-path="function-factories.html"><a href="function-factories.html#stateful-funs"><i class="fa fa-check"></i><b>10.2.4</b> Stateful functions</a></li>
+<li class="chapter" data-level="10.2.5" data-path="function-factories.html"><a href="function-factories.html#factory-pitfalls"><i class="fa fa-check"></i><b>10.2.5</b> Garbage collection</a></li>
+<li class="chapter" data-level="10.2.6" data-path="function-factories.html"><a href="function-factories.html#exercises-32"><i class="fa fa-check"></i><b>10.2.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="function-factories.html"><a href="function-factories.html#graph-fact"><i class="fa fa-check"></i><b>10.3</b> Graphical factories</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="function-factories.html"><a href="function-factories.html#labelling"><i class="fa fa-check"></i><b>10.3.1</b> Labelling</a></li>
+<li class="chapter" data-level="10.3.2" data-path="function-factories.html"><a href="function-factories.html#histogram-bins"><i class="fa fa-check"></i><b>10.3.2</b> Histogram bins</a></li>
+<li class="chapter" data-level="10.3.3" data-path="function-factories.html"><a href="function-factories.html#ggsave"><i class="fa fa-check"></i><b>10.3.3</b> <code>ggsave()</code></a></li>
+<li class="chapter" data-level="10.3.4" data-path="function-factories.html"><a href="function-factories.html#exercises-33"><i class="fa fa-check"></i><b>10.3.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="function-factories.html"><a href="function-factories.html#stat-fact"><i class="fa fa-check"></i><b>10.4</b> Statistical factories</a>
+<ul>
+<li class="chapter" data-level="10.4.1" data-path="function-factories.html"><a href="function-factories.html#box-cox-transformation"><i class="fa fa-check"></i><b>10.4.1</b> Box-Cox transformation</a></li>
+<li class="chapter" data-level="10.4.2" data-path="function-factories.html"><a href="function-factories.html#bootstrap-generators"><i class="fa fa-check"></i><b>10.4.2</b> Bootstrap generators</a></li>
+<li class="chapter" data-level="10.4.3" data-path="function-factories.html"><a href="function-factories.html#MLE"><i class="fa fa-check"></i><b>10.4.3</b> Maximum likelihood estimation</a></li>
+<li class="chapter" data-level="10.4.4" data-path="function-factories.html"><a href="function-factories.html#exercises-34"><i class="fa fa-check"></i><b>10.4.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="function-factories.html"><a href="function-factories.html#functional-factories"><i class="fa fa-check"></i><b>10.5</b> Function factories + functionals</a>
+<ul>
+<li class="chapter" data-level="10.5.1" data-path="function-factories.html"><a href="function-factories.html#exercises-35"><i class="fa fa-check"></i><b>10.5.1</b> Exercises</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="function-operators.html"><a href="function-operators.html"><i class="fa fa-check"></i><b>11</b> Function operators</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="function-operators.html"><a href="function-operators.html#introduction-10"><i class="fa fa-check"></i><b>11.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="function-operators.html"><a href="function-operators.html#outline-9"><i class="fa fa-check"></i>Outline</a></li>
+<li class="chapter" data-level="" data-path="function-operators.html"><a href="function-operators.html#prerequisites-5"><i class="fa fa-check"></i>Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="function-operators.html"><a href="function-operators.html#existing-fos"><i class="fa fa-check"></i><b>11.2</b> Existing function operators</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="function-operators.html"><a href="function-operators.html#safely"><i class="fa fa-check"></i><b>11.2.1</b> Capturing errors with <code>purrr::safely()</code></a></li>
+<li class="chapter" data-level="11.2.2" data-path="function-operators.html"><a href="function-operators.html#memoise"><i class="fa fa-check"></i><b>11.2.2</b> Caching computations with <code>memoise::memoise()</code></a></li>
+<li class="chapter" data-level="11.2.3" data-path="function-operators.html"><a href="function-operators.html#exercises-36"><i class="fa fa-check"></i><b>11.2.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="function-operators.html"><a href="function-operators.html#fo-case-study"><i class="fa fa-check"></i><b>11.3</b> Case study: Creating your own function operators</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="function-operators.html"><a href="function-operators.html#exercises-37"><i class="fa fa-check"></i><b>11.3.1</b> Exercises</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>III Object-oriented programming</b></span></li>
+<li class="chapter" data-level="" data-path="oo.html"><a href="oo.html"><i class="fa fa-check"></i>Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="oo.html"><a href="oo.html#oop-systems"><i class="fa fa-check"></i>OOP systems</a></li>
+<li class="chapter" data-level="" data-path="oo.html"><a href="oo.html#oop-in-r"><i class="fa fa-check"></i>OOP in R</a></li>
+<li class="chapter" data-level="" data-path="oo.html"><a href="oo.html#sloop"><i class="fa fa-check"></i>sloop</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="base-types.html"><a href="base-types.html"><i class="fa fa-check"></i><b>12</b> Base types</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="base-types.html"><a href="base-types.html#introduction-11"><i class="fa fa-check"></i><b>12.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="base-types.html"><a href="base-types.html#outline-10"><i class="fa fa-check"></i>Outline</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="base-types.html"><a href="base-types.html#base-vs-oo"><i class="fa fa-check"></i><b>12.2</b> Base versus OO objects</a></li>
+<li class="chapter" data-level="12.3" data-path="base-types.html"><a href="base-types.html#base-types-2"><i class="fa fa-check"></i><b>12.3</b> Base types</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="base-types.html"><a href="base-types.html#numeric-type"><i class="fa fa-check"></i><b>12.3.1</b> Numeric type</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="s3.html"><a href="s3.html"><i class="fa fa-check"></i><b>13</b> S3</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="s3.html"><a href="s3.html#introduction-12"><i class="fa fa-check"></i><b>13.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#outline-11"><i class="fa fa-check"></i>Outline</a></li>
+<li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#prerequisites-6"><i class="fa fa-check"></i>Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="s3.html"><a href="s3.html#s3-basics"><i class="fa fa-check"></i><b>13.2</b> Basics</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="s3.html"><a href="s3.html#exercises-38"><i class="fa fa-check"></i><b>13.2.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="s3.html"><a href="s3.html#s3-classes"><i class="fa fa-check"></i><b>13.3</b> Classes</a>
+<ul>
+<li class="chapter" data-level="13.3.1" data-path="s3.html"><a href="s3.html#s3-constructor"><i class="fa fa-check"></i><b>13.3.1</b> Constructors</a></li>
+<li class="chapter" data-level="13.3.2" data-path="s3.html"><a href="s3.html#validators"><i class="fa fa-check"></i><b>13.3.2</b> Validators</a></li>
+<li class="chapter" data-level="13.3.3" data-path="s3.html"><a href="s3.html#helpers"><i class="fa fa-check"></i><b>13.3.3</b> Helpers</a></li>
+<li class="chapter" data-level="13.3.4" data-path="s3.html"><a href="s3.html#exercises-39"><i class="fa fa-check"></i><b>13.3.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="s3.html"><a href="s3.html#s3-methods"><i class="fa fa-check"></i><b>13.4</b> Generics and methods</a>
+<ul>
+<li class="chapter" data-level="13.4.1" data-path="s3.html"><a href="s3.html#method-dispatch"><i class="fa fa-check"></i><b>13.4.1</b> Method dispatch</a></li>
+<li class="chapter" data-level="13.4.2" data-path="s3.html"><a href="s3.html#finding-methods"><i class="fa fa-check"></i><b>13.4.2</b> Finding methods</a></li>
+<li class="chapter" data-level="13.4.3" data-path="s3.html"><a href="s3.html#s3-arguments"><i class="fa fa-check"></i><b>13.4.3</b> Creating methods</a></li>
+<li class="chapter" data-level="13.4.4" data-path="s3.html"><a href="s3.html#exercises-40"><i class="fa fa-check"></i><b>13.4.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="13.5" data-path="s3.html"><a href="s3.html#object-styles"><i class="fa fa-check"></i><b>13.5</b> Object styles</a>
+<ul>
+<li class="chapter" data-level="13.5.1" data-path="s3.html"><a href="s3.html#exercises-41"><i class="fa fa-check"></i><b>13.5.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="13.6" data-path="s3.html"><a href="s3.html#s3-inheritance"><i class="fa fa-check"></i><b>13.6</b> Inheritance</a>
+<ul>
+<li class="chapter" data-level="13.6.1" data-path="s3.html"><a href="s3.html#nextmethod"><i class="fa fa-check"></i><b>13.6.1</b> <code>NextMethod()</code></a></li>
+<li class="chapter" data-level="13.6.2" data-path="s3.html"><a href="s3.html#s3-subclassing"><i class="fa fa-check"></i><b>13.6.2</b> Allowing subclassing</a></li>
+<li class="chapter" data-level="13.6.3" data-path="s3.html"><a href="s3.html#exercises-42"><i class="fa fa-check"></i><b>13.6.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="13.7" data-path="s3.html"><a href="s3.html#s3-dispatch"><i class="fa fa-check"></i><b>13.7</b> Dispatch details</a>
+<ul>
+<li class="chapter" data-level="13.7.1" data-path="s3.html"><a href="s3.html#implicit-class"><i class="fa fa-check"></i><b>13.7.1</b> S3 and base types</a></li>
+<li class="chapter" data-level="13.7.2" data-path="s3.html"><a href="s3.html#internal-generics"><i class="fa fa-check"></i><b>13.7.2</b> Internal generics</a></li>
+<li class="chapter" data-level="13.7.3" data-path="s3.html"><a href="s3.html#group-generics"><i class="fa fa-check"></i><b>13.7.3</b> Group generics</a></li>
+<li class="chapter" data-level="13.7.4" data-path="s3.html"><a href="s3.html#double-dispatch"><i class="fa fa-check"></i><b>13.7.4</b> Double dispatch</a></li>
+<li class="chapter" data-level="13.7.5" data-path="s3.html"><a href="s3.html#exercises-43"><i class="fa fa-check"></i><b>13.7.5</b> Exercises</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="r6.html"><a href="r6.html"><i class="fa fa-check"></i><b>14</b> R6</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="r6.html"><a href="r6.html#introduction-13"><i class="fa fa-check"></i><b>14.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="r6.html"><a href="r6.html#outline-12"><i class="fa fa-check"></i>Outline</a></li>
+<li class="chapter" data-level="" data-path="r6.html"><a href="r6.html#prerequisites-7"><i class="fa fa-check"></i>Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="r6.html"><a href="r6.html#r6-classes"><i class="fa fa-check"></i><b>14.2</b> Classes and methods</a>
+<ul>
+<li class="chapter" data-level="14.2.1" data-path="r6.html"><a href="r6.html#method-chaining"><i class="fa fa-check"></i><b>14.2.1</b> Method chaining</a></li>
+<li class="chapter" data-level="14.2.2" data-path="r6.html"><a href="r6.html#r6-important-methods"><i class="fa fa-check"></i><b>14.2.2</b> Important methods</a></li>
+<li class="chapter" data-level="14.2.3" data-path="r6.html"><a href="r6.html#adding-methods-after-creation"><i class="fa fa-check"></i><b>14.2.3</b> Adding methods after creation</a></li>
+<li class="chapter" data-level="14.2.4" data-path="r6.html"><a href="r6.html#inheritance"><i class="fa fa-check"></i><b>14.2.4</b> Inheritance</a></li>
+<li class="chapter" data-level="14.2.5" data-path="r6.html"><a href="r6.html#introspection"><i class="fa fa-check"></i><b>14.2.5</b> Introspection</a></li>
+<li class="chapter" data-level="14.2.6" data-path="r6.html"><a href="r6.html#exercises-44"><i class="fa fa-check"></i><b>14.2.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="14.3" data-path="r6.html"><a href="r6.html#r6-access"><i class="fa fa-check"></i><b>14.3</b> Controlling access</a>
+<ul>
+<li class="chapter" data-level="14.3.1" data-path="r6.html"><a href="r6.html#privacy"><i class="fa fa-check"></i><b>14.3.1</b> Privacy</a></li>
+<li class="chapter" data-level="14.3.2" data-path="r6.html"><a href="r6.html#active-fields"><i class="fa fa-check"></i><b>14.3.2</b> Active fields</a></li>
+<li class="chapter" data-level="14.3.3" data-path="r6.html"><a href="r6.html#exercises-45"><i class="fa fa-check"></i><b>14.3.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="14.4" data-path="r6.html"><a href="r6.html#r6-semantics"><i class="fa fa-check"></i><b>14.4</b> Reference semantics</a>
+<ul>
+<li class="chapter" data-level="14.4.1" data-path="r6.html"><a href="r6.html#reasoning"><i class="fa fa-check"></i><b>14.4.1</b> Reasoning</a></li>
+<li class="chapter" data-level="14.4.2" data-path="r6.html"><a href="r6.html#finalizer"><i class="fa fa-check"></i><b>14.4.2</b> Finalizer</a></li>
+<li class="chapter" data-level="14.4.3" data-path="r6.html"><a href="r6.html#r6-fields"><i class="fa fa-check"></i><b>14.4.3</b> R6 fields</a></li>
+<li class="chapter" data-level="14.4.4" data-path="r6.html"><a href="r6.html#exercises-46"><i class="fa fa-check"></i><b>14.4.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="14.5" data-path="r6.html"><a href="r6.html#why-r6"><i class="fa fa-check"></i><b>14.5</b> Why R6?</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="s4.html"><a href="s4.html"><i class="fa fa-check"></i><b>15</b> S4</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="s4.html"><a href="s4.html#introduction-14"><i class="fa fa-check"></i><b>15.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="s4.html"><a href="s4.html#outline-13"><i class="fa fa-check"></i>Outline</a></li>
+<li class="chapter" data-level="" data-path="s4.html"><a href="s4.html#learning-more"><i class="fa fa-check"></i>Learning more</a></li>
+<li class="chapter" data-level="" data-path="s4.html"><a href="s4.html#prerequisites-8"><i class="fa fa-check"></i>Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="15.2" data-path="s4.html"><a href="s4.html#s4-basics"><i class="fa fa-check"></i><b>15.2</b> Basics</a>
+<ul>
+<li class="chapter" data-level="15.2.1" data-path="s4.html"><a href="s4.html#exercises-47"><i class="fa fa-check"></i><b>15.2.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="15.3" data-path="s4.html"><a href="s4.html#s4-classes"><i class="fa fa-check"></i><b>15.3</b> Classes</a>
+<ul>
+<li class="chapter" data-level="15.3.1" data-path="s4.html"><a href="s4.html#inheritance-1"><i class="fa fa-check"></i><b>15.3.1</b> Inheritance</a></li>
+<li class="chapter" data-level="15.3.2" data-path="s4.html"><a href="s4.html#introspection-1"><i class="fa fa-check"></i><b>15.3.2</b> Introspection</a></li>
+<li class="chapter" data-level="15.3.3" data-path="s4.html"><a href="s4.html#redefinition"><i class="fa fa-check"></i><b>15.3.3</b> Redefinition</a></li>
+<li class="chapter" data-level="15.3.4" data-path="s4.html"><a href="s4.html#helper"><i class="fa fa-check"></i><b>15.3.4</b> Helper</a></li>
+<li class="chapter" data-level="15.3.5" data-path="s4.html"><a href="s4.html#validator"><i class="fa fa-check"></i><b>15.3.5</b> Validator</a></li>
+<li class="chapter" data-level="15.3.6" data-path="s4.html"><a href="s4.html#exercises-48"><i class="fa fa-check"></i><b>15.3.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="15.4" data-path="s4.html"><a href="s4.html#s4-generics"><i class="fa fa-check"></i><b>15.4</b> Generics and methods</a>
+<ul>
+<li class="chapter" data-level="15.4.1" data-path="s4.html"><a href="s4.html#signature"><i class="fa fa-check"></i><b>15.4.1</b> Signature</a></li>
+<li class="chapter" data-level="15.4.2" data-path="s4.html"><a href="s4.html#methods"><i class="fa fa-check"></i><b>15.4.2</b> Methods</a></li>
+<li class="chapter" data-level="15.4.3" data-path="s4.html"><a href="s4.html#show-method"><i class="fa fa-check"></i><b>15.4.3</b> Show method</a></li>
+<li class="chapter" data-level="15.4.4" data-path="s4.html"><a href="s4.html#accessors"><i class="fa fa-check"></i><b>15.4.4</b> Accessors</a></li>
+<li class="chapter" data-level="15.4.5" data-path="s4.html"><a href="s4.html#exercises-49"><i class="fa fa-check"></i><b>15.4.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="15.5" data-path="s4.html"><a href="s4.html#s4-dispatch"><i class="fa fa-check"></i><b>15.5</b> Method dispatch</a>
+<ul>
+<li class="chapter" data-level="15.5.1" data-path="s4.html"><a href="s4.html#single-dispatch"><i class="fa fa-check"></i><b>15.5.1</b> Single dispatch</a></li>
+<li class="chapter" data-level="15.5.2" data-path="s4.html"><a href="s4.html#multiple-inheritance"><i class="fa fa-check"></i><b>15.5.2</b> Multiple inheritance</a></li>
+<li class="chapter" data-level="15.5.3" data-path="s4.html"><a href="s4.html#multiple-dispatch"><i class="fa fa-check"></i><b>15.5.3</b> Multiple dispatch</a></li>
+<li class="chapter" data-level="15.5.4" data-path="s4.html"><a href="s4.html#multiple-dispatch-and-multiple-inheritance"><i class="fa fa-check"></i><b>15.5.4</b> Multiple dispatch and multiple inheritance</a></li>
+<li class="chapter" data-level="15.5.5" data-path="s4.html"><a href="s4.html#exercises-50"><i class="fa fa-check"></i><b>15.5.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="15.6" data-path="s4.html"><a href="s4.html#s4-s3"><i class="fa fa-check"></i><b>15.6</b> S4 and S3</a>
+<ul>
+<li class="chapter" data-level="15.6.1" data-path="s4.html"><a href="s4.html#classes"><i class="fa fa-check"></i><b>15.6.1</b> Classes</a></li>
+<li class="chapter" data-level="15.6.2" data-path="s4.html"><a href="s4.html#generics"><i class="fa fa-check"></i><b>15.6.2</b> Generics</a></li>
+<li class="chapter" data-level="15.6.3" data-path="s4.html"><a href="s4.html#exercises-51"><i class="fa fa-check"></i><b>15.6.3</b> Exercises</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="oo-tradeoffs.html"><a href="oo-tradeoffs.html"><i class="fa fa-check"></i><b>16</b> Trade-offs</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="oo-tradeoffs.html"><a href="oo-tradeoffs.html#introduction-15"><i class="fa fa-check"></i><b>16.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="oo-tradeoffs.html"><a href="oo-tradeoffs.html#outline-14"><i class="fa fa-check"></i>Outline</a></li>
+<li class="chapter" data-level="" data-path="oo-tradeoffs.html"><a href="oo-tradeoffs.html#prerequisites-9"><i class="fa fa-check"></i>Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="16.2" data-path="oo-tradeoffs.html"><a href="oo-tradeoffs.html#s3-s4"><i class="fa fa-check"></i><b>16.2</b> S4 versus S3</a></li>
+<li class="chapter" data-level="16.3" data-path="oo-tradeoffs.html"><a href="oo-tradeoffs.html#s3-r6"><i class="fa fa-check"></i><b>16.3</b> R6 versus S3</a>
+<ul>
+<li class="chapter" data-level="16.3.1" data-path="oo-tradeoffs.html"><a href="oo-tradeoffs.html#namespacing"><i class="fa fa-check"></i><b>16.3.1</b> Namespacing</a></li>
+<li class="chapter" data-level="16.3.2" data-path="oo-tradeoffs.html"><a href="oo-tradeoffs.html#threading-state"><i class="fa fa-check"></i><b>16.3.2</b> Threading state</a></li>
+<li class="chapter" data-level="16.3.3" data-path="oo-tradeoffs.html"><a href="oo-tradeoffs.html#tradeoffs-pipe"><i class="fa fa-check"></i><b>16.3.3</b> Method chaining</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>IV Metaprogramming</b></span></li>
+<li class="chapter" data-level="" data-path="metaprogramming.html"><a href="metaprogramming.html"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="17" data-path="meta-big-picture.html"><a href="meta-big-picture.html"><i class="fa fa-check"></i><b>17</b> Big picture</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="meta-big-picture.html"><a href="meta-big-picture.html#introduction-16"><i class="fa fa-check"></i><b>17.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="meta-big-picture.html"><a href="meta-big-picture.html#outline-15"><i class="fa fa-check"></i>Outline</a></li>
+<li class="chapter" data-level="" data-path="meta-big-picture.html"><a href="meta-big-picture.html#prerequisites-10"><i class="fa fa-check"></i>Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="17.2" data-path="meta-big-picture.html"><a href="meta-big-picture.html#code-data"><i class="fa fa-check"></i><b>17.2</b> Code is data</a></li>
+<li class="chapter" data-level="17.3" data-path="meta-big-picture.html"><a href="meta-big-picture.html#code-tree"><i class="fa fa-check"></i><b>17.3</b> Code is a tree</a></li>
+<li class="chapter" data-level="17.4" data-path="meta-big-picture.html"><a href="meta-big-picture.html#coding-code"><i class="fa fa-check"></i><b>17.4</b> Code can generate code</a></li>
+<li class="chapter" data-level="17.5" data-path="meta-big-picture.html"><a href="meta-big-picture.html#eval-intro"><i class="fa fa-check"></i><b>17.5</b> Evaluation runs code</a></li>
+<li class="chapter" data-level="17.6" data-path="meta-big-picture.html"><a href="meta-big-picture.html#eval-funs"><i class="fa fa-check"></i><b>17.6</b> Customising evaluation with functions</a></li>
+<li class="chapter" data-level="17.7" data-path="meta-big-picture.html"><a href="meta-big-picture.html#eval-data"><i class="fa fa-check"></i><b>17.7</b> Customising evaluation with data</a></li>
+<li class="chapter" data-level="17.8" data-path="meta-big-picture.html"><a href="meta-big-picture.html#quosure-intro"><i class="fa fa-check"></i><b>17.8</b> Quosures</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="expressions.html"><a href="expressions.html"><i class="fa fa-check"></i><b>18</b> Expressions</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="expressions.html"><a href="expressions.html#introduction-17"><i class="fa fa-check"></i><b>18.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="expressions.html"><a href="expressions.html#outline-16"><i class="fa fa-check"></i>Outline</a></li>
+<li class="chapter" data-level="" data-path="expressions.html"><a href="expressions.html#prerequisites-11"><i class="fa fa-check"></i>Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="18.2" data-path="expressions.html"><a href="expressions.html#ast"><i class="fa fa-check"></i><b>18.2</b> Abstract syntax trees</a>
+<ul>
+<li class="chapter" data-level="18.2.1" data-path="expressions.html"><a href="expressions.html#drawing"><i class="fa fa-check"></i><b>18.2.1</b> Drawing</a></li>
+<li class="chapter" data-level="18.2.2" data-path="expressions.html"><a href="expressions.html#non-code-components"><i class="fa fa-check"></i><b>18.2.2</b> Non-code components</a></li>
+<li class="chapter" data-level="18.2.3" data-path="expressions.html"><a href="expressions.html#infix-calls"><i class="fa fa-check"></i><b>18.2.3</b> Infix calls</a></li>
+<li class="chapter" data-level="18.2.4" data-path="expressions.html"><a href="expressions.html#exercises-52"><i class="fa fa-check"></i><b>18.2.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="18.3" data-path="expressions.html"><a href="expressions.html#expression-details"><i class="fa fa-check"></i><b>18.3</b> Expressions</a>
+<ul>
+<li class="chapter" data-level="18.3.1" data-path="expressions.html"><a href="expressions.html#constants"><i class="fa fa-check"></i><b>18.3.1</b> Constants</a></li>
+<li class="chapter" data-level="18.3.2" data-path="expressions.html"><a href="expressions.html#symbols"><i class="fa fa-check"></i><b>18.3.2</b> Symbols</a></li>
+<li class="chapter" data-level="18.3.3" data-path="expressions.html"><a href="expressions.html#calls"><i class="fa fa-check"></i><b>18.3.3</b> Calls</a></li>
+<li class="chapter" data-level="18.3.4" data-path="expressions.html"><a href="expressions.html#summary"><i class="fa fa-check"></i><b>18.3.4</b> Summary</a></li>
+<li class="chapter" data-level="18.3.5" data-path="expressions.html"><a href="expressions.html#exercises-53"><i class="fa fa-check"></i><b>18.3.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="18.4" data-path="expressions.html"><a href="expressions.html#grammar"><i class="fa fa-check"></i><b>18.4</b> Parsing and grammar</a>
+<ul>
+<li class="chapter" data-level="18.4.1" data-path="expressions.html"><a href="expressions.html#operator-precedence"><i class="fa fa-check"></i><b>18.4.1</b> Operator precedence</a></li>
+<li class="chapter" data-level="18.4.2" data-path="expressions.html"><a href="expressions.html#associativity"><i class="fa fa-check"></i><b>18.4.2</b> Associativity</a></li>
+<li class="chapter" data-level="18.4.3" data-path="expressions.html"><a href="expressions.html#parsing"><i class="fa fa-check"></i><b>18.4.3</b> Parsing and deparsing</a></li>
+<li class="chapter" data-level="18.4.4" data-path="expressions.html"><a href="expressions.html#exercises-54"><i class="fa fa-check"></i><b>18.4.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="18.5" data-path="expressions.html"><a href="expressions.html#ast-funs"><i class="fa fa-check"></i><b>18.5</b> Walking AST with recursive functions</a>
+<ul>
+<li class="chapter" data-level="18.5.1" data-path="expressions.html"><a href="expressions.html#finding-f-and-t"><i class="fa fa-check"></i><b>18.5.1</b> Finding F and T</a></li>
+<li class="chapter" data-level="18.5.2" data-path="expressions.html"><a href="expressions.html#finding-all-variables-created-by-assignment"><i class="fa fa-check"></i><b>18.5.2</b> Finding all variables created by assignment</a></li>
+<li class="chapter" data-level="18.5.3" data-path="expressions.html"><a href="expressions.html#exercises-55"><i class="fa fa-check"></i><b>18.5.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="18.6" data-path="expressions.html"><a href="expressions.html#expression-special"><i class="fa fa-check"></i><b>18.6</b> Specialised data structures</a>
+<ul>
+<li class="chapter" data-level="18.6.1" data-path="expressions.html"><a href="expressions.html#pairlists"><i class="fa fa-check"></i><b>18.6.1</b> Pairlists</a></li>
+<li class="chapter" data-level="18.6.2" data-path="expressions.html"><a href="expressions.html#empty-symbol"><i class="fa fa-check"></i><b>18.6.2</b> Missing arguments</a></li>
+<li class="chapter" data-level="18.6.3" data-path="expressions.html"><a href="expressions.html#expression-vectors"><i class="fa fa-check"></i><b>18.6.3</b> Expression vectors</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="quasiquotation.html"><a href="quasiquotation.html"><i class="fa fa-check"></i><b>19</b> Quasiquotation</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="quasiquotation.html"><a href="quasiquotation.html#introduction-18"><i class="fa fa-check"></i><b>19.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#outline-17"><i class="fa fa-check"></i>Outline</a></li>
+<li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#prerequisites-12"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#related-work"><i class="fa fa-check"></i>Related work</a></li>
+</ul></li>
+<li class="chapter" data-level="19.2" data-path="quasiquotation.html"><a href="quasiquotation.html#quasi-motivation"><i class="fa fa-check"></i><b>19.2</b> Motivation</a>
+<ul>
+<li class="chapter" data-level="19.2.1" data-path="quasiquotation.html"><a href="quasiquotation.html#vocabulary"><i class="fa fa-check"></i><b>19.2.1</b> Vocabulary</a></li>
+<li class="chapter" data-level="19.2.2" data-path="quasiquotation.html"><a href="quasiquotation.html#exercises-56"><i class="fa fa-check"></i><b>19.2.2</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="19.3" data-path="quasiquotation.html"><a href="quasiquotation.html#quoting"><i class="fa fa-check"></i><b>19.3</b> Quoting</a>
+<ul>
+<li class="chapter" data-level="19.3.1" data-path="quasiquotation.html"><a href="quasiquotation.html#capturing-expressions"><i class="fa fa-check"></i><b>19.3.1</b> Capturing expressions</a></li>
+<li class="chapter" data-level="19.3.2" data-path="quasiquotation.html"><a href="quasiquotation.html#capturing-symbols"><i class="fa fa-check"></i><b>19.3.2</b> Capturing symbols</a></li>
+<li class="chapter" data-level="19.3.3" data-path="quasiquotation.html"><a href="quasiquotation.html#with-base-r"><i class="fa fa-check"></i><b>19.3.3</b> With base R</a></li>
+<li class="chapter" data-level="19.3.4" data-path="quasiquotation.html"><a href="quasiquotation.html#substitution"><i class="fa fa-check"></i><b>19.3.4</b> Substitution</a></li>
+<li class="chapter" data-level="19.3.5" data-path="quasiquotation.html"><a href="quasiquotation.html#summary-1"><i class="fa fa-check"></i><b>19.3.5</b> Summary</a></li>
+<li class="chapter" data-level="19.3.6" data-path="quasiquotation.html"><a href="quasiquotation.html#exercises-57"><i class="fa fa-check"></i><b>19.3.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="19.4" data-path="quasiquotation.html"><a href="quasiquotation.html#unquoting"><i class="fa fa-check"></i><b>19.4</b> Unquoting</a>
+<ul>
+<li class="chapter" data-level="19.4.1" data-path="quasiquotation.html"><a href="quasiquotation.html#unquoting-one-argument"><i class="fa fa-check"></i><b>19.4.1</b> Unquoting one argument</a></li>
+<li class="chapter" data-level="19.4.2" data-path="quasiquotation.html"><a href="quasiquotation.html#unquoting-a-function"><i class="fa fa-check"></i><b>19.4.2</b> Unquoting a function</a></li>
+<li class="chapter" data-level="19.4.3" data-path="quasiquotation.html"><a href="quasiquotation.html#unquote-missing"><i class="fa fa-check"></i><b>19.4.3</b> Unquoting a missing argument</a></li>
+<li class="chapter" data-level="19.4.4" data-path="quasiquotation.html"><a href="quasiquotation.html#unquoting-in-special-forms"><i class="fa fa-check"></i><b>19.4.4</b> Unquoting in special forms</a></li>
+<li class="chapter" data-level="19.4.5" data-path="quasiquotation.html"><a href="quasiquotation.html#unquoting-many-arguments"><i class="fa fa-check"></i><b>19.4.5</b> Unquoting many arguments</a></li>
+<li class="chapter" data-level="19.4.6" data-path="quasiquotation.html"><a href="quasiquotation.html#the-polite-fiction-of"><i class="fa fa-check"></i><b>19.4.6</b> The polite fiction of <code>!!</code></a></li>
+<li class="chapter" data-level="19.4.7" data-path="quasiquotation.html"><a href="quasiquotation.html#non-standard-ast"><i class="fa fa-check"></i><b>19.4.7</b> Non-standard ASTs</a></li>
+<li class="chapter" data-level="19.4.8" data-path="quasiquotation.html"><a href="quasiquotation.html#exercises-58"><i class="fa fa-check"></i><b>19.4.8</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="19.5" data-path="quasiquotation.html"><a href="quasiquotation.html#base-nonquote"><i class="fa fa-check"></i><b>19.5</b> Non-quoting</a></li>
+<li class="chapter" data-level="19.6" data-path="quasiquotation.html"><a href="quasiquotation.html#tidy-dots"><i class="fa fa-check"></i><b>19.6</b> <code>...</code> (dot-dot-dot)</a>
+<ul>
+<li class="chapter" data-level="19.6.1" data-path="quasiquotation.html"><a href="quasiquotation.html#examples"><i class="fa fa-check"></i><b>19.6.1</b> Examples</a></li>
+<li class="chapter" data-level="19.6.2" data-path="quasiquotation.html"><a href="quasiquotation.html#exec"><i class="fa fa-check"></i><b>19.6.2</b> <code>exec()</code></a></li>
+<li class="chapter" data-level="19.6.3" data-path="quasiquotation.html"><a href="quasiquotation.html#dots_list"><i class="fa fa-check"></i><b>19.6.3</b> <code>dots_list()</code></a></li>
+<li class="chapter" data-level="19.6.4" data-path="quasiquotation.html"><a href="quasiquotation.html#do-call"><i class="fa fa-check"></i><b>19.6.4</b> With base R</a></li>
+<li class="chapter" data-level="19.6.5" data-path="quasiquotation.html"><a href="quasiquotation.html#exercises-59"><i class="fa fa-check"></i><b>19.6.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="19.7" data-path="quasiquotation.html"><a href="quasiquotation.html#expr-case-studies"><i class="fa fa-check"></i><b>19.7</b> Case studies</a>
+<ul>
+<li class="chapter" data-level="19.7.1" data-path="quasiquotation.html"><a href="quasiquotation.html#lobstrast"><i class="fa fa-check"></i><b>19.7.1</b> <code>lobstr::ast()</code></a></li>
+<li class="chapter" data-level="19.7.2" data-path="quasiquotation.html"><a href="quasiquotation.html#map-reduce-to-generate-code"><i class="fa fa-check"></i><b>19.7.2</b> Map-reduce to generate code</a></li>
+<li class="chapter" data-level="19.7.3" data-path="quasiquotation.html"><a href="quasiquotation.html#slicing-an-array"><i class="fa fa-check"></i><b>19.7.3</b> Slicing an array</a></li>
+<li class="chapter" data-level="19.7.4" data-path="quasiquotation.html"><a href="quasiquotation.html#new-function"><i class="fa fa-check"></i><b>19.7.4</b> Creating functions</a></li>
+<li class="chapter" data-level="19.7.5" data-path="quasiquotation.html"><a href="quasiquotation.html#exercises-60"><i class="fa fa-check"></i><b>19.7.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="19.8" data-path="quasiquotation.html"><a href="quasiquotation.html#history"><i class="fa fa-check"></i><b>19.8</b> History</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="evaluation.html"><a href="evaluation.html"><i class="fa fa-check"></i><b>20</b> Evaluation</a>
+<ul>
+<li class="chapter" data-level="20.1" data-path="evaluation.html"><a href="evaluation.html#introduction-19"><i class="fa fa-check"></i><b>20.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="evaluation.html"><a href="evaluation.html#outline-18"><i class="fa fa-check"></i>Outline</a></li>
+<li class="chapter" data-level="" data-path="evaluation.html"><a href="evaluation.html#prerequisites-13"><i class="fa fa-check"></i>Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="20.2" data-path="evaluation.html"><a href="evaluation.html#eval"><i class="fa fa-check"></i><b>20.2</b> Evaluation basics</a>
+<ul>
+<li class="chapter" data-level="20.2.1" data-path="evaluation.html"><a href="evaluation.html#application-local"><i class="fa fa-check"></i><b>20.2.1</b> Application: <code>local()</code></a></li>
+<li class="chapter" data-level="20.2.2" data-path="evaluation.html"><a href="evaluation.html#application-source"><i class="fa fa-check"></i><b>20.2.2</b> Application: <code>source()</code></a></li>
+<li class="chapter" data-level="20.2.3" data-path="evaluation.html"><a href="evaluation.html#gotcha-function"><i class="fa fa-check"></i><b>20.2.3</b> Gotcha: <code>function()</code></a></li>
+<li class="chapter" data-level="20.2.4" data-path="evaluation.html"><a href="evaluation.html#exercises-61"><i class="fa fa-check"></i><b>20.2.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="20.3" data-path="evaluation.html"><a href="evaluation.html#quosures"><i class="fa fa-check"></i><b>20.3</b> Quosures</a>
+<ul>
+<li class="chapter" data-level="20.3.1" data-path="evaluation.html"><a href="evaluation.html#creating"><i class="fa fa-check"></i><b>20.3.1</b> Creating</a></li>
+<li class="chapter" data-level="20.3.2" data-path="evaluation.html"><a href="evaluation.html#evaluating"><i class="fa fa-check"></i><b>20.3.2</b> Evaluating</a></li>
+<li class="chapter" data-level="20.3.3" data-path="evaluation.html"><a href="evaluation.html#quosure-dots"><i class="fa fa-check"></i><b>20.3.3</b> Dots</a></li>
+<li class="chapter" data-level="20.3.4" data-path="evaluation.html"><a href="evaluation.html#quosure-impl"><i class="fa fa-check"></i><b>20.3.4</b> Under the hood</a></li>
+<li class="chapter" data-level="20.3.5" data-path="evaluation.html"><a href="evaluation.html#nested-quosures"><i class="fa fa-check"></i><b>20.3.5</b> Nested quosures</a></li>
+<li class="chapter" data-level="20.3.6" data-path="evaluation.html"><a href="evaluation.html#exercises-62"><i class="fa fa-check"></i><b>20.3.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="20.4" data-path="evaluation.html"><a href="evaluation.html#data-masks"><i class="fa fa-check"></i><b>20.4</b> Data masks</a>
+<ul>
+<li class="chapter" data-level="20.4.1" data-path="evaluation.html"><a href="evaluation.html#basics-3"><i class="fa fa-check"></i><b>20.4.1</b> Basics</a></li>
+<li class="chapter" data-level="20.4.2" data-path="evaluation.html"><a href="evaluation.html#pronouns"><i class="fa fa-check"></i><b>20.4.2</b> Pronouns</a></li>
+<li class="chapter" data-level="20.4.3" data-path="evaluation.html"><a href="evaluation.html#subset"><i class="fa fa-check"></i><b>20.4.3</b> Application: <code>subset()</code></a></li>
+<li class="chapter" data-level="20.4.4" data-path="evaluation.html"><a href="evaluation.html#application-transform"><i class="fa fa-check"></i><b>20.4.4</b> Application: transform</a></li>
+<li class="chapter" data-level="20.4.5" data-path="evaluation.html"><a href="evaluation.html#select"><i class="fa fa-check"></i><b>20.4.5</b> Application: <code>select()</code></a></li>
+<li class="chapter" data-level="20.4.6" data-path="evaluation.html"><a href="evaluation.html#exercises-63"><i class="fa fa-check"></i><b>20.4.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="20.5" data-path="evaluation.html"><a href="evaluation.html#tidy-evaluation"><i class="fa fa-check"></i><b>20.5</b> Using tidy evaluation</a>
+<ul>
+<li class="chapter" data-level="20.5.1" data-path="evaluation.html"><a href="evaluation.html#quoting-and-unquoting"><i class="fa fa-check"></i><b>20.5.1</b> Quoting and unquoting</a></li>
+<li class="chapter" data-level="20.5.2" data-path="evaluation.html"><a href="evaluation.html#handling-ambiguity"><i class="fa fa-check"></i><b>20.5.2</b> Handling ambiguity</a></li>
+<li class="chapter" data-level="20.5.3" data-path="evaluation.html"><a href="evaluation.html#quoting-and-ambiguity"><i class="fa fa-check"></i><b>20.5.3</b> Quoting and ambiguity</a></li>
+<li class="chapter" data-level="20.5.4" data-path="evaluation.html"><a href="evaluation.html#exercises-64"><i class="fa fa-check"></i><b>20.5.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="20.6" data-path="evaluation.html"><a href="evaluation.html#base-evaluation"><i class="fa fa-check"></i><b>20.6</b> Base evaluation</a>
+<ul>
+<li class="chapter" data-level="20.6.1" data-path="evaluation.html"><a href="evaluation.html#substitute"><i class="fa fa-check"></i><b>20.6.1</b> <code>substitute()</code></a></li>
+<li class="chapter" data-level="20.6.2" data-path="evaluation.html"><a href="evaluation.html#match.call"><i class="fa fa-check"></i><b>20.6.2</b> <code>match.call()</code></a></li>
+<li class="chapter" data-level="20.6.3" data-path="evaluation.html"><a href="evaluation.html#exercises-65"><i class="fa fa-check"></i><b>20.6.3</b> Exercises</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="translation.html"><a href="translation.html"><i class="fa fa-check"></i><b>21</b> Translating R code</a>
+<ul>
+<li class="chapter" data-level="21.1" data-path="translation.html"><a href="translation.html#introduction-20"><i class="fa fa-check"></i><b>21.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="translation.html"><a href="translation.html#outline-19"><i class="fa fa-check"></i>Outline</a></li>
+<li class="chapter" data-level="" data-path="translation.html"><a href="translation.html#prerequisites-14"><i class="fa fa-check"></i>Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="21.2" data-path="translation.html"><a href="translation.html#html"><i class="fa fa-check"></i><b>21.2</b> HTML</a>
+<ul>
+<li class="chapter" data-level="21.2.1" data-path="translation.html"><a href="translation.html#goal"><i class="fa fa-check"></i><b>21.2.1</b> Goal</a></li>
+<li class="chapter" data-level="21.2.2" data-path="translation.html"><a href="translation.html#escaping"><i class="fa fa-check"></i><b>21.2.2</b> Escaping</a></li>
+<li class="chapter" data-level="21.2.3" data-path="translation.html"><a href="translation.html#basic-tag-functions"><i class="fa fa-check"></i><b>21.2.3</b> Basic tag functions</a></li>
+<li class="chapter" data-level="21.2.4" data-path="translation.html"><a href="translation.html#tag-functions"><i class="fa fa-check"></i><b>21.2.4</b> Tag functions</a></li>
+<li class="chapter" data-level="21.2.5" data-path="translation.html"><a href="translation.html#html-env"><i class="fa fa-check"></i><b>21.2.5</b> Processing all tags</a></li>
+<li class="chapter" data-level="21.2.6" data-path="translation.html"><a href="translation.html#exercises-66"><i class="fa fa-check"></i><b>21.2.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="21.3" data-path="translation.html"><a href="translation.html#latex"><i class="fa fa-check"></i><b>21.3</b> LaTeX</a>
+<ul>
+<li class="chapter" data-level="21.3.1" data-path="translation.html"><a href="translation.html#latex-mathematics"><i class="fa fa-check"></i><b>21.3.1</b> LaTeX mathematics</a></li>
+<li class="chapter" data-level="21.3.2" data-path="translation.html"><a href="translation.html#goal-1"><i class="fa fa-check"></i><b>21.3.2</b> Goal</a></li>
+<li class="chapter" data-level="21.3.3" data-path="translation.html"><a href="translation.html#to_math"><i class="fa fa-check"></i><b>21.3.3</b> <code>to_math</code>()</a></li>
+<li class="chapter" data-level="21.3.4" data-path="translation.html"><a href="translation.html#known-symbols"><i class="fa fa-check"></i><b>21.3.4</b> Known symbols</a></li>
+<li class="chapter" data-level="21.3.5" data-path="translation.html"><a href="translation.html#unknown-symbols"><i class="fa fa-check"></i><b>21.3.5</b> Unknown symbols</a></li>
+<li class="chapter" data-level="21.3.6" data-path="translation.html"><a href="translation.html#known-functions"><i class="fa fa-check"></i><b>21.3.6</b> Known functions</a></li>
+<li class="chapter" data-level="21.3.7" data-path="translation.html"><a href="translation.html#unknown-functions"><i class="fa fa-check"></i><b>21.3.7</b> Unknown functions</a></li>
+<li class="chapter" data-level="21.3.8" data-path="translation.html"><a href="translation.html#exercises-67"><i class="fa fa-check"></i><b>21.3.8</b> Exercises</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>V Techniques</b></span></li>
+<li class="chapter" data-level="" data-path="techniques.html"><a href="techniques.html"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="22" data-path="debugging.html"><a href="debugging.html"><i class="fa fa-check"></i><b>22</b> Debugging</a>
+<ul>
+<li class="chapter" data-level="22.1" data-path="debugging.html"><a href="debugging.html#introduction-21"><i class="fa fa-check"></i><b>22.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="debugging.html"><a href="debugging.html#outline-20"><i class="fa fa-check"></i>Outline</a></li>
+</ul></li>
+<li class="chapter" data-level="22.2" data-path="debugging.html"><a href="debugging.html#debugging-strategy"><i class="fa fa-check"></i><b>22.2</b> Overall approach</a></li>
+<li class="chapter" data-level="22.3" data-path="debugging.html"><a href="debugging.html#traceback"><i class="fa fa-check"></i><b>22.3</b> Locating errors</a>
+<ul>
+<li class="chapter" data-level="22.3.1" data-path="debugging.html"><a href="debugging.html#debug-lazy"><i class="fa fa-check"></i><b>22.3.1</b> Lazy evaluation</a></li>
+</ul></li>
+<li class="chapter" data-level="22.4" data-path="debugging.html"><a href="debugging.html#browser"><i class="fa fa-check"></i><b>22.4</b> Interactive debugger</a>
+<ul>
+<li class="chapter" data-level="22.4.1" data-path="debugging.html"><a href="debugging.html#browser-commands"><i class="fa fa-check"></i><b>22.4.1</b> <code>browser()</code> commands</a></li>
+<li class="chapter" data-level="22.4.2" data-path="debugging.html"><a href="debugging.html#alternatives"><i class="fa fa-check"></i><b>22.4.2</b> Alternatives</a></li>
+<li class="chapter" data-level="22.4.3" data-path="debugging.html"><a href="debugging.html#debug-compiled"><i class="fa fa-check"></i><b>22.4.3</b> Compiled code</a></li>
+</ul></li>
+<li class="chapter" data-level="22.5" data-path="debugging.html"><a href="debugging.html#non-interactive-debugging"><i class="fa fa-check"></i><b>22.5</b> Non-interactive debugging</a>
+<ul>
+<li class="chapter" data-level="22.5.1" data-path="debugging.html"><a href="debugging.html#dump.frames"><i class="fa fa-check"></i><b>22.5.1</b> <code>dump.frames()</code></a></li>
+<li class="chapter" data-level="22.5.2" data-path="debugging.html"><a href="debugging.html#print-debugging"><i class="fa fa-check"></i><b>22.5.2</b> Print debugging</a></li>
+<li class="chapter" data-level="22.5.3" data-path="debugging.html"><a href="debugging.html#rmarkdown"><i class="fa fa-check"></i><b>22.5.3</b> RMarkdown</a></li>
+</ul></li>
+<li class="chapter" data-level="22.6" data-path="debugging.html"><a href="debugging.html#non-error-failures"><i class="fa fa-check"></i><b>22.6</b> Non-error failures</a></li>
+</ul></li>
+<li class="chapter" data-level="23" data-path="perf-measure.html"><a href="perf-measure.html"><i class="fa fa-check"></i><b>23</b> Measuring performance</a>
+<ul>
+<li class="chapter" data-level="23.1" data-path="perf-measure.html"><a href="perf-measure.html#introduction-22"><i class="fa fa-check"></i><b>23.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="perf-measure.html"><a href="perf-measure.html#outline-21"><i class="fa fa-check"></i>Outline</a></li>
+<li class="chapter" data-level="" data-path="perf-measure.html"><a href="perf-measure.html#prerequisites-15"><i class="fa fa-check"></i>Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="23.2" data-path="perf-measure.html"><a href="perf-measure.html#profiling"><i class="fa fa-check"></i><b>23.2</b> Profiling</a>
+<ul>
+<li class="chapter" data-level="23.2.1" data-path="perf-measure.html"><a href="perf-measure.html#visualising-profiles"><i class="fa fa-check"></i><b>23.2.1</b> Visualising profiles</a></li>
+<li class="chapter" data-level="23.2.2" data-path="perf-measure.html"><a href="perf-measure.html#memory-profiling"><i class="fa fa-check"></i><b>23.2.2</b> Memory profiling</a></li>
+<li class="chapter" data-level="23.2.3" data-path="perf-measure.html"><a href="perf-measure.html#limitations"><i class="fa fa-check"></i><b>23.2.3</b> Limitations</a></li>
+<li class="chapter" data-level="23.2.4" data-path="perf-measure.html"><a href="perf-measure.html#exercises-68"><i class="fa fa-check"></i><b>23.2.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="23.3" data-path="perf-measure.html"><a href="perf-measure.html#microbenchmarking"><i class="fa fa-check"></i><b>23.3</b> Microbenchmarking</a>
+<ul>
+<li class="chapter" data-level="23.3.1" data-path="perf-measure.html"><a href="perf-measure.html#benchmark-results"><i class="fa fa-check"></i><b>23.3.1</b> <code>bench::mark()</code> results</a></li>
+<li class="chapter" data-level="23.3.2" data-path="perf-measure.html"><a href="perf-measure.html#interpreting-results"><i class="fa fa-check"></i><b>23.3.2</b> Interpreting results</a></li>
+<li class="chapter" data-level="23.3.3" data-path="perf-measure.html"><a href="perf-measure.html#exercises-69"><i class="fa fa-check"></i><b>23.3.3</b> Exercises</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="24" data-path="perf-improve.html"><a href="perf-improve.html"><i class="fa fa-check"></i><b>24</b> Improving performance</a>
+<ul>
+<li class="chapter" data-level="24.1" data-path="perf-improve.html"><a href="perf-improve.html#introduction-23"><i class="fa fa-check"></i><b>24.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="perf-improve.html"><a href="perf-improve.html#outline-22"><i class="fa fa-check"></i>Outline</a></li>
+<li class="chapter" data-level="" data-path="perf-improve.html"><a href="perf-improve.html#prerequisites-16"><i class="fa fa-check"></i>Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="24.2" data-path="perf-improve.html"><a href="perf-improve.html#code-organisation"><i class="fa fa-check"></i><b>24.2</b> Code organisation</a></li>
+<li class="chapter" data-level="24.3" data-path="perf-improve.html"><a href="perf-improve.html#already-solved"><i class="fa fa-check"></i><b>24.3</b> Checking for existing solutions</a>
+<ul>
+<li class="chapter" data-level="24.3.1" data-path="perf-improve.html"><a href="perf-improve.html#exercises-70"><i class="fa fa-check"></i><b>24.3.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="24.4" data-path="perf-improve.html"><a href="perf-improve.html#be-lazy"><i class="fa fa-check"></i><b>24.4</b> Doing as little as possible</a>
+<ul>
+<li class="chapter" data-level="24.4.1" data-path="perf-improve.html"><a href="perf-improve.html#mean"><i class="fa fa-check"></i><b>24.4.1</b> <code>mean()</code></a></li>
+<li class="chapter" data-level="24.4.2" data-path="perf-improve.html"><a href="perf-improve.html#as.data.frame"><i class="fa fa-check"></i><b>24.4.2</b> <code>as.data.frame()</code></a></li>
+<li class="chapter" data-level="24.4.3" data-path="perf-improve.html"><a href="perf-improve.html#exercises-71"><i class="fa fa-check"></i><b>24.4.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="24.5" data-path="perf-improve.html"><a href="perf-improve.html#vectorise"><i class="fa fa-check"></i><b>24.5</b> Vectorise</a>
+<ul>
+<li class="chapter" data-level="24.5.1" data-path="perf-improve.html"><a href="perf-improve.html#exercises-72"><i class="fa fa-check"></i><b>24.5.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="24.6" data-path="perf-improve.html"><a href="perf-improve.html#avoid-copies"><i class="fa fa-check"></i><b>24.6</b> Avoiding copies</a></li>
+<li class="chapter" data-level="24.7" data-path="perf-improve.html"><a href="perf-improve.html#t-test"><i class="fa fa-check"></i><b>24.7</b> Case study: t-test</a></li>
+<li class="chapter" data-level="24.8" data-path="perf-improve.html"><a href="perf-improve.html#more-techniques"><i class="fa fa-check"></i><b>24.8</b> Other techniques</a></li>
+</ul></li>
+<li class="chapter" data-level="25" data-path="rcpp.html"><a href="rcpp.html"><i class="fa fa-check"></i><b>25</b> Rewriting R code in C++</a>
+<ul>
+<li class="chapter" data-level="25.1" data-path="rcpp.html"><a href="rcpp.html#introduction-24"><i class="fa fa-check"></i><b>25.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="rcpp.html"><a href="rcpp.html#outline-23"><i class="fa fa-check"></i>Outline</a></li>
+<li class="chapter" data-level="" data-path="rcpp.html"><a href="rcpp.html#prerequisites-17"><i class="fa fa-check"></i>Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="25.2" data-path="rcpp.html"><a href="rcpp.html#rcpp-intro"><i class="fa fa-check"></i><b>25.2</b> Getting started with C++</a>
+<ul>
+<li class="chapter" data-level="25.2.1" data-path="rcpp.html"><a href="rcpp.html#no-inputs-scalar-output"><i class="fa fa-check"></i><b>25.2.1</b> No inputs, scalar output</a></li>
+<li class="chapter" data-level="25.2.2" data-path="rcpp.html"><a href="rcpp.html#scalar-input-scalar-output"><i class="fa fa-check"></i><b>25.2.2</b> Scalar input, scalar output</a></li>
+<li class="chapter" data-level="25.2.3" data-path="rcpp.html"><a href="rcpp.html#vector-input-scalar-output"><i class="fa fa-check"></i><b>25.2.3</b> Vector input, scalar output</a></li>
+<li class="chapter" data-level="25.2.4" data-path="rcpp.html"><a href="rcpp.html#vector-input-vector-output"><i class="fa fa-check"></i><b>25.2.4</b> Vector input, vector output</a></li>
+<li class="chapter" data-level="25.2.5" data-path="rcpp.html"><a href="rcpp.html#sourceCpp"><i class="fa fa-check"></i><b>25.2.5</b> Using sourceCpp</a></li>
+<li class="chapter" data-level="25.2.6" data-path="rcpp.html"><a href="rcpp.html#exercise-started"><i class="fa fa-check"></i><b>25.2.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="25.3" data-path="rcpp.html"><a href="rcpp.html#rcpp-classes"><i class="fa fa-check"></i><b>25.3</b> Other classes</a>
+<ul>
+<li class="chapter" data-level="25.3.1" data-path="rcpp.html"><a href="rcpp.html#lists-and-data-frames"><i class="fa fa-check"></i><b>25.3.1</b> Lists and data frames</a></li>
+<li class="chapter" data-level="25.3.2" data-path="rcpp.html"><a href="rcpp.html#functions-rcpp"><i class="fa fa-check"></i><b>25.3.2</b> Functions</a></li>
+<li class="chapter" data-level="25.3.3" data-path="rcpp.html"><a href="rcpp.html#attributes-1"><i class="fa fa-check"></i><b>25.3.3</b> Attributes</a></li>
+</ul></li>
+<li class="chapter" data-level="25.4" data-path="rcpp.html"><a href="rcpp.html#rcpp-na"><i class="fa fa-check"></i><b>25.4</b> Missing values</a>
+<ul>
+<li class="chapter" data-level="25.4.1" data-path="rcpp.html"><a href="rcpp.html#scalars-1"><i class="fa fa-check"></i><b>25.4.1</b> Scalars</a></li>
+<li class="chapter" data-level="25.4.2" data-path="rcpp.html"><a href="rcpp.html#strings"><i class="fa fa-check"></i><b>25.4.2</b> Strings</a></li>
+<li class="chapter" data-level="25.4.3" data-path="rcpp.html"><a href="rcpp.html#boolean"><i class="fa fa-check"></i><b>25.4.3</b> Boolean</a></li>
+<li class="chapter" data-level="25.4.4" data-path="rcpp.html"><a href="rcpp.html#vectors-rcpp"><i class="fa fa-check"></i><b>25.4.4</b> Vectors</a></li>
+<li class="chapter" data-level="25.4.5" data-path="rcpp.html"><a href="rcpp.html#exercises-73"><i class="fa fa-check"></i><b>25.4.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="25.5" data-path="rcpp.html"><a href="rcpp.html#stl"><i class="fa fa-check"></i><b>25.5</b> Standard Template Library</a>
+<ul>
+<li class="chapter" data-level="25.5.1" data-path="rcpp.html"><a href="rcpp.html#using-iterators"><i class="fa fa-check"></i><b>25.5.1</b> Using iterators</a></li>
+<li class="chapter" data-level="25.5.2" data-path="rcpp.html"><a href="rcpp.html#algorithms"><i class="fa fa-check"></i><b>25.5.2</b> Algorithms</a></li>
+<li class="chapter" data-level="25.5.3" data-path="rcpp.html"><a href="rcpp.html#data-structures-rcpp"><i class="fa fa-check"></i><b>25.5.3</b> Data structures</a></li>
+<li class="chapter" data-level="25.5.4" data-path="rcpp.html"><a href="rcpp.html#vectors-stl"><i class="fa fa-check"></i><b>25.5.4</b> Vectors</a></li>
+<li class="chapter" data-level="25.5.5" data-path="rcpp.html"><a href="rcpp.html#sets"><i class="fa fa-check"></i><b>25.5.5</b> Sets</a></li>
+<li class="chapter" data-level="25.5.6" data-path="rcpp.html"><a href="rcpp.html#map-1"><i class="fa fa-check"></i><b>25.5.6</b> Map</a></li>
+<li class="chapter" data-level="25.5.7" data-path="rcpp.html"><a href="rcpp.html#exercises-74"><i class="fa fa-check"></i><b>25.5.7</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="25.6" data-path="rcpp.html"><a href="rcpp.html#rcpp-case-studies"><i class="fa fa-check"></i><b>25.6</b> Case studies</a>
+<ul>
+<li class="chapter" data-level="25.6.1" data-path="rcpp.html"><a href="rcpp.html#gibbs-sampler"><i class="fa fa-check"></i><b>25.6.1</b> Gibbs sampler</a></li>
+<li class="chapter" data-level="25.6.2" data-path="rcpp.html"><a href="rcpp.html#r-vectorisation-versus-c-vectorisation"><i class="fa fa-check"></i><b>25.6.2</b> R vectorisation versus C++ vectorisation</a></li>
+</ul></li>
+<li class="chapter" data-level="25.7" data-path="rcpp.html"><a href="rcpp.html#rcpp-package"><i class="fa fa-check"></i><b>25.7</b> Using Rcpp in a package</a></li>
+<li class="chapter" data-level="25.8" data-path="rcpp.html"><a href="rcpp.html#rcpp-more"><i class="fa fa-check"></i><b>25.8</b> Learning more</a></li>
+<li class="chapter" data-level="25.9" data-path="rcpp.html"><a href="rcpp.html#acknowledgments"><i class="fa fa-check"></i><b>25.9</b> Acknowledgments</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Advanced R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="s4" class="section level1" number="15">
+<h1><span class="header-section-number">15</span> S4</h1>
+<div id="introduction-14" class="section level2" number="15.1">
+<h2><span class="header-section-number">15.1</span> Introduction</h2>
+<p>S4 provides a formal approach to functional OOP. The underlying ideas are similar to S3 (the topic of Chapter <a href="s3.html#s3">13</a>), but implementation is much stricter and makes use of specialised functions for creating classes (<code>setClass()</code>), generics (<code>setGeneric()</code>), and methods (<code>setMethod()</code>). Additionally, S4 provides both multiple inheritance (i.e. a class can have multiple parents) and multiple dispatch (i.e. method dispatch can use the class of multiple arguments).</p>
+<p>An important new component of S4 is the <strong>slot</strong>, a named component of the object that is accessed using the specialised subsetting operator <code>@</code> (pronounced at). The set of slots, and their classes, forms an important part of the definition of an S4 class.</p>
+<div id="outline-13" class="section level3 unnumbered">
+<h3>Outline</h3>
+<ul>
+<li><p>Section <a href="s4.html#s4-basics">15.2</a> gives a quick overview of the main components of S4:
+classes, generics, and methods.</p></li>
+<li><p>Section <a href="s4.html#s4-classes">15.3</a> dives into the details of S4 classes, including
+prototypes, constructors, helpers, and validators.</p></li>
+<li><p>Section <a href="s4.html#s4-generics">15.4</a> shows you how to create new S4 generics, and
+how to supply those generics with methods. You’ll also learn about
+accessor functions which are designed to allow users to safely inspect and
+modify object slots.</p></li>
+<li><p>Section <a href="s4.html#s4-dispatch">15.5</a> dives into the full details of method dispatch
+in S4. The basic idea is simple, then it rapidly gets more complex once
+multiple inheritance and multiple dispatch are combined.</p></li>
+<li><p>Section <a href="s4.html#s4-s3">15.6</a> discusses the interaction between S4 and S3, showing
+you how to use them together.</p></li>
+</ul>
+</div>
+<div id="learning-more" class="section level3 unnumbered">
+<h3>Learning more</h3>
+<p>Like the other OO chapters, the focus here will be on how S4 works, not how to deploy it most effectively. If you do want to use it in practice, there are two main challenges:</p>
+<ul>
+<li><p>There is no one reference that will answer all your questions about S4.</p></li>
+<li><p>R’s built-in documentation sometimes clashes with community best practices.</p></li>
+</ul>
+<p>As you move towards more advanced usage, you will need to piece together needed information by carefully reading the documentation, asking questions on StackOverflow, and performing experiments. Some recommendations:</p>
+<ul>
+<li><p>The Bioconductor community is a long-term user of S4 and has produced much of
+the best material about its effective use. Start with <a href="https://bioconductor.org/help/course-materials/2017/Zurich/S4-classes-and-methods.html">S4 classes and
+methods</a> taught by Martin Morgan and Hervé Pagès, or
+check for a newer version at <a href="https://bioconductor.org/help/course-materials/">Bioconductor course materials</a>.</p>
+<p>Martin Morgan is a member of R-core and the project lead of Bioconductor.
+He’s a world expert on the practical use of S4, and I recommend reading
+anything he has written about it, starting with the questions he has
+answered on <a href="http://stackoverflow.com/search?tab=votes&amp;q=user%3a547331%20%5bs4%5d%20is%3aanswe">stackoverflow</a>.</p></li>
+<li><p>John Chambers is the author of the S4 system, and provides an overview<br />
+of its motivation and historical context in <em>Object-oriented programming,
+functional programming and R</em>.<span class="citation"><a href="#fn77" class="footnote-ref" id="fnref77"><sup>77</sup></a></span> For a fuller exploration
+of S4, see his book <em>Software for Data Analysis</em>.<span class="citation"><a href="#fn78" class="footnote-ref" id="fnref78"><sup>78</sup></a></span></p></li>
+</ul>
+</div>
+<div id="prerequisites-8" class="section level3 unnumbered">
+<h3>Prerequisites</h3>
+<p>All functions related to S4 live in the methods package. This package is always available when you’re running R interactively, but may not be available when running R in batch mode, i.e. from <code>Rscript</code><a href="#fn79" class="footnote-ref" id="fnref79"><sup>79</sup></a>. For this reason, it’s a good idea to call <code>library(methods)</code> whenever you use S4. This also signals to the reader that you’ll be using the S4 object system.</p>
+<div class="sourceCode" id="cb623"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb623-1"><a href="s4.html#cb623-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(methods)</span></code></pre></div>
+</div>
+</div>
+<div id="s4-basics" class="section level2" number="15.2">
+<h2><span class="header-section-number">15.2</span> Basics</h2>
+<p>We’ll start with a quick overview of the main components of S4. You define an S4 class by calling <code>setClass()</code> with the class name and a definition of its slots, and the names and classes of the class data:</p>
+<div class="sourceCode" id="cb624"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb624-1"><a href="s4.html#cb624-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setClass</span>(<span class="st">&quot;Person&quot;</span>, </span>
+<span id="cb624-2"><a href="s4.html#cb624-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">slots =</span> <span class="fu">c</span>(</span>
+<span id="cb624-3"><a href="s4.html#cb624-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">&quot;character&quot;</span>, </span>
+<span id="cb624-4"><a href="s4.html#cb624-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">age =</span> <span class="st">&quot;numeric&quot;</span></span>
+<span id="cb624-5"><a href="s4.html#cb624-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb624-6"><a href="s4.html#cb624-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p>Once the class is defined, you can construct new objects from it by calling <code>new()</code> with the name of the class and a value for each slot:</p>
+<div class="sourceCode" id="cb625"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb625-1"><a href="s4.html#cb625-1" aria-hidden="true" tabindex="-1"></a>john <span class="ot">&lt;-</span> <span class="fu">new</span>(<span class="st">&quot;Person&quot;</span>, <span class="at">name =</span> <span class="st">&quot;John Smith&quot;</span>, <span class="at">age =</span> <span class="cn">NA_real_</span>)</span></code></pre></div>
+<p>
+</p>
+<p>Given an S4 object you can see its class with <code>is()</code> and access slots with <code>@</code> (equivalent to <code>$</code>) and <code>slot()</code> (equivalent to <code>[[</code>):</p>
+<div class="sourceCode" id="cb626"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb626-1"><a href="s4.html#cb626-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is</span>(john)</span>
+<span id="cb626-2"><a href="s4.html#cb626-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Person&quot;</span></span>
+<span id="cb626-3"><a href="s4.html#cb626-3" aria-hidden="true" tabindex="-1"></a>john<span class="sc">@</span>name</span>
+<span id="cb626-4"><a href="s4.html#cb626-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;John Smith&quot;</span></span>
+<span id="cb626-5"><a href="s4.html#cb626-5" aria-hidden="true" tabindex="-1"></a><span class="fu">slot</span>(john, <span class="st">&quot;age&quot;</span>)</span>
+<span id="cb626-6"><a href="s4.html#cb626-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] NA</span></span></code></pre></div>
+<p>Generally, you should only use <code>@</code> in your methods. If you’re working with someone else’s class, look for <strong>accessor</strong> functions that allow you to safely set and get slot values. As the developer of a class, you should also provide your own accessor functions. Accessors are typically S4 generics allowing multiple classes to share the same external interface.</p>
+<p>Here we’ll create a setter and getter for the <code>age</code> slot by first creating generics with <code>setGeneric()</code>:</p>
+<div class="sourceCode" id="cb627"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb627-1"><a href="s4.html#cb627-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setGeneric</span>(<span class="st">&quot;age&quot;</span>, <span class="cf">function</span>(x) <span class="fu">standardGeneric</span>(<span class="st">&quot;age&quot;</span>))</span>
+<span id="cb627-2"><a href="s4.html#cb627-2" aria-hidden="true" tabindex="-1"></a><span class="fu">setGeneric</span>(<span class="st">&quot;age&lt;-&quot;</span>, <span class="cf">function</span>(x, value) <span class="fu">standardGeneric</span>(<span class="st">&quot;age&lt;-&quot;</span>))</span></code></pre></div>
+<p>And then defining methods with <code>setMethod()</code>:</p>
+<div class="sourceCode" id="cb628"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb628-1"><a href="s4.html#cb628-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setMethod</span>(<span class="st">&quot;age&quot;</span>, <span class="st">&quot;Person&quot;</span>, <span class="cf">function</span>(x) x<span class="sc">@</span>age)</span>
+<span id="cb628-2"><a href="s4.html#cb628-2" aria-hidden="true" tabindex="-1"></a><span class="fu">setMethod</span>(<span class="st">&quot;age&lt;-&quot;</span>, <span class="st">&quot;Person&quot;</span>, <span class="cf">function</span>(x, value) {</span>
+<span id="cb628-3"><a href="s4.html#cb628-3" aria-hidden="true" tabindex="-1"></a>  x<span class="sc">@</span>age <span class="ot">&lt;-</span> value</span>
+<span id="cb628-4"><a href="s4.html#cb628-4" aria-hidden="true" tabindex="-1"></a>  x</span>
+<span id="cb628-5"><a href="s4.html#cb628-5" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb628-6"><a href="s4.html#cb628-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb628-7"><a href="s4.html#cb628-7" aria-hidden="true" tabindex="-1"></a><span class="fu">age</span>(john) <span class="ot">&lt;-</span> <span class="dv">50</span></span>
+<span id="cb628-8"><a href="s4.html#cb628-8" aria-hidden="true" tabindex="-1"></a><span class="fu">age</span>(john)</span>
+<span id="cb628-9"><a href="s4.html#cb628-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 50</span></span></code></pre></div>
+<p>If you’re using an S4 class defined in a package, you can get help on it with <code>class?Person</code>. To get help for a method, put <code>?</code> in front of a call (e.g. <code>?age(john)</code>) and <code>?</code> will use the class of the arguments to figure out which help file you need.</p>
+<p>Finally, you can use sloop functions to identify S4 objects and generics found in the wild:</p>
+<div class="sourceCode" id="cb629"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb629-1"><a href="s4.html#cb629-1" aria-hidden="true" tabindex="-1"></a>sloop<span class="sc">::</span><span class="fu">otype</span>(john)</span>
+<span id="cb629-2"><a href="s4.html#cb629-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;S4&quot;</span></span>
+<span id="cb629-3"><a href="s4.html#cb629-3" aria-hidden="true" tabindex="-1"></a>sloop<span class="sc">::</span><span class="fu">ftype</span>(age)</span>
+<span id="cb629-4"><a href="s4.html#cb629-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;S4&quot;      &quot;generic&quot;</span></span></code></pre></div>
+<div id="exercises-47" class="section level3" number="15.2.1">
+<h3><span class="header-section-number">15.2.1</span> Exercises</h3>
+<ol style="list-style-type: decimal">
+<li><p><code>lubridate::period()</code> returns an S4 class. What slots does it have?
+What class is each slot? What accessors does it provide?</p></li>
+<li><p>What other ways can you find help for a method? Read <code>?"?"</code> and
+summarise the details.</p></li>
+</ol>
+</div>
+</div>
+<div id="s4-classes" class="section level2" number="15.3">
+<h2><span class="header-section-number">15.3</span> Classes</h2>
+<p>
+
+</p>
+<p>To define an S4 class, call <code>setClass()</code> with three arguments:</p>
+<ul>
+<li><p>The class <strong>name</strong>. By convention, S4 class names use <code>UpperCamelCase</code>.</p></li>
+<li><p>A named character vector that describes the names and classes of the
+<strong>slots</strong> (fields). For example, a person might be represented by a character
+name and a numeric age: <code>c(name = "character", age = "numeric")</code>. The
+pseudo-class <code>ANY</code> allows a slot to accept objects of any type.</p></li>
+<li><p>A <strong>prototype</strong>, a list of default values for each slot. Technically,
+the prototype is optional<a href="#fn80" class="footnote-ref" id="fnref80"><sup>80</sup></a>, but you should always provide it.</p></li>
+</ul>
+<p>The code below illustrates the three arguments by creating a <code>Person</code> class with character <code>name</code> and numeric <code>age</code> slots.</p>
+<div class="sourceCode" id="cb630"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb630-1"><a href="s4.html#cb630-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setClass</span>(<span class="st">&quot;Person&quot;</span>, </span>
+<span id="cb630-2"><a href="s4.html#cb630-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">slots =</span> <span class="fu">c</span>(</span>
+<span id="cb630-3"><a href="s4.html#cb630-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">&quot;character&quot;</span>, </span>
+<span id="cb630-4"><a href="s4.html#cb630-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">age =</span> <span class="st">&quot;numeric&quot;</span></span>
+<span id="cb630-5"><a href="s4.html#cb630-5" aria-hidden="true" tabindex="-1"></a>  ), </span>
+<span id="cb630-6"><a href="s4.html#cb630-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">prototype =</span> <span class="fu">list</span>(</span>
+<span id="cb630-7"><a href="s4.html#cb630-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="cn">NA_character_</span>,</span>
+<span id="cb630-8"><a href="s4.html#cb630-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">age =</span> <span class="cn">NA_real_</span></span>
+<span id="cb630-9"><a href="s4.html#cb630-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb630-10"><a href="s4.html#cb630-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb630-11"><a href="s4.html#cb630-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb630-12"><a href="s4.html#cb630-12" aria-hidden="true" tabindex="-1"></a>me <span class="ot">&lt;-</span> <span class="fu">new</span>(<span class="st">&quot;Person&quot;</span>, <span class="at">name =</span> <span class="st">&quot;Hadley&quot;</span>)</span>
+<span id="cb630-13"><a href="s4.html#cb630-13" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(me)</span>
+<span id="cb630-14"><a href="s4.html#cb630-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Formal class &#39;Person&#39; [package &quot;.GlobalEnv&quot;] with 2 slots</span></span>
+<span id="cb630-15"><a href="s4.html#cb630-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   ..@ name: chr &quot;Hadley&quot;</span></span>
+<span id="cb630-16"><a href="s4.html#cb630-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   ..@ age : num NA</span></span></code></pre></div>
+<div id="inheritance-1" class="section level3" number="15.3.1">
+<h3><span class="header-section-number">15.3.1</span> Inheritance</h3>
+<p>
+</p>
+<p>There is one other important argument to <code>setClass()</code>: <code>contains</code>. This specifies a class (or classes) to inherit slots and behaviour from. For example, we can create an <code>Employee</code> class that inherits from the <code>Person</code> class, adding an extra slot that describes their <code>boss</code>.</p>
+<div class="sourceCode" id="cb631"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb631-1"><a href="s4.html#cb631-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setClass</span>(<span class="st">&quot;Employee&quot;</span>, </span>
+<span id="cb631-2"><a href="s4.html#cb631-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">contains =</span> <span class="st">&quot;Person&quot;</span>, </span>
+<span id="cb631-3"><a href="s4.html#cb631-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">slots =</span> <span class="fu">c</span>(</span>
+<span id="cb631-4"><a href="s4.html#cb631-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">boss =</span> <span class="st">&quot;Person&quot;</span></span>
+<span id="cb631-5"><a href="s4.html#cb631-5" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb631-6"><a href="s4.html#cb631-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">prototype =</span> <span class="fu">list</span>(</span>
+<span id="cb631-7"><a href="s4.html#cb631-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">boss =</span> <span class="fu">new</span>(<span class="st">&quot;Person&quot;</span>)</span>
+<span id="cb631-8"><a href="s4.html#cb631-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb631-9"><a href="s4.html#cb631-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb631-10"><a href="s4.html#cb631-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb631-11"><a href="s4.html#cb631-11" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(<span class="fu">new</span>(<span class="st">&quot;Employee&quot;</span>))</span>
+<span id="cb631-12"><a href="s4.html#cb631-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Formal class &#39;Employee&#39; [package &quot;.GlobalEnv&quot;] with 3 slots</span></span>
+<span id="cb631-13"><a href="s4.html#cb631-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   ..@ boss:Formal class &#39;Person&#39; [package &quot;.GlobalEnv&quot;] with 2 slots</span></span>
+<span id="cb631-14"><a href="s4.html#cb631-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   .. .. ..@ name: chr NA</span></span>
+<span id="cb631-15"><a href="s4.html#cb631-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   .. .. ..@ age : num NA</span></span>
+<span id="cb631-16"><a href="s4.html#cb631-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   ..@ name: chr NA</span></span>
+<span id="cb631-17"><a href="s4.html#cb631-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   ..@ age : num NA</span></span></code></pre></div>
+<p><code>setClass()</code> has 9 other arguments but they are either deprecated or not recommended.</p>
+</div>
+<div id="introspection-1" class="section level3" number="15.3.2">
+<h3><span class="header-section-number">15.3.2</span> Introspection</h3>
+<p>
+</p>
+<p>To determine what classes an object inherits from, use <code>is()</code>:</p>
+<div class="sourceCode" id="cb632"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb632-1"><a href="s4.html#cb632-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is</span>(<span class="fu">new</span>(<span class="st">&quot;Person&quot;</span>))</span>
+<span id="cb632-2"><a href="s4.html#cb632-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Person&quot;</span></span>
+<span id="cb632-3"><a href="s4.html#cb632-3" aria-hidden="true" tabindex="-1"></a><span class="fu">is</span>(<span class="fu">new</span>(<span class="st">&quot;Employee&quot;</span>))</span>
+<span id="cb632-4"><a href="s4.html#cb632-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Employee&quot; &quot;Person&quot;</span></span></code></pre></div>
+<p>To test if an object inherits from a specific class, use the second argument of <code>is()</code>:</p>
+<div class="sourceCode" id="cb633"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb633-1"><a href="s4.html#cb633-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is</span>(john, <span class="st">&quot;Person&quot;</span>)</span>
+<span id="cb633-2"><a href="s4.html#cb633-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
+</div>
+<div id="redefinition" class="section level3" number="15.3.3">
+<h3><span class="header-section-number">15.3.3</span> Redefinition</h3>
+<p>In most programming languages, class definition occurs at compile-time and object construction occurs later, at run-time. In R, however, both definition and construction occur at run time. When you call <code>setClass()</code>, you are registering a class definition in a (hidden) global variable. As with all state-modifying functions you need to use <code>setClass()</code> with care. It’s possible to create invalid objects if you redefine a class after already having instantiated an object:</p>
+<div class="sourceCode" id="cb634"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb634-1"><a href="s4.html#cb634-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setClass</span>(<span class="st">&quot;A&quot;</span>, <span class="at">slots =</span> <span class="fu">c</span>(<span class="at">x =</span> <span class="st">&quot;numeric&quot;</span>))</span>
+<span id="cb634-2"><a href="s4.html#cb634-2" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">new</span>(<span class="st">&quot;A&quot;</span>, <span class="at">x =</span> <span class="dv">10</span>)</span>
+<span id="cb634-3"><a href="s4.html#cb634-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb634-4"><a href="s4.html#cb634-4" aria-hidden="true" tabindex="-1"></a><span class="fu">setClass</span>(<span class="st">&quot;A&quot;</span>, <span class="at">slots =</span> <span class="fu">c</span>(<span class="at">a_different_slot =</span> <span class="st">&quot;numeric&quot;</span>))</span>
+<span id="cb634-5"><a href="s4.html#cb634-5" aria-hidden="true" tabindex="-1"></a>a</span>
+<span id="cb634-6"><a href="s4.html#cb634-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; An object of class &quot;A&quot;</span></span>
+<span id="cb634-7"><a href="s4.html#cb634-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Slot &quot;a_different_slot&quot;:</span></span>
+<span id="cb634-8"><a href="s4.html#cb634-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in slot(object, what): no slot of name &quot;a_different_slot&quot; for this object of class &quot;A&quot;</span></span></code></pre></div>
+<p>This can cause confusion during interactive creation of new classes. (R6 classes have the same problem, as described in Section <a href="r6.html#r6-important-methods">14.2.2</a>.)</p>
+</div>
+<div id="helper" class="section level3" number="15.3.4">
+<h3><span class="header-section-number">15.3.4</span> Helper</h3>
+<p>
+
+
+</p>
+<p><code>new()</code> is a low-level constructor suitable for use by you, the developer. User-facing classes should always be paired with a user-friendly helper. A helper should always:</p>
+<ul>
+<li><p>Have the same name as the class, e.g. <code>myclass()</code>.</p></li>
+<li><p>Have a thoughtfully crafted user interface with carefully chosen default
+values and useful conversions.</p></li>
+<li><p>Create carefully crafted error messages tailored towards an end-user.</p></li>
+<li><p>Finish by calling <code>methods::new()</code>.</p></li>
+</ul>
+<p>The <code>Person</code> class is so simple so a helper is almost superfluous, but we can use it to clearly define the contract: <code>age</code> is optional but <code>name</code> is required. We’ll also coerce age to a double so the helper also works when passed an integer.</p>
+<div class="sourceCode" id="cb635"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb635-1"><a href="s4.html#cb635-1" aria-hidden="true" tabindex="-1"></a>Person <span class="ot">&lt;-</span> <span class="cf">function</span>(name, <span class="at">age =</span> <span class="cn">NA</span>) {</span>
+<span id="cb635-2"><a href="s4.html#cb635-2" aria-hidden="true" tabindex="-1"></a>  age <span class="ot">&lt;-</span> <span class="fu">as.double</span>(age)</span>
+<span id="cb635-3"><a href="s4.html#cb635-3" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb635-4"><a href="s4.html#cb635-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">new</span>(<span class="st">&quot;Person&quot;</span>, <span class="at">name =</span> name, <span class="at">age =</span> age)</span>
+<span id="cb635-5"><a href="s4.html#cb635-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb635-6"><a href="s4.html#cb635-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb635-7"><a href="s4.html#cb635-7" aria-hidden="true" tabindex="-1"></a><span class="fu">Person</span>(<span class="st">&quot;Hadley&quot;</span>)</span>
+<span id="cb635-8"><a href="s4.html#cb635-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; An object of class &quot;Person&quot;</span></span>
+<span id="cb635-9"><a href="s4.html#cb635-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Slot &quot;name&quot;:</span></span>
+<span id="cb635-10"><a href="s4.html#cb635-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Hadley&quot;</span></span>
+<span id="cb635-11"><a href="s4.html#cb635-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb635-12"><a href="s4.html#cb635-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Slot &quot;age&quot;:</span></span>
+<span id="cb635-13"><a href="s4.html#cb635-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] NA</span></span></code></pre></div>
+</div>
+<div id="validator" class="section level3" number="15.3.5">
+<h3><span class="header-section-number">15.3.5</span> Validator</h3>
+<p>
+
+</p>
+<p>The constructor automatically checks that the slots have correct classes:</p>
+<div class="sourceCode" id="cb636"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb636-1"><a href="s4.html#cb636-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Person</span>(mtcars)</span>
+<span id="cb636-2"><a href="s4.html#cb636-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in validObject(.Object): invalid class &quot;Person&quot; object: invalid object for slot &quot;name&quot; in class &quot;Person&quot;: got class &quot;data.frame&quot;, should be or extend class &quot;character&quot;</span></span></code></pre></div>
+<p>You will need to implement more complicated checks (i.e. checks that involve lengths, or multiple slots) yourself. For example, we might want to make it clear that the Person class is a vector class, and can store data about multiple people. That’s not currently clear because <code>@name</code> and <code>@age</code> can be different lengths:</p>
+<div class="sourceCode" id="cb637"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb637-1"><a href="s4.html#cb637-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Person</span>(<span class="st">&quot;Hadley&quot;</span>, <span class="at">age =</span> <span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">37</span>))</span>
+<span id="cb637-2"><a href="s4.html#cb637-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; An object of class &quot;Person&quot;</span></span>
+<span id="cb637-3"><a href="s4.html#cb637-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Slot &quot;name&quot;:</span></span>
+<span id="cb637-4"><a href="s4.html#cb637-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Hadley&quot;</span></span>
+<span id="cb637-5"><a href="s4.html#cb637-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb637-6"><a href="s4.html#cb637-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Slot &quot;age&quot;:</span></span>
+<span id="cb637-7"><a href="s4.html#cb637-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 30 37</span></span></code></pre></div>
+<p>To enforce these additional constraints we write a validator with <code>setValidity()</code>. It takes a class and a function that returns <code>TRUE</code> if the input is valid, and otherwise returns a character vector describing the problem(s):</p>
+<div class="sourceCode" id="cb638"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb638-1"><a href="s4.html#cb638-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setValidity</span>(<span class="st">&quot;Person&quot;</span>, <span class="cf">function</span>(object) {</span>
+<span id="cb638-2"><a href="s4.html#cb638-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(object<span class="sc">@</span>name) <span class="sc">!=</span> <span class="fu">length</span>(object<span class="sc">@</span>age)) {</span>
+<span id="cb638-3"><a href="s4.html#cb638-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;@name and @age must be same length&quot;</span></span>
+<span id="cb638-4"><a href="s4.html#cb638-4" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb638-5"><a href="s4.html#cb638-5" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span></span>
+<span id="cb638-6"><a href="s4.html#cb638-6" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb638-7"><a href="s4.html#cb638-7" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
+<p>Now we can no longer create an invalid object:</p>
+<div class="sourceCode" id="cb639"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb639-1"><a href="s4.html#cb639-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Person</span>(<span class="st">&quot;Hadley&quot;</span>, <span class="at">age =</span> <span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">37</span>))</span>
+<span id="cb639-2"><a href="s4.html#cb639-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in validObject(.Object): invalid class &quot;Person&quot; object: @name and @age must be same length</span></span></code></pre></div>
+<p>NB: The validity method is only called automatically by <code>new()</code>, so you can still create an invalid object by modifying it:</p>
+<div class="sourceCode" id="cb640"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb640-1"><a href="s4.html#cb640-1" aria-hidden="true" tabindex="-1"></a>alex <span class="ot">&lt;-</span> <span class="fu">Person</span>(<span class="st">&quot;Alex&quot;</span>, <span class="at">age =</span> <span class="dv">30</span>)</span>
+<span id="cb640-2"><a href="s4.html#cb640-2" aria-hidden="true" tabindex="-1"></a>alex<span class="sc">@</span>age <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span></code></pre></div>
+<p>You can explicitly check the validity yourself by calling <code>validObject()</code>:</p>
+<div class="sourceCode" id="cb641"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb641-1"><a href="s4.html#cb641-1" aria-hidden="true" tabindex="-1"></a><span class="fu">validObject</span>(alex)</span>
+<span id="cb641-2"><a href="s4.html#cb641-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in validObject(alex): invalid class &quot;Person&quot; object: @name and @age must be same length</span></span></code></pre></div>
+<p>In Section <a href="s4.html#accessors">15.4.4</a>, we’ll use <code>validObject()</code> to create accessors that can not create invalid objects.</p>
+</div>
+<div id="exercises-48" class="section level3" number="15.3.6">
+<h3><span class="header-section-number">15.3.6</span> Exercises</h3>
+<ol style="list-style-type: decimal">
+<li><p>Extend the Person class with fields to match <code>utils::person()</code>.
+Think about what slots you will need, what class each slot should have,
+and what you’ll need to check in your validity method.</p></li>
+<li><p>What happens if you define a new S4 class that doesn’t have any slots?
+(Hint: read about virtual classes in <code>?setClass</code>.)</p></li>
+<li><p>Imagine you were going to reimplement factors, dates, and data frames in
+S4. Sketch out the <code>setClass()</code> calls that you would use to define the
+classes. Think about appropriate <code>slots</code> and <code>prototype</code>.</p></li>
+</ol>
+</div>
+</div>
+<div id="s4-generics" class="section level2" number="15.4">
+<h2><span class="header-section-number">15.4</span> Generics and methods</h2>
+<p>
+
+
+</p>
+<p>The job of a generic is to perform method dispatch, i.e. find the specific implementation for the combination of classes passed to the generic. Here you’ll learn how to define S4 generics and methods, then in the next section we’ll explore precisely how S4 method dispatch works.</p>
+<p>To create a new S4 generic, call <code>setGeneric()</code> with a function that calls <code>standardGeneric()</code>:</p>
+<div class="sourceCode" id="cb642"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb642-1"><a href="s4.html#cb642-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setGeneric</span>(<span class="st">&quot;myGeneric&quot;</span>, <span class="cf">function</span>(x) <span class="fu">standardGeneric</span>(<span class="st">&quot;myGeneric&quot;</span>))</span></code></pre></div>
+<p>By convention, new S4 generics should use <code>lowerCamelCase</code>.</p>
+<p>It is bad practice to use <code>{}</code> in the generic as it triggers a special case that is more expensive, and generally best avoided.</p>
+<div class="sourceCode" id="cb643"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb643-1"><a href="s4.html#cb643-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Don&#39;t do this!</span></span>
+<span id="cb643-2"><a href="s4.html#cb643-2" aria-hidden="true" tabindex="-1"></a><span class="fu">setGeneric</span>(<span class="st">&quot;myGeneric&quot;</span>, <span class="cf">function</span>(x) {</span>
+<span id="cb643-3"><a href="s4.html#cb643-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">standardGeneric</span>(<span class="st">&quot;myGeneric&quot;</span>)</span>
+<span id="cb643-4"><a href="s4.html#cb643-4" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
+<div id="signature" class="section level3" number="15.4.1">
+<h3><span class="header-section-number">15.4.1</span> Signature</h3>
+<p></p>
+<p>Like <code>setClass()</code>, <code>setGeneric()</code> has many other arguments. There is only one that you need to know about: <code>signature</code>. This allows you to control the arguments that are used for method dispatch. If <code>signature</code> is not supplied, all arguments (apart from <code>...</code>) are used. It is occasionally useful to remove arguments from dispatch. This allows you to require that methods provide arguments like <code>verbose = TRUE</code> or <code>quiet = FALSE</code>, but they don’t take part in dispatch.</p>
+<div class="sourceCode" id="cb644"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb644-1"><a href="s4.html#cb644-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setGeneric</span>(<span class="st">&quot;myGeneric&quot;</span>, </span>
+<span id="cb644-2"><a href="s4.html#cb644-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(x, ..., <span class="at">verbose =</span> <span class="cn">TRUE</span>) <span class="fu">standardGeneric</span>(<span class="st">&quot;myGeneric&quot;</span>),</span>
+<span id="cb644-3"><a href="s4.html#cb644-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">signature =</span> <span class="st">&quot;x&quot;</span></span>
+<span id="cb644-4"><a href="s4.html#cb644-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+</div>
+<div id="methods" class="section level3" number="15.4.2">
+<h3><span class="header-section-number">15.4.2</span> Methods</h3>
+<p>
+</p>
+<p>A generic isn’t useful without some methods, and in S4 you define methods with <code>setMethod()</code>. There are three important arguments: the name of the generic, the name of the class, and the method itself.</p>
+<div class="sourceCode" id="cb645"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb645-1"><a href="s4.html#cb645-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setMethod</span>(<span class="st">&quot;myGeneric&quot;</span>, <span class="st">&quot;Person&quot;</span>, <span class="cf">function</span>(x) {</span>
+<span id="cb645-2"><a href="s4.html#cb645-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># method implementation</span></span>
+<span id="cb645-3"><a href="s4.html#cb645-3" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
+<p>More formally, the second argument to <code>setMethod()</code> is called the <strong>signature</strong>. In S4, unlike S3, the signature can include multiple arguments. This makes method dispatch in S4 substantially more complicated, but avoids having to implement double-dispatch as a special case. We’ll talk more about multiple dispatch in the next section. <code>setMethod()</code> has other arguments, but you should never use them.</p>
+<p>To list all the methods that belong to a generic, or that are associated with a class, use <code>methods("generic")</code> or <code>methods(class = "class")</code>; to find the implementation of a specific method, use <code>selectMethod("generic", "class")</code>.</p>
+</div>
+<div id="show-method" class="section level3" number="15.4.3">
+<h3><span class="header-section-number">15.4.3</span> Show method</h3>
+<p></p>
+<p>The most commonly defined S4 method that controls printing is <code>show()</code>, which controls how the object appears when it is printed. To define a method for an existing generic, you must first determine the arguments. You can get those from the documentation or by looking at the <code>args()</code> of the generic:</p>
+<div class="sourceCode" id="cb646"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb646-1"><a href="s4.html#cb646-1" aria-hidden="true" tabindex="-1"></a><span class="fu">args</span>(<span class="fu">getGeneric</span>(<span class="st">&quot;show&quot;</span>))</span>
+<span id="cb646-2"><a href="s4.html#cb646-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; function (object) </span></span>
+<span id="cb646-3"><a href="s4.html#cb646-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; NULL</span></span></code></pre></div>
+<p>Our show method needs to have a single argument <code>object</code>:</p>
+<div class="sourceCode" id="cb647"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb647-1"><a href="s4.html#cb647-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setMethod</span>(<span class="st">&quot;show&quot;</span>, <span class="st">&quot;Person&quot;</span>, <span class="cf">function</span>(object) {</span>
+<span id="cb647-2"><a href="s4.html#cb647-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="fu">is</span>(object)[[<span class="dv">1</span>]], <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>,</span>
+<span id="cb647-3"><a href="s4.html#cb647-3" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;  Name: &quot;</span>, object<span class="sc">@</span>name, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>,</span>
+<span id="cb647-4"><a href="s4.html#cb647-4" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;  Age:  &quot;</span>, object<span class="sc">@</span>age, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>,</span>
+<span id="cb647-5"><a href="s4.html#cb647-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">sep =</span> <span class="st">&quot;&quot;</span></span>
+<span id="cb647-6"><a href="s4.html#cb647-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb647-7"><a href="s4.html#cb647-7" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb647-8"><a href="s4.html#cb647-8" aria-hidden="true" tabindex="-1"></a>john</span>
+<span id="cb647-9"><a href="s4.html#cb647-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Person</span></span>
+<span id="cb647-10"><a href="s4.html#cb647-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Name: John Smith</span></span>
+<span id="cb647-11"><a href="s4.html#cb647-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Age:  50</span></span></code></pre></div>
+</div>
+<div id="accessors" class="section level3" number="15.4.4">
+<h3><span class="header-section-number">15.4.4</span> Accessors</h3>
+<p></p>
+<p>Slots should be considered an internal implementation detail: they can change without warning and user code should avoid accessing them directly. Instead, all user-accessible slots should be accompanied by a pair of <strong>accessors</strong>. If the slot is unique to the class, this can just be a function:</p>
+<div class="sourceCode" id="cb648"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb648-1"><a href="s4.html#cb648-1" aria-hidden="true" tabindex="-1"></a>person_name <span class="ot">&lt;-</span> <span class="cf">function</span>(x) x<span class="sc">@</span>name</span></code></pre></div>
+<p>Typically, however, you’ll define a generic so that multiple classes can use the same interface:</p>
+<div class="sourceCode" id="cb649"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb649-1"><a href="s4.html#cb649-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setGeneric</span>(<span class="st">&quot;name&quot;</span>, <span class="cf">function</span>(x) <span class="fu">standardGeneric</span>(<span class="st">&quot;name&quot;</span>))</span>
+<span id="cb649-2"><a href="s4.html#cb649-2" aria-hidden="true" tabindex="-1"></a><span class="fu">setMethod</span>(<span class="st">&quot;name&quot;</span>, <span class="st">&quot;Person&quot;</span>, <span class="cf">function</span>(x) x<span class="sc">@</span>name)</span>
+<span id="cb649-3"><a href="s4.html#cb649-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb649-4"><a href="s4.html#cb649-4" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span>(john)</span>
+<span id="cb649-5"><a href="s4.html#cb649-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;John Smith&quot;</span></span></code></pre></div>
+<p>If the slot is also writeable, you should provide a setter function. You should always include <code>validObject()</code> in the setter to prevent the user from creating invalid objects.</p>
+<div class="sourceCode" id="cb650"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb650-1"><a href="s4.html#cb650-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setGeneric</span>(<span class="st">&quot;name&lt;-&quot;</span>, <span class="cf">function</span>(x, value) <span class="fu">standardGeneric</span>(<span class="st">&quot;name&lt;-&quot;</span>))</span>
+<span id="cb650-2"><a href="s4.html#cb650-2" aria-hidden="true" tabindex="-1"></a><span class="fu">setMethod</span>(<span class="st">&quot;name&lt;-&quot;</span>, <span class="st">&quot;Person&quot;</span>, <span class="cf">function</span>(x, value) {</span>
+<span id="cb650-3"><a href="s4.html#cb650-3" aria-hidden="true" tabindex="-1"></a>  x<span class="sc">@</span>name <span class="ot">&lt;-</span> value</span>
+<span id="cb650-4"><a href="s4.html#cb650-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">validObject</span>(x)</span>
+<span id="cb650-5"><a href="s4.html#cb650-5" aria-hidden="true" tabindex="-1"></a>  x</span>
+<span id="cb650-6"><a href="s4.html#cb650-6" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb650-7"><a href="s4.html#cb650-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb650-8"><a href="s4.html#cb650-8" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span>(john) <span class="ot">&lt;-</span> <span class="st">&quot;Jon Smythe&quot;</span></span>
+<span id="cb650-9"><a href="s4.html#cb650-9" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span>(john)</span>
+<span id="cb650-10"><a href="s4.html#cb650-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Jon Smythe&quot;</span></span>
+<span id="cb650-11"><a href="s4.html#cb650-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb650-12"><a href="s4.html#cb650-12" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span>(john) <span class="ot">&lt;-</span> letters</span>
+<span id="cb650-13"><a href="s4.html#cb650-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in validObject(x): invalid class &quot;Person&quot; object: @name and @age must be same length</span></span></code></pre></div>
+<p>(If the <code>name&lt;-</code> notation is unfamiliar, review Section <a href="functions.html#function-forms">6.8</a>.)</p>
+</div>
+<div id="exercises-49" class="section level3" number="15.4.5">
+<h3><span class="header-section-number">15.4.5</span> Exercises</h3>
+<ol style="list-style-type: decimal">
+<li><p>Add <code>age()</code> accessors for the <code>Person</code> class.</p></li>
+<li><p>In the definition of the generic, why is it necessary to repeat the
+name of the generic twice?</p></li>
+<li><p>Why does the <code>show()</code> method defined in Section <a href="s4.html#show-method">15.4.3</a> use
+<code>is(object)[[1]]</code>? (Hint: try printing the employee subclass.)</p></li>
+<li><p>What happens if you define a method with different argument names to
+the generic?</p></li>
+</ol>
+</div>
+</div>
+<div id="s4-dispatch" class="section level2" number="15.5">
+<h2><span class="header-section-number">15.5</span> Method dispatch</h2>
+<p>
+</p>
+<p>S4 dispatch is complicated because S4 has two important features:</p>
+<ul>
+<li>Multiple inheritance, i.e. a class can have multiple parents,</li>
+<li>Multiple dispatch, i.e. a generic can use multiple arguments to pick a method.</li>
+</ul>
+<p>These features make S4 very powerful, but can also make it hard to understand which method will get selected for a given combination of inputs. In practice, keep method dispatch as simple as possible by avoiding multiple inheritance, and reserving multiple dispatch only for where it is absolutely necessary.</p>
+<p>But it’s important to describe the full details, so here we’ll start simple with single inheritance and single dispatch, and work our way up to the more complicated cases. To illustrate the ideas without getting bogged down in the details, we’ll use an imaginary <strong>class graph</strong> based on emoji:</p>
+<p><img src="diagrams/s4/emoji.png" width="226" style="display: block; margin: auto;" /></p>
+<p>Emoji give us very compact class names that evoke the relationships between the classes. It should be straightforward to remember that 😜 inherits from 😉 which inherits from 😶, and that 😎 inherits from both 🕶 and 🙂.</p>
+<div id="single-dispatch" class="section level3" number="15.5.1">
+<h3><span class="header-section-number">15.5.1</span> Single dispatch</h3>
+<p></p>
+<p>Let’s start with the simplest case: a generic function that dispatches on a single class with a single parent. The method dispatch here is simple so it’s a good place to define the graphical conventions we’ll use for the more complex cases.</p>
+<p><img src="diagrams/s4/single.png" width="189" style="display: block; margin: auto;" /></p>
+<p>There are two parts to this diagram:</p>
+<ul>
+<li><p>The top part, <code>f(...)</code>, defines the scope of the diagram. Here we have a
+generic with one argument, that has a class hierarchy that is three levels
+deep.</p></li>
+<li><p>The bottom part is the <strong>method graph</strong> and displays all the possible methods
+that could be defined. Methods that exist, i.e. that have been defined with
+<code>setMethod()</code>, have a grey background.</p></li>
+</ul>
+<p>To find the method that gets called, you start with the most specific class of the actual arguments, then follow the arrows until you find a method that exists. For example, if you called the function with an object of class 😉 you would follow the arrow right to find the method defined for the more general 😶 class. If no method is found, method dispatch has failed and an error is thrown. In practice, this means that you should alway define methods defined for the terminal nodes, i.e. those on the far right.</p>
+<p>
+
+There are two <strong>pseudo-classes</strong> that you can define methods for. These are called pseudo-classes because they don’t actually exist, but allow you to define useful behaviours. The first pseudo-class is <code>ANY</code> which matches any class<a href="#fn81" class="footnote-ref" id="fnref81"><sup>81</sup></a>. For technical reasons that we’ll get to later, the link to the <code>ANY</code> method is longer than the links between the other classes:</p>
+<p><img src="diagrams/s4/single-any.png" width="269" style="display: block; margin: auto;" /></p>
+<p>The second pseudo-class is <code>MISSING</code>. If you define a method for this pseudo-class, it will match whenever the argument is missing. It’s not useful for single dispatch, but is important for functions like <code>+</code> and <code>-</code> that use double dispatch and behave differently depending on whether they have one or two arguments.</p>
+</div>
+<div id="multiple-inheritance" class="section level3" number="15.5.2">
+<h3><span class="header-section-number">15.5.2</span> Multiple inheritance</h3>
+<p>
+</p>
+<p>Things get more complicated when the class has multiple parents.</p>
+<p><img src="diagrams/s4/multiple.png" width="179" style="display: block; margin: auto;" /></p>
+<p>The basic process remains the same: you start from the actual class supplied to the generic, then follow the arrows until you find a defined method. The wrinkle is that now there are multiple arrows to follow, so you might find multiple methods. If that happens, you pick the method that is closest, i.e. requires travelling the fewest arrows.</p>
+<p>NB: While the method graph is a powerful metaphor for understanding method dispatch, implementing it in this way would be rather inefficient, so the actual approach that S4 uses is somewhat different. You can read the details in <code>?Methods_Details</code>.</p>
+<p>What happens if methods are the same distance? For example, imagine we’ve defined methods for 🕶 and 🙂, and we call the generic with 😎. Note that no method can be found for the 😶 class, which I’ll highlight with a red double outline.</p>
+<p><img src="diagrams/s4/multiple-ambig.png" width="165" style="display: block; margin: auto;" /></p>
+<p>This is called an <strong>ambiguous</strong> method, and in diagrams I’ll illustrate it with a thick dotted border. When this happens in R, you’ll get a warning, and the method for the class that comes earlier in the alphabet will be picked (this is effectively random and should not be relied upon). When you discover ambiguity you should always resolve it by providing a more precise method:</p>
+<p><img src="diagrams/s4/multiple-ambig-2.png" width="165" style="display: block; margin: auto;" /></p>
+<p>The fallback <code>ANY</code> method still exists but the rules are little more complex. As indicated by the wavy dotted lines, the <code>ANY</code> method is always considered further away than a method for a real class. This means that it will never contribute to ambiguity.</p>
+<p><img src="diagrams/s4/multiple-any.png" width="241" style="display: block; margin: auto;" /></p>
+<p>With multiple inheritances it is hard to simultaneously prevent ambiguity, ensure that every terminal method has an implementation, and minimise the number of defined methods (in order to benefit from OOP). For example, of the six ways to define only two methods for this call, only one is free from problems. For this reason, I recommend using multiple inheritance with extreme care: you will need to carefully think about the method graph and plan accordingly.</p>
+<p><img src="diagrams/s4/multiple-all.png" width="416" style="display: block; margin: auto;" /></p>
+</div>
+<div id="multiple-dispatch" class="section level3" number="15.5.3">
+<h3><span class="header-section-number">15.5.3</span> Multiple dispatch</h3>
+<p>
+</p>
+<p>Once you understand multiple inheritance, understanding multiple dispatch is straightforward. You follow multiple arrows in the same way as previously, but now each method is specified by two classes (separated by a comma).</p>
+<p><img src="diagrams/s4/single-single.png" width="316" style="display: block; margin: auto;" /></p>
+<p>I’m not going to show examples of dispatching on more than two arguments, but you can follow the basic principles to generate your own method graphs.</p>
+<p>The main difference between multiple inheritance and multiple dispatch is that there are many more arrows to follow. The following diagram shows four defined methods which produce two ambiguous cases:</p>
+<p><img src="diagrams/s4/single-single-ambig.png" width="316" style="display: block; margin: auto;" /></p>
+<p>Multiple dispatch tends to be less tricky to work with than multiple inheritance because there are usually fewer terminal class combinations. In this example, there’s only one. That means, at a minimum, you can define a single method and have default behaviour for all inputs.</p>
+</div>
+<div id="multiple-dispatch-and-multiple-inheritance" class="section level3" number="15.5.4">
+<h3><span class="header-section-number">15.5.4</span> Multiple dispatch and multiple inheritance</h3>
+<p>Of course you can combine multiple dispatch with multiple inheritance:</p>
+<p><img src="diagrams/s4/single-multiple.png" width="307" style="display: block; margin: auto;" /></p>
+<p>A still more complicated case dispatches on two classes, both of which have multiple inheritance:</p>
+<p><img src="diagrams/s4/multiple-multiple.png" width="236" style="display: block; margin: auto;" /></p>
+<p>As the method graph gets more and more complicated it gets harder and harder to predict which method will get called given a combination of inputs, and it gets harder and harder to make sure that you haven’t introduced ambiguity. If you have to draw diagrams to figure out what method is actually going to be called, it’s a strong indication that you should go back and simplify your design.</p>
+</div>
+<div id="exercises-50" class="section level3" number="15.5.5">
+<h3><span class="header-section-number">15.5.5</span> Exercises</h3>
+<ol style="list-style-type: decimal">
+<li><p>Draw the method graph for
+<code>f(</code>😅, 😽<code>)</code>.</p></li>
+<li><p>Draw the method graph for
+<code>f(</code>😃, 😉, 😙<code>)</code>.</p></li>
+<li><p>Take the last example which shows multiple dispatch over two classes that
+use multiple inheritance. What happens if you define a method for all
+terminal classes? Why does method dispatch not save us much work here?</p></li>
+</ol>
+</div>
+</div>
+<div id="s4-s3" class="section level2" number="15.6">
+<h2><span class="header-section-number">15.6</span> S4 and S3</h2>
+<p>
+</p>
+<p>When writing S4 code, you’ll often need to interact with existing S3 classes and generics. This section describes how S4 classes, methods, and generics interact with existing code.</p>
+<div id="classes" class="section level3" number="15.6.1">
+<h3><span class="header-section-number">15.6.1</span> Classes</h3>
+<p>In <code>slots</code> and <code>contains</code> you can use S4 classes, S3 classes, or the implicit class (Section <a href="s3.html#implicit-class">13.7.1</a>) of a base type. To use an S3 class, you must first register it with <code>setOldClass()</code>. You call this function once for each S3 class, giving it the class attribute. For example, the following definitions are already provided by base R:</p>
+<div class="sourceCode" id="cb651"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb651-1"><a href="s4.html#cb651-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setOldClass</span>(<span class="st">&quot;data.frame&quot;</span>)</span>
+<span id="cb651-2"><a href="s4.html#cb651-2" aria-hidden="true" tabindex="-1"></a><span class="fu">setOldClass</span>(<span class="fu">c</span>(<span class="st">&quot;ordered&quot;</span>, <span class="st">&quot;factor&quot;</span>))</span>
+<span id="cb651-3"><a href="s4.html#cb651-3" aria-hidden="true" tabindex="-1"></a><span class="fu">setOldClass</span>(<span class="fu">c</span>(<span class="st">&quot;glm&quot;</span>, <span class="st">&quot;lm&quot;</span>))</span></code></pre></div>
+<p>However, it’s generally better to be more specific and provide a full S4 definition with <code>slots</code> and a <code>prototype</code>:</p>
+<div class="sourceCode" id="cb652"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb652-1"><a href="s4.html#cb652-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setClass</span>(<span class="st">&quot;factor&quot;</span>,</span>
+<span id="cb652-2"><a href="s4.html#cb652-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">contains =</span> <span class="st">&quot;integer&quot;</span>,</span>
+<span id="cb652-3"><a href="s4.html#cb652-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">slots =</span> <span class="fu">c</span>(</span>
+<span id="cb652-4"><a href="s4.html#cb652-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">levels =</span> <span class="st">&quot;character&quot;</span></span>
+<span id="cb652-5"><a href="s4.html#cb652-5" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb652-6"><a href="s4.html#cb652-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">prototype =</span> <span class="fu">structure</span>(</span>
+<span id="cb652-7"><a href="s4.html#cb652-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">integer</span>(),</span>
+<span id="cb652-8"><a href="s4.html#cb652-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">levels =</span> <span class="fu">character</span>()</span>
+<span id="cb652-9"><a href="s4.html#cb652-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb652-10"><a href="s4.html#cb652-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb652-11"><a href="s4.html#cb652-11" aria-hidden="true" tabindex="-1"></a><span class="fu">setOldClass</span>(<span class="st">&quot;factor&quot;</span>, <span class="at">S4Class =</span> <span class="st">&quot;factor&quot;</span>)</span></code></pre></div>
+<p>Generally, these definitions should be provided by the creator of the S3 class. If you’re trying to build an S4 class on top of an S3 class provided by a package, you should request that the package maintainer add this call to their package, rather than adding it to your own code.</p>
+<p>If an S4 object inherits from an S3 class or a base type, it will have a special virtual slot called <code>.Data</code>. This contains the underlying base type or S3 object: </p>
+<div class="sourceCode" id="cb653"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb653-1"><a href="s4.html#cb653-1" aria-hidden="true" tabindex="-1"></a>RangedNumeric <span class="ot">&lt;-</span> <span class="fu">setClass</span>(</span>
+<span id="cb653-2"><a href="s4.html#cb653-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;RangedNumeric&quot;</span>,</span>
+<span id="cb653-3"><a href="s4.html#cb653-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">contains =</span> <span class="st">&quot;numeric&quot;</span>,</span>
+<span id="cb653-4"><a href="s4.html#cb653-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">slots =</span> <span class="fu">c</span>(<span class="at">min =</span> <span class="st">&quot;numeric&quot;</span>, <span class="at">max =</span> <span class="st">&quot;numeric&quot;</span>),</span>
+<span id="cb653-5"><a href="s4.html#cb653-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">prototype =</span> <span class="fu">structure</span>(<span class="fu">numeric</span>(), <span class="at">min =</span> <span class="cn">NA_real_</span>, <span class="at">max =</span> <span class="cn">NA_real_</span>)</span>
+<span id="cb653-6"><a href="s4.html#cb653-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb653-7"><a href="s4.html#cb653-7" aria-hidden="true" tabindex="-1"></a>rn <span class="ot">&lt;-</span> <span class="fu">RangedNumeric</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">min =</span> <span class="dv">1</span>, <span class="at">max =</span> <span class="dv">10</span>)</span>
+<span id="cb653-8"><a href="s4.html#cb653-8" aria-hidden="true" tabindex="-1"></a>rn<span class="sc">@</span>min</span>
+<span id="cb653-9"><a href="s4.html#cb653-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1</span></span>
+<span id="cb653-10"><a href="s4.html#cb653-10" aria-hidden="true" tabindex="-1"></a>rn<span class="sc">@</span>.Data</span>
+<span id="cb653-11"><a href="s4.html#cb653-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1]  1  2  3  4  5  6  7  8  9 10</span></span></code></pre></div>
+<p>It is possible to define S3 methods for S4 generics, and S4 methods for S3 generics (provided you’ve called <code>setOldClass()</code>). However, it’s more complicated than it might appear at first glance, so make sure you thoroughly read <code>?Methods_for_S3</code>.</p>
+</div>
+<div id="generics" class="section level3" number="15.6.2">
+<h3><span class="header-section-number">15.6.2</span> Generics</h3>
+<p>As well as creating a new generic from scratch, it’s also possible to convert an existing S3 generic to an S4 generic:</p>
+<div class="sourceCode" id="cb654"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb654-1"><a href="s4.html#cb654-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setGeneric</span>(<span class="st">&quot;mean&quot;</span>)</span></code></pre></div>
+<p>In this case, the existing function becomes the default (<code>ANY</code>) method:</p>
+<div class="sourceCode" id="cb655"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb655-1"><a href="s4.html#cb655-1" aria-hidden="true" tabindex="-1"></a><span class="fu">selectMethod</span>(<span class="st">&quot;mean&quot;</span>, <span class="st">&quot;ANY&quot;</span>)</span>
+<span id="cb655-2"><a href="s4.html#cb655-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Method Definition (Class &quot;derivedDefaultMethod&quot;):</span></span>
+<span id="cb655-3"><a href="s4.html#cb655-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb655-4"><a href="s4.html#cb655-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; function (x, ...) </span></span>
+<span id="cb655-5"><a href="s4.html#cb655-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; UseMethod(&quot;mean&quot;)</span></span>
+<span id="cb655-6"><a href="s4.html#cb655-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;bytecode: 0x55893d6f9d38&gt;</span></span>
+<span id="cb655-7"><a href="s4.html#cb655-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;environment: namespace:base&gt;</span></span>
+<span id="cb655-8"><a href="s4.html#cb655-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb655-9"><a href="s4.html#cb655-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signatures:</span></span>
+<span id="cb655-10"><a href="s4.html#cb655-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         x    </span></span>
+<span id="cb655-11"><a href="s4.html#cb655-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; target  &quot;ANY&quot;</span></span>
+<span id="cb655-12"><a href="s4.html#cb655-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; defined &quot;ANY&quot;</span></span></code></pre></div>
+<p>NB: <code>setMethod()</code> will automatically call <code>setGeneric()</code> if the first argument isn’t already a generic, enabling you to turn any existing function into an S4 generic. It is OK to convert an existing S3 generic to S4, but you should avoid converting regular functions to S4 generics in packages because that requires careful coordination if done by multiple packages.</p>
+</div>
+<div id="exercises-51" class="section level3" number="15.6.3">
+<h3><span class="header-section-number">15.6.3</span> Exercises</h3>
+<ol style="list-style-type: decimal">
+<li><p>What would a full <code>setOldClass()</code> definition look like for an ordered
+factor (i.e. add <code>slots</code> and <code>prototype</code> the definition above)?</p></li>
+<li><p>Define a <code>length</code> method for the <code>Person</code> class.</p></li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="77">
+<li id="fn77"><p>John M Chambers, <span>“Object-Oriented Programming, Functional Programming and <span>R</span>,”</span> <em>Statistical Science</em> 29, no. 2 (2014): 167–80, <a href="https://projecteuclid.org/download/pdfview_1/euclid.ss/1408368569" role="doc-biblioref">https://projecteuclid.org/download/pdfview_1/euclid.ss/1408368569</a>.<a href="s4.html#fnref77" class="footnote-back">↩︎</a></p></li>
+<li id="fn78"><p>John M Chambers, <em>Software for Data Analysis: Programming with <span>R</span></em> (Springer, 2008).<a href="s4.html#fnref78" class="footnote-back">↩︎</a></p></li>
+<li id="fn79"><p>This is a historical quirk introduced because the methods package used to take a long time to load and <code>Rscript</code> is optimised for fast command line invocation.<a href="s4.html#fnref79" class="footnote-back">↩︎</a></p></li>
+<li id="fn80"><p><code>?setClass</code> recommends that you avoid the <code>prototype</code> argument, but this is generally considered to be bad advice.<a href="s4.html#fnref80" class="footnote-back">↩︎</a></p></li>
+<li id="fn81"><p>The S4 <code>ANY</code> pseudo-class plays the same role as the S3 <code>default</code> pseudo-class.<a href="s4.html#fnref81" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="r6.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="oo-tradeoffs.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": false,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/hadley/adv-r/edit/master/S4.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

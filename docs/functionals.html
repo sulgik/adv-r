@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>1 Functionals | Advanced R</title>
+<meta name="author" content="Hadley Wickham">
+<meta name="generator" content="bookdown 0.24 with bs4_book()">
+<meta property="og:title" content="1 Functionals | Advanced R">
+<meta property="og:type" content="book">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="1 Functionals | Advanced R">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.10/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-141212623-1"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-141212623-1');
+    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><meta name="description" content="1.1 Introduction  To become significantly more reliable, code must become more transparent. In particular, nested conditions and loops must be viewed with great suspicion. Complicated control...">
+<meta property="og:description" content="1.1 Introduction  To become significantly more reliable, code must become more transparent. In particular, nested conditions and loops must be viewed with great suspicion. Complicated control...">
+<meta name="twitter:description" content="1.1 Introduction  To become significantly more reliable, code must become more transparent. In particular, nested conditions and loops must be viewed with great suspicion. Complicated control...">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Advanced R</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Welcome</a></li>
+<li class="book-part">Functional programming</li>
+<li><a class="" href="fp.html">Introduction</a></li>
+<li><a class="active" href="functionals.html"><span class="header-section-number">1</span> Functionals</a></li>
+<li><a class="" href="function-factories.html"><span class="header-section-number">2</span> Function factories</a></li>
+<li><a class="" href="function-operators.html"><span class="header-section-number">3</span> Function operators</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/hadley/adv-r">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="functionals" class="section level1" number="1">
+<h1>
+<span class="header-section-number">1</span> Functionals<a class="anchor" aria-label="anchor" href="#functionals"><i class="fas fa-link"></i></a>
+</h1>
+<div id="introduction" class="section level2" number="1.1">
+<h2>
+<span class="header-section-number">1.1</span> Introduction<a class="anchor" aria-label="anchor" href="#introduction"><i class="fas fa-link"></i></a>
+</h2>
+<p></p>
+<blockquote>
+<p>To become significantly more reliable, code must become more transparent.
+In particular, nested conditions and loops must be viewed with great
+suspicion. Complicated control flows confuse programmers. Messy code often
+hides bugs.</p>
+<p>— Bjarne Stroustrup</p>
+</blockquote>
+<p>A <strong>functional</strong> is a function that takes a function as an input and returns a vector as output. Here’s a simple functional: it calls the function provided as input with 1000 random uniform numbers.</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">randomise</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">f</span><span class="op">)</span> <span class="fu">f</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">1e3</span><span class="op">)</span><span class="op">)</span>
+<span class="fu">randomise</span><span class="op">(</span><span class="va">mean</span><span class="op">)</span>
+<span class="co">#&gt; [1] 0.506</span>
+<span class="fu">randomise</span><span class="op">(</span><span class="va">mean</span><span class="op">)</span>
+<span class="co">#&gt; [1] 0.501</span>
+<span class="fu">randomise</span><span class="op">(</span><span class="va">sum</span><span class="op">)</span>
+<span class="co">#&gt; [1] 489</span></code></pre></div>
+<p>The chances are that you’ve already used a functional. You might have used for-loop replacements like base R’s <code><a href="https://rdrr.io/r/base/lapply.html">lapply()</a></code>, <code><a href="https://rdrr.io/r/base/apply.html">apply()</a></code>, and <code><a href="https://rdrr.io/r/base/tapply.html">tapply()</a></code>; or purrr’s <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code>; or maybe you’ve used a mathematical functional like <code><a href="https://rdrr.io/r/stats/integrate.html">integrate()</a></code> or <code><a href="https://rdrr.io/r/stats/optim.html">optim()</a></code>.</p>
+<p>
+A common use of functionals is as an alternative to for loops. For loops have a bad rap in R because many people believe they are slow<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Typically it’s not the for loop itself that’s slow, but what you’re doing inside of it. A common culprit of slow loops is modifying a data structure, where each modification generates a copy. See Sections &lt;a href="#single-binding"&gt;&lt;strong&gt;??&lt;/strong&gt;&lt;/a&gt; and &lt;a href="#avoid-copies"&gt;&lt;strong&gt;??&lt;/strong&gt;&lt;/a&gt; for more details.&lt;/p&gt;'><sup>1</sup></a>, but the real downside of for loops is that they’re very flexible: a loop conveys that you’re iterating, but not what should be done with the results. Just as it’s better to use <code>while</code> than <code>repeat</code>, and it’s better to use <code>for</code> than <code>while</code> (Section <a href="#for-family"><strong>??</strong></a>), it’s better to use a functional than <code>for</code>. Each functional is tailored for a specific task, so when you recognise the functional you immediately know why it’s being used.</p>
+<p>If you’re an experienced for loop user, switching to functionals is typically a pattern matching exercise. You look at the for loop and find a functional that matches the basic form. If one doesn’t exist, don’t try and torture an existing functional to fit the form you need. Instead, just leave it as a for loop! (Or once you’ve repeated the same loop two or more times, maybe think about writing your own functional).</p>
+<div id="outline" class="section level3 unnumbered">
+<h3>Outline<a class="anchor" aria-label="anchor" href="#outline"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li><p>Section <a href="functionals.html#map">1.2</a> introduces your first functional: <code><a href="https://purrr.tidyverse.org/reference/map.html">purrr::map()</a></code>.</p></li>
+<li><p>Section <a href="functionals.html#purrr-style">1.3</a> demonstrates how you can combine multiple simple
+functionals to solve a more complex problem and discusses how purrr style
+differs from other approaches.</p></li>
+<li><p>Section <a href="functionals.html#map-variants">1.4</a> teaches you about 18 (!!) important variants of
+<code><a href="https://purrr.tidyverse.org/reference/map.html">purrr::map()</a></code>. Fortunately, their orthogonal design makes them easy to
+learn, remember, and master.</p></li>
+<li><p>Section <a href="functionals.html#reduce">1.5</a> introduces a new style of functional: <code><a href="https://purrr.tidyverse.org/reference/reduce.html">purrr::reduce()</a></code>.
+<code><a href="https://purrr.tidyverse.org/reference/reduce.html">reduce()</a></code> systematically reduces a vector to a single result by applying
+a function that takes two inputs.</p></li>
+<li><p>Section <a href="functionals.html#predicate-functionals">1.6</a> teaches you about predicates: functions
+that return a single <code>TRUE</code> or <code>FALSE</code>, and the family of functionals
+that use them to solve common problems.</p></li>
+<li><p>Section <a href="functionals.html#base-functionals">1.7</a> reviews some functionals in base R that
+are not members of the map, reduce, or predicate families.</p></li>
+</ul>
+</div>
+<div id="prerequisites" class="section level3 unnumbered">
+<h3>Prerequisites<a class="anchor" aria-label="anchor" href="#prerequisites"><i class="fas fa-link"></i></a>
+</h3>
+<p>This chapter will focus on functionals provided by the <a href="https://purrr.tidyverse.org">purrr package</a>.<span class="citation"><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Lionel Henry and Hadley Wickham, &lt;em&gt;Purrr: Functional Programming Tools&lt;/em&gt;, 2018, &lt;a href="https://purrr.tidyverse.org" role="doc-biblioref"&gt;https://purrr.tidyverse.org&lt;/a&gt;.&lt;/p&gt;'><sup>2</sup></a></span> These functions have a consistent interface that makes it easier to understand the key ideas than their base equivalents, which have grown organically over many years. I’ll compare and contrast base R functions as we go, and then wrap up the chapter with a discussion of base functionals that don’t have purrr equivalents.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org">purrr</a></span><span class="op">)</span></code></pre></div>
+</div>
+</div>
+<div id="map" class="section level2" number="1.2">
+<h2>
+<span class="header-section-number">1.2</span> My first functional: <code>map()</code><a class="anchor" aria-label="anchor" href="#map"><i class="fas fa-link"></i></a>
+</h2>
+<p>The most fundamental functional is <code><a href="https://purrr.tidyverse.org/reference/map.html">purrr::map()</a></code><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Not to be confused with &lt;code&gt;base::Map()&lt;/code&gt;, which is considerably more complex. I’ll discuss &lt;code&gt;Map()&lt;/code&gt; in Section &lt;a href="functionals.html#pmap"&gt;1.4.5&lt;/a&gt;.&lt;/p&gt;'><sup>3</sup></a>. It takes a vector and a function, calls the function once for each element of the vector, and returns the results in a list. In other words, <code><a href="https://purrr.tidyverse.org/reference/map.html">map(1:3, f)</a></code> is equivalent to <code><a href="https://rdrr.io/r/base/list.html">list(f(1), f(2), f(3))</a></code>.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">triple</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span> <span class="op">*</span> <span class="fl">3</span>
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="va">triple</span><span class="op">)</span>
+<span class="co">#&gt; [[1]]</span>
+<span class="co">#&gt; [1] 3</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[2]]</span>
+<span class="co">#&gt; [1] 6</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[3]]</span>
+<span class="co">#&gt; [1] 9</span></code></pre></div>
+<p>Or, graphically:</p>
+<div class="inline-figure"><img src="diagrams/functionals/map.png" width="260" style="display: block; margin: auto;"></div>
+<div class="sidebar">
+<p>You might wonder why this function is called <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code>. What does it have to do with depicting physical features of land or sea 🗺? In fact, the meaning comes from mathematics where <em>map</em> refers to “an operation that associates each element of a given set with one or more elements of a second set.” This makes sense here because <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> defines a mapping from one vector to another. (<em>“Map”</em> also has the nice property of being short, which is useful for such a fundamental building block.)</p>
+</div>
+<p>The implementation of <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> is quite simple. We allocate a list the same length as the input, and then fill in the list with a for loop. The heart of the implementation is only a handful of lines of code:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">simple_map</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">f</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op">(</span><span class="st">"list"</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
+  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">out</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">f</span><span class="op">(</span><span class="va">x</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span>, <span class="va">...</span><span class="op">)</span>
+  <span class="op">}</span>
+  <span class="va">out</span>
+<span class="op">}</span></code></pre></div>
+<p>The real <code><a href="https://purrr.tidyverse.org/reference/map.html">purrr::map()</a></code> function has a few differences: it is written in C to eke out every last iota of performance, preserves names, and supports a few shortcuts that you’ll learn about in Section <a href="functionals.html#purrr-shortcuts">1.2.2</a>.</p>
+<div class="base">
+<p>The base equivalent to <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> is <code><a href="https://rdrr.io/r/base/lapply.html">lapply()</a></code>. The only difference is that <code><a href="https://rdrr.io/r/base/lapply.html">lapply()</a></code> does not support the helpers that you’ll learn about below, so if you’re only using <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> from purrr, you can skip the additional dependency and use <code><a href="https://rdrr.io/r/base/lapply.html">lapply()</a></code> directly.</p>
+</div>
+<div id="map-atomic" class="section level3" number="1.2.1">
+<h3>
+<span class="header-section-number">1.2.1</span> Producing atomic vectors<a class="anchor" aria-label="anchor" href="#map-atomic"><i class="fas fa-link"></i></a>
+</h3>
+<p><code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> returns a list, which makes it the most general of the map family because you can put anything in a list. But it is inconvenient to return a list when a simpler data structure would do, so there are four more specific variants: <code><a href="https://purrr.tidyverse.org/reference/map.html">map_lgl()</a></code>, <code><a href="https://purrr.tidyverse.org/reference/map.html">map_int()</a></code>, <code><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl()</a></code>, and <code><a href="https://purrr.tidyverse.org/reference/map.html">map_chr()</a></code>. Each returns an atomic vector of the specified type:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># map_chr() always returns a character vector</span>
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_chr</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="va">typeof</span><span class="op">)</span>
+<span class="co">#&gt;      mpg      cyl     disp       hp     drat       wt     qsec       vs </span>
+<span class="co">#&gt; "double" "double" "double" "double" "double" "double" "double" "double" </span>
+<span class="co">#&gt;       am     gear     carb </span>
+<span class="co">#&gt; "double" "double" "double"</span>
+
+<span class="co"># map_lgl() always returns a logical vector</span>
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_lgl</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="va">is.double</span><span class="op">)</span>
+<span class="co">#&gt;  mpg  cyl disp   hp drat   wt qsec   vs   am gear carb </span>
+<span class="co">#&gt; TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</span>
+
+<span class="co"># map_int() always returns a integer vector</span>
+<span class="va">n_unique</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_int</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="va">n_unique</span><span class="op">)</span>
+<span class="co">#&gt;  mpg  cyl disp   hp drat   wt qsec   vs   am gear carb </span>
+<span class="co">#&gt;   25    3   27   22   22   29   30    2    2    3    6</span>
+
+<span class="co"># map_dbl() always returns a double vector</span>
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="va">mean</span><span class="op">)</span>
+<span class="co">#&gt;     mpg     cyl    disp      hp    drat      wt    qsec      vs      am    gear </span>
+<span class="co">#&gt;  20.091   6.188 230.722 146.688   3.597   3.217  17.849   0.438   0.406   3.688 </span>
+<span class="co">#&gt;    carb </span>
+<span class="co">#&gt;   2.812</span></code></pre></div>
+<p>purrr uses the convention that suffixes, like <code>_dbl()</code>, refer to the output. All <code>map_*()</code> functions can take any type of vector as input. These examples rely on two facts: <code>mtcars</code> is a data frame, and data frames are lists containing vectors of the same length. This is more obvious if we draw a data frame with the same orientation as vector:</p>
+<div class="inline-figure"><img src="diagrams/functionals/map-list.png" width="335" style="display: block; margin: auto;"></div>
+<p>All map functions always return an output vector the same length as the input, which implies that each call to <code>.f</code> must return a single value. If it does not, you’ll get an error:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">pair</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">x</span><span class="op">)</span>
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, <span class="va">pair</span><span class="op">)</span>
+<span class="co">#&gt; Error: Result 1 must be a single double, not an integer vector of length 2</span></code></pre></div>
+<p>This is similar to the error you’ll get if <code>.f</code> returns the wrong type of result:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, <span class="va">as.character</span><span class="op">)</span>
+<span class="co">#&gt; Error: Can't coerce element 1 from a character to a double</span></code></pre></div>
+<p>In either case, it’s often useful to switch back to <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code>, because <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> can accept any type of output. That allows you to see the problematic output, and figure out what to do with it.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, <span class="va">pair</span><span class="op">)</span>
+<span class="co">#&gt; [[1]]</span>
+<span class="co">#&gt; [1] 1 1</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[2]]</span>
+<span class="co">#&gt; [1] 2 2</span>
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, <span class="va">as.character</span><span class="op">)</span>
+<span class="co">#&gt; [[1]]</span>
+<span class="co">#&gt; [1] "1"</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[2]]</span>
+<span class="co">#&gt; [1] "2"</span></code></pre></div>
+<div class="base">
+<p>Base R has two apply functions that can return atomic vectors: <code><a href="https://rdrr.io/r/base/lapply.html">sapply()</a></code> and <code><a href="https://rdrr.io/r/base/lapply.html">vapply()</a></code>. I recommend that you avoid <code><a href="https://rdrr.io/r/base/lapply.html">sapply()</a></code> because it tries to simplify the result, so it can return a list, a vector, or a matrix. This makes it difficult to program with, and it should be avoided in non-interactive settings. <code><a href="https://rdrr.io/r/base/lapply.html">vapply()</a></code> is safer because it allows you to provide a template, <code>FUN.VALUE</code>, that describes the output shape. If you don’t want to use purrr, I recommend you always use <code><a href="https://rdrr.io/r/base/lapply.html">vapply()</a></code> in your functions, not <code><a href="https://rdrr.io/r/base/lapply.html">sapply()</a></code>. The primary downside of <code><a href="https://rdrr.io/r/base/lapply.html">vapply()</a></code> is its verbosity: for example, the equivalent to <code><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl(x, mean, na.rm = TRUE)</a></code> is <code><a href="https://rdrr.io/r/base/lapply.html">vapply(x, mean, na.rm = TRUE, FUN.VALUE = double(1))</a></code>.</p>
+</div>
+</div>
+<div id="purrr-shortcuts" class="section level3" number="1.2.2">
+<h3>
+<span class="header-section-number">1.2.2</span> Anonymous functions and shortcuts<a class="anchor" aria-label="anchor" href="#purrr-shortcuts"><i class="fas fa-link"></i></a>
+</h3>
+<p>
+</p>
+<p>Instead of using <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> with an existing function, you can create an inline anonymous function (as mentioned in Section <a href="#first-class-functions"><strong>??</strong></a>):</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt;  mpg  cyl disp   hp drat   wt qsec   vs   am gear carb </span>
+<span class="co">#&gt;   25    3   27   22   22   29   30    2    2    3    6</span></code></pre></div>
+<p>Anonymous functions are very useful, but the syntax is verbose. So purrr supports a special shortcut:</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt;  mpg  cyl disp   hp drat   wt qsec   vs   am gear carb </span>
+<span class="co">#&gt;   25    3   27   22   22   29   30    2    2    3    6</span></code></pre></div>
+<p>This works because all purrr functions translate formulas, created by <code><a href="https://rdrr.io/r/base/tilde.html">~</a></code> (pronounced “twiddle”), into functions. You can see what’s happening behind the scenes by calling <code><a href="https://purrr.tidyverse.org/reference/as_mapper.html">as_mapper()</a></code>:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://purrr.tidyverse.org/reference/as_mapper.html">as_mapper</a></span><span class="op">(</span><span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; &lt;lambda&gt;</span>
+<span class="co">#&gt; function (..., .x = ..1, .y = ..2, . = ..1) </span>
+<span class="co">#&gt; length(unique(.x))</span>
+<span class="co">#&gt; attr(,"class")</span>
+<span class="co">#&gt; [1] "rlang_lambda_function" "function"</span></code></pre></div>
+<p>The function arguments look a little quirky but allow you to refer to <code>.</code> for one argument functions, <code>.x</code> and <code>.y</code> for two argument functions, and <code>..1</code>, <code>..2</code>, <code>..3</code>, etc, for functions with an arbitrary number of arguments. <code>.</code> remains for backward compatibility but I don’t recommend using it because it’s easily confused with the <code>.</code> used by magrittr’s pipe.</p>
+<p>This shortcut is particularly useful for generating random data:</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
+<span class="co">#&gt; List of 3</span>
+<span class="co">#&gt;  $ : num [1:2] 0.281 0.53</span>
+<span class="co">#&gt;  $ : num [1:2] 0.433 0.917</span>
+<span class="co">#&gt;  $ : num [1:2] 0.0275 0.8249</span></code></pre></div>
+<p>Reserve this syntax for short and simple functions. A good rule of thumb is that if your function spans lines or uses <code>{}</code>, it’s time to give it a name.</p>
+<p>The map functions also have shortcuts for extracting elements from a vector, powered by <code><a href="https://purrr.tidyverse.org/reference/pluck.html">purrr::pluck()</a></code>. You can use a character vector to select elements by name, an integer vector to select by position, or a list to select by both name and position. These are very useful for working with deeply nested lists, which often arise when working with JSON.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, x <span class="op">=</span> <span class="fl">1</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>, z <span class="op">=</span> <span class="st">"a"</span><span class="op">)</span>,
+  <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2</span>, x <span class="op">=</span> <span class="fl">4</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">6</span><span class="op">)</span>, z <span class="op">=</span> <span class="st">"b"</span><span class="op">)</span>,
+  <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3</span>, x <span class="op">=</span> <span class="fl">8</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">9</span>, <span class="fl">10</span>, <span class="fl">11</span><span class="op">)</span><span class="op">)</span>
+<span class="op">)</span>
+
+<span class="co"># Select by name</span>
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"x"</span><span class="op">)</span>
+<span class="co">#&gt; [1] 1 4 8</span>
+
+<span class="co"># Or by position</span>
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">1</span><span class="op">)</span>
+<span class="co">#&gt; [1] -1 -2 -3</span>
+
+<span class="co"># Or by both</span>
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"y"</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [1] 2 5 9</span>
+
+<span class="co"># You'll get an error if a component doesn't exist:</span>
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_chr</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"z"</span><span class="op">)</span>
+<span class="co">#&gt; Error: Result 3 must be a single string, not NULL of length 0</span>
+
+<span class="co"># Unless you supply a .default value</span>
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_chr</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"z"</span>, .default <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span>
+<span class="co">#&gt; [1] "a" "b" NA</span></code></pre></div>
+<div class="base">
+<p>In base R functions, like <code><a href="https://rdrr.io/r/base/lapply.html">lapply()</a></code>, you can provide the name of the function as a string. This isn’t tremendously useful as <code><a href="https://rdrr.io/r/base/lapply.html">lapply(x, "f")</a></code> is almost always equivalent to <code><a href="https://rdrr.io/r/base/lapply.html">lapply(x, f)</a></code> and is more typing.</p>
+</div>
+</div>
+<div id="passing-arguments" class="section level3" number="1.2.3">
+<h3>
+<span class="header-section-number">1.2.3</span> Passing arguments with <code>...</code><a class="anchor" aria-label="anchor" href="#passing-arguments"><i class="fas fa-link"></i></a>
+</h3>
+<p></p>
+<p>It’s often convenient to pass along additional arguments to the function that you’re calling. For example, you might want to pass <code>na.rm = TRUE</code> along to <code><a href="https://rdrr.io/r/base/mean.html">mean()</a></code>. One way to do that is with an anonymous function:</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="cn">NA</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl</a></span><span class="op">(</span><span class="va">x</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">.x</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [1] 3.0 5.5</span></code></pre></div>
+<p>But because the map functions pass <code>...</code> along, there’s a simpler form available:</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">mean</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="co">#&gt; [1] 3.0 5.5</span></code></pre></div>
+<p>This is easiest to understand with a picture: any arguments that come after <code>f</code> in the call to <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> are inserted <em>after</em> the data in individual calls to <code>f()</code>:</p>
+<div class="inline-figure"><img src="diagrams/functionals/map-arg.png" width="359" style="display: block; margin: auto;"></div>
+<p>It’s important to note that these arguments are not decomposed; or said another way, <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> is only vectorised over its first argument. If an argument after <code>f</code> is a vector, it will be passed along as is:</p>
+<div class="inline-figure"><img src="diagrams/functionals/map-arg-recycle.png" width="345" style="display: block; margin: auto;"></div>
+<p>(You’ll learn about map variants that <em>are</em> vectorised over multiple arguments in Sections <a href="functionals.html#map2">1.4.2</a> and <a href="functionals.html#pmap">1.4.5</a>.)</p>
+<p>Note there’s a subtle difference between placing extra arguments inside an anonymous function compared with passing them to <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code>. Putting them in an anonymous function means that they will be evaluated every time <code>f()</code> is executed, not just once when you call <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code>. This is easiest to see if we make the additional argument random:</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">plus</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="va">x</span> <span class="op">+</span> <span class="va">y</span>
+
+<span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">plus</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [1] 0.0625 0.0625 0.0625 0.0625</span>
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl</a></span><span class="op">(</span><span class="va">x</span>, <span class="op">~</span> <span class="fu">plus</span><span class="op">(</span><span class="va">.x</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [1] 0.903 0.132 0.629 0.945</span></code></pre></div>
+</div>
+<div id="argument-names" class="section level3" number="1.2.4">
+<h3>
+<span class="header-section-number">1.2.4</span> Argument names<a class="anchor" aria-label="anchor" href="#argument-names"><i class="fas fa-link"></i></a>
+</h3>
+<p>In the diagrams, I’ve omitted argument names to focus on the overall structure. But I recommend writing out the full names in your code, as it makes it easier to read. <code><a href="https://purrr.tidyverse.org/reference/map.html">map(x, mean, 0.1)</a></code> is perfectly valid code, but will call <code><a href="https://rdrr.io/r/base/mean.html">mean(x[[1]], 0.1)</a></code> so it relies on the reader remembering that the second argument to <code><a href="https://rdrr.io/r/base/mean.html">mean()</a></code> is <code>trim</code>. To avoid unnecessary burden on the brain of the reader<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Who is highly likely to be future you!&lt;/p&gt;"><sup>4</sup></a>, be kind and write <code><a href="https://purrr.tidyverse.org/reference/map.html">map(x, mean, trim = 0.1)</a></code>.</p>
+<p>This is the reason why the arguments to <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> are a little odd: instead of being <code>x</code> and <code>f</code>, they are <code>.x</code> and <code>.f</code>. It’s easiest to see the problem that leads to these names using <code>simple_map()</code> defined above. <code>simple_map()</code> has arguments <code>x</code> and <code>f</code> so you’ll have problems whenever the function you are calling has arguments <code>x</code> or <code>f</code>:</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">boostrap_summary</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">f</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu">f</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">x</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="fu">simple_map</span><span class="op">(</span><span class="va">mtcars</span>, <span class="va">boostrap_summary</span>, f <span class="op">=</span> <span class="va">mean</span><span class="op">)</span>
+<span class="co">#&gt; Error in mean.default(x[[i]], ...): 'trim' must be numeric of length one</span></code></pre></div>
+<!-- GVW: a diagram here showing how the various f's and x's are matched to one another in the example above would be very helpful -->
+<p>The error is a little bewildering until you remember that the call to <code>simple_map()</code> is equivalent to <code>simple_map(x = mtcars, f = mean, bootstrap_summary)</code> because named matching beats positional matching.</p>
+<p>purrr functions reduce the likelihood of such a clash by using <code>.f</code> and <code>.x</code> instead of the more common <code>f</code> and <code>x</code>. Of course this technique isn’t perfect (because the function you are calling might still use <code>.f</code> and <code>.x</code>), but it avoids 99% of issues. The remaining 1% of the time, use an anonymous function.</p>
+<div class="base">
+<p>Base functions that pass along <code>...</code> use a variety of naming conventions to prevent undesired argument matching:</p>
+<ul>
+<li><p>The apply family mostly uses capital letters (e.g. <code>X</code> and <code>FUN</code>).</p></li>
+<li><p><code><a href="https://rdrr.io/r/base/transform.html">transform()</a></code> uses the more exotic prefix <code>_</code>: this makes the name non-syntactic
+so it must always be surrounded in <code>`</code>, as described in
+Section <a href="#non-syntactic"><strong>??</strong></a>. This makes undesired matches extremely
+unlikely.</p></li>
+<li><p>Other functionals like <code><a href="https://rdrr.io/r/stats/uniroot.html">uniroot()</a></code> and <code><a href="https://rdrr.io/r/stats/optim.html">optim()</a></code> make no effort to avoid
+clashes but they tend to be used with specially created functions so
+clashes are less likely.</p></li>
+</ul>
+</div>
+</div>
+<div id="change-argument" class="section level3" number="1.2.5">
+<h3>
+<span class="header-section-number">1.2.5</span> Varying another argument<a class="anchor" aria-label="anchor" href="#change-argument"><i class="fas fa-link"></i></a>
+</h3>
+<p>So far the first argument to <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> has always become the first argument to the function. But what happens if the first argument should be constant, and you want to vary a different argument? How do you get the result in this picture?</p>
+<div class="inline-figure"><img src="diagrams/functionals/map-arg-flipped.png" width="359" style="display: block; margin: auto;"></div>
+<p>It turns out that there’s no way to do it directly, but there are two tricks you can use instead. To illustrate them, imagine I have a vector that contains a few unusual values, and I want to explore the effect of different amounts of trimming when computing the mean. In this case, the first argument to <code><a href="https://rdrr.io/r/base/mean.html">mean()</a></code> will be constant, and I want to vary the second argument, <code>trim</code>.</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">trims</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.5</span><span class="op">)</span>
+<span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Cauchy.html">rcauchy</a></span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span></code></pre></div>
+<ul>
+<li>
+<p>The simplest technique is to use an anonymous function to rearrange the
+argument order:</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl</a></span><span class="op">(</span><span class="va">trims</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">x</span>, trim <span class="op">=</span> <span class="va">.x</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [1] -0.3500  0.0434  0.0354  0.0502</span></code></pre></div>
+<p>This is still a little confusing because I’m using both <code>x</code> and <code>.x</code>.
+You can make it a little clearer by abandoning the <code><a href="https://rdrr.io/r/base/tilde.html">~</a></code> helper:</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl</a></span><span class="op">(</span><span class="va">trims</span>, <span class="kw">function</span><span class="op">(</span><span class="va">trim</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">x</span>, trim <span class="op">=</span> <span class="va">trim</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [1] -0.3500  0.0434  0.0354  0.0502</span></code></pre></div>
+</li>
+<li>
+<p>Sometimes, if you want to be (too) clever, you can take advantage of R’s
+flexible argument matching rules (as described in Section
+<a href="#prefix-form"><strong>??</strong></a>). For example, in this example you can rewrite
+<code><a href="https://rdrr.io/r/base/mean.html">mean(x, trim = 0.1)</a></code> as <code><a href="https://rdrr.io/r/base/mean.html">mean(0.1, x = x)</a></code>, so you could write the
+call to <code><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl()</a></code> as:</p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl</a></span><span class="op">(</span><span class="va">trims</span>, <span class="va">mean</span>, x <span class="op">=</span> <span class="va">x</span><span class="op">)</span>
+<span class="co">#&gt; [1] -0.3500  0.0434  0.0354  0.0502</span></code></pre></div>
+<p>I don’t recommend this technique as it relies on the reader’s familiarity with both the argument order to <code>.f</code>, and R’s
+argument matching rules.</p>
+</li>
+</ul>
+<p>You’ll see one more alternative in Section <a href="functionals.html#pmap">1.4.5</a>.</p>
+</div>
+<div id="exercises" class="section level3" number="1.2.6">
+<h3>
+<span class="header-section-number">1.2.6</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises"><i class="fas fa-link"></i></a>
+</h3>
+<ol style="list-style-type: decimal">
+<li><p>Use <code><a href="https://purrr.tidyverse.org/reference/as_mapper.html">as_mapper()</a></code> to explore how purrr generates anonymous functions for
+the integer, character, and list helpers. What helper allows you to
+extract attributes? Read the documentation to find out.</p></li>
+<li><p><code><a href="https://purrr.tidyverse.org/reference/map.html">map(1:3, ~ runif(2))</a></code> is a useful pattern for generating random
+numbers, but <code><a href="https://purrr.tidyverse.org/reference/map.html">map(1:3, runif(2))</a></code> is not. Why not? Can you explain why
+it returns the result that it does?</p></li>
+<li>
+<p>Use the appropriate <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> function to:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Compute the standard deviation of every column in a numeric data frame.</p></li>
+<li><p>Compute the standard deviation of every numeric column in a mixed data
+frame. (Hint: you’ll need to do it in two steps.)</p></li>
+<li><p>Compute the number of levels for every factor in a data frame.</p></li>
+</ol>
+</li>
+<li>
+<p>The following code simulates the performance of a t-test for non-normal
+data. Extract the p-value from each test, then visualise.</p>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">trials</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html">rpois</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">10</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html">rpois</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+</li>
+<li>
+<p>The following code uses a map nested inside another map to apply a
+function to every element of a nested list. Why does it fail, and
+what do you need to do to make it work?</p>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">9</span><span class="op">)</span><span class="op">)</span>,
+  <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">6</span><span class="op">)</span>, <span class="fl">7</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">7</span>, <span class="fl">6</span><span class="op">)</span><span class="op">)</span>
+<span class="op">)</span>
+
+<span class="va">triple</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span> <span class="op">*</span> <span class="fl">3</span>
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">map</span>, .f <span class="op">=</span> <span class="va">triple</span><span class="op">)</span>
+<span class="co">#&gt; Error in .f(.x[[i]], ...): unused argument (function (.x, .f, ...) </span>
+<span class="co">#&gt; {</span>
+<span class="co">#&gt;     .f &lt;- as_mapper(.f, ...)</span>
+<span class="co">#&gt;     .Call(map_impl, environment(), ".x", ".f", "list")</span>
+<span class="co">#&gt; })</span></code></pre></div>
+</li>
+<li>
+<p>Use <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> to fit linear models to the <code>mtcars</code> dataset using the formulas
+stored in this list:</p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">formulas</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+  <span class="va">mpg</span> <span class="op">~</span> <span class="va">disp</span>,
+  <span class="va">mpg</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="va">disp</span><span class="op">)</span>,
+  <span class="va">mpg</span> <span class="op">~</span> <span class="va">disp</span> <span class="op">+</span> <span class="va">wt</span>,
+  <span class="va">mpg</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="va">disp</span><span class="op">)</span> <span class="op">+</span> <span class="va">wt</span>
+<span class="op">)</span></code></pre></div>
+</li>
+<li>
+<p>Fit the model <code>mpg ~ disp</code> to each of the bootstrap replicates of <code>mtcars</code>
+in the list below, then extract the <span class="math inline">\(R^2\)</span> of the model fit (Hint: you can
+compute the <span class="math inline">\(R^2\)</span> with <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>.)</p>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">bootstrap</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">df</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, , drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span>
+<span class="op">}</span>
+
+<span class="va">bootstraps</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="op">~</span> <span class="fu">bootstrap</span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+</li>
+</ol>
+</div>
+</div>
+<div id="purrr-style" class="section level2" number="1.3">
+<h2>
+<span class="header-section-number">1.3</span> Purrr style<a class="anchor" aria-label="anchor" href="#purrr-style"><i class="fas fa-link"></i></a>
+</h2>
+<p>Before we go on to explore more map variants, let’s take a quick look at how you tend to use multiple purrr functions to solve a moderately realistic problem: fitting a model to each subgroup and extracting a coefficient of the model. For this toy example, I’m going to break the <code>mtcars</code> data set down into groups defined by the number of cylinders, using the base <code>split</code> function:</p>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">by_cyl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html">split</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="va">mtcars</span><span class="op">$</span><span class="va">cyl</span><span class="op">)</span></code></pre></div>
+<p>This creates a list of three data frames: the cars with 4, 6, and 8 cylinders respectively.</p>
+<p>Now imagine we want to fit a linear model, then extract the second coefficient (i.e. the slope). The following code shows how you might do that with purrr:</p>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">by_cyl</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span>, data <span class="op">=</span> <span class="va">.x</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">coef</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>
+<span class="co">#&gt;     4     6     8 </span>
+<span class="co">#&gt; -5.65 -2.78 -2.19</span></code></pre></div>
+<p>(If you haven’t seen <code><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></code>, the pipe, before, it’s described in Section <a href="#function-composition"><strong>??</strong></a>.)</p>
+<p>I think this code is easy to read because each line encapsulates a single step, you can easily distinguish the functional from what it does, and the purrr helpers allow us to very concisely describe what to do in each step.</p>
+<p>How would you attack this problem with base R? You certainly <em>could</em> replace each purrr function with the equivalent base function:</p>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">by_cyl</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">data</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span>, data <span class="op">=</span> <span class="va">data</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">coef</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">vapply</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>, <span class="fu"><a href="https://rdrr.io/r/base/double.html">double</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt;     4     6     8 </span>
+<span class="co">#&gt; -5.65 -2.78 -2.19</span></code></pre></div>
+<p>But this isn’t really base R since we’re using the pipe. To tackle purely in base I think you’d use an intermediate variable, and do more in each step:</p>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">models</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">by_cyl</span>, <span class="kw">function</span><span class="op">(</span><span class="va">data</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span>, data <span class="op">=</span> <span class="va">data</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/lapply.html">vapply</a></span><span class="op">(</span><span class="va">models</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>, <span class="fu"><a href="https://rdrr.io/r/base/double.html">double</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt;     4     6     8 </span>
+<span class="co">#&gt; -5.65 -2.78 -2.19</span></code></pre></div>
+<p>Or, of course, you could use a for loop:</p>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">slopes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/double.html">double</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">by_cyl</span><span class="op">)</span><span class="op">)</span>
+<span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span><span class="op">(</span><span class="va">by_cyl</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span>, data <span class="op">=</span> <span class="va">by_cyl</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>
+  <span class="va">slopes</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>
+<span class="op">}</span>
+<span class="va">slopes</span>
+<span class="co">#&gt; [1] -5.65 -2.78 -2.19</span></code></pre></div>
+<p>It’s interesting to note that as you move from purrr to base apply functions to for loops you tend to do more and more in each iteration. In purrr we iterate 3 times (<code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code>, <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code>, <code><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl()</a></code>), with apply functions we iterate twice (<code><a href="https://rdrr.io/r/base/lapply.html">lapply()</a></code>, <code><a href="https://rdrr.io/r/base/lapply.html">vapply()</a></code>), and with a for loop we iterate once. I prefer more, but simpler, steps because I think it makes the code easier to understand and later modify.</p>
+</div>
+<div id="map-variants" class="section level2" number="1.4">
+<h2>
+<span class="header-section-number">1.4</span> Map variants<a class="anchor" aria-label="anchor" href="#map-variants"><i class="fas fa-link"></i></a>
+</h2>
+<p>There are 23 primary variants of <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code>. So far, you’ve learned about five (<code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code>, <code><a href="https://purrr.tidyverse.org/reference/map.html">map_lgl()</a></code>, <code><a href="https://purrr.tidyverse.org/reference/map.html">map_int()</a></code>, <code><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl()</a></code> and <code><a href="https://purrr.tidyverse.org/reference/map.html">map_chr()</a></code>). That means that you’ve got 18 (!!) more to learn. That sounds like a lot, but fortunately the design of purrr means that you only need to learn five new ideas:</p>
+<ul>
+<li>Output same type as input with <code><a href="https://purrr.tidyverse.org/reference/modify.html">modify()</a></code>
+</li>
+<li>Iterate over two inputs with <code><a href="https://purrr.tidyverse.org/reference/map2.html">map2()</a></code>.</li>
+<li>Iterate with an index using <code><a href="https://purrr.tidyverse.org/reference/imap.html">imap()</a></code>
+</li>
+<li>Return nothing with <code><a href="https://purrr.tidyverse.org/reference/map.html">walk()</a></code>.</li>
+<li>Iterate over any number of inputs with <code><a href="https://purrr.tidyverse.org/reference/map2.html">pmap()</a></code>.</li>
+</ul>
+<p>The map family of functions has orthogonal input and outputs, meaning that we can organise all the family into a matrix, with inputs in the rows and outputs in the columns. Once you’ve mastered the idea in a row, you can combine it with any column; once you’ve mastered the idea in a column, you can combine it with any row. That relationship is summarised in the following table:</p>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th></th>
+<th>List</th>
+<th>Atomic</th>
+<th>Same type</th>
+<th>Nothing</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>One argument</td>
+<td><code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code></td>
+<td>
+<code><a href="https://purrr.tidyverse.org/reference/map.html">map_lgl()</a></code>, …</td>
+<td><code><a href="https://purrr.tidyverse.org/reference/modify.html">modify()</a></code></td>
+<td><code><a href="https://purrr.tidyverse.org/reference/map.html">walk()</a></code></td>
+</tr>
+<tr class="even">
+<td>Two arguments</td>
+<td><code><a href="https://purrr.tidyverse.org/reference/map2.html">map2()</a></code></td>
+<td>
+<code><a href="https://purrr.tidyverse.org/reference/map2.html">map2_lgl()</a></code>, …</td>
+<td><code><a href="https://purrr.tidyverse.org/reference/modify.html">modify2()</a></code></td>
+<td><code><a href="https://purrr.tidyverse.org/reference/map2.html">walk2()</a></code></td>
+</tr>
+<tr class="odd">
+<td>One argument + index</td>
+<td><code><a href="https://purrr.tidyverse.org/reference/imap.html">imap()</a></code></td>
+<td>
+<code><a href="https://purrr.tidyverse.org/reference/imap.html">imap_lgl()</a></code>, …</td>
+<td><code><a href="https://purrr.tidyverse.org/reference/modify.html">imodify()</a></code></td>
+<td><code><a href="https://purrr.tidyverse.org/reference/imap.html">iwalk()</a></code></td>
+</tr>
+<tr class="even">
+<td>N arguments</td>
+<td><code><a href="https://purrr.tidyverse.org/reference/map2.html">pmap()</a></code></td>
+<td>
+<code><a href="https://purrr.tidyverse.org/reference/map2.html">pmap_lgl()</a></code>, …</td>
+<td>—</td>
+<td><code><a href="https://purrr.tidyverse.org/reference/map2.html">pwalk()</a></code></td>
+</tr>
+</tbody>
+</table></div>
+<div id="modify" class="section level3" number="1.4.1">
+<h3>
+<span class="header-section-number">1.4.1</span> Same type of output as input: <code>modify()</code><a class="anchor" aria-label="anchor" href="#modify"><i class="fas fa-link"></i></a>
+</h3>
+<p>Imagine you wanted to double every column in a data frame. You might first try using <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code>, but <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> always returns a list:</p>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
+  x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>,
+  y <span class="op">=</span> <span class="fl">6</span><span class="op">:</span><span class="fl">4</span>
+<span class="op">)</span>
+
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">df</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">*</span> <span class="fl">2</span><span class="op">)</span>
+<span class="co">#&gt; $x</span>
+<span class="co">#&gt; [1] 2 4 6</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $y</span>
+<span class="co">#&gt; [1] 12 10  8</span></code></pre></div>
+<p>If you want to keep the output as a data frame, you can use <code><a href="https://purrr.tidyverse.org/reference/modify.html">modify()</a></code>, which always returns the same type of output as the input:</p>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://purrr.tidyverse.org/reference/modify.html">modify</a></span><span class="op">(</span><span class="va">df</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">*</span> <span class="fl">2</span><span class="op">)</span>
+<span class="co">#&gt;   x  y</span>
+<span class="co">#&gt; 1 2 12</span>
+<span class="co">#&gt; 2 4 10</span>
+<span class="co">#&gt; 3 6  8</span></code></pre></div>
+<p>Despite the name, <code><a href="https://purrr.tidyverse.org/reference/modify.html">modify()</a></code> doesn’t modify in place, it returns a modified copy, so if you wanted to permanently modify <code>df</code>, you’d need to assign it:</p>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/modify.html">modify</a></span><span class="op">(</span><span class="va">df</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">*</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
+<p>As usual, the basic implementation of <code><a href="https://purrr.tidyverse.org/reference/modify.html">modify()</a></code> is simple, and in fact it’s even simpler than <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> because we don’t need to create a new output vector; we can just progressively replace the input. (The real code is a little complex to handle edge cases more gracefully.)</p>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">simple_modify</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">f</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span>
+  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">x</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">f</span><span class="op">(</span><span class="va">x</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span>, <span class="va">...</span><span class="op">)</span>
+  <span class="op">}</span>
+  <span class="va">x</span>
+<span class="op">}</span></code></pre></div>
+<p>In Section <a href="functionals.html#predicate-map">1.6.2</a> you’ll learn about a very useful variant of <code><a href="https://purrr.tidyverse.org/reference/modify.html">modify()</a></code>, called <code><a href="https://purrr.tidyverse.org/reference/modify.html">modify_if()</a></code>. This allows you to (e.g.) only double <em>numeric</em> columns of a data frame with <code><a href="https://purrr.tidyverse.org/reference/modify.html">modify_if(df, is.numeric, ~ .x * 2)</a></code>.</p>
+</div>
+<div id="map2" class="section level3" number="1.4.2">
+<h3>
+<span class="header-section-number">1.4.2</span> Two inputs: <code>map2()</code> and friends<a class="anchor" aria-label="anchor" href="#map2"><i class="fas fa-link"></i></a>
+</h3>
+<p><code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> is vectorised over a single argument, <code>.x</code>. This means it only varies <code>.x</code> when calling <code>.f</code>, and all other arguments are passed along unchanged, thus making it poorly suited for some problems. For example, how would you find a weighted mean when you have a list of observations and a list of weights? Imagine we have the following data:</p>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">xs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span>
+<span class="va">xs</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span>
+<span class="va">ws</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html">rpois</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">5</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
+<p>You can use <code><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl()</a></code> to compute the unweighted means:</p>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl</a></span><span class="op">(</span><span class="va">xs</span>, <span class="va">mean</span><span class="op">)</span>
+<span class="co">#&gt; [1]    NA 0.463 0.551 0.453 0.564 0.501 0.371 0.443</span></code></pre></div>
+<p>But passing <code>ws</code> as an additional argument doesn’t work because arguments after <code>.f</code> are not transformed:</p>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl</a></span><span class="op">(</span><span class="va">xs</span>, <span class="va">weighted.mean</span>, w <span class="op">=</span> <span class="va">ws</span><span class="op">)</span>
+<span class="co">#&gt; Error in weighted.mean.default(.x[[i]], ...): 'x' and 'w' must have the same length</span></code></pre></div>
+<div class="inline-figure"><img src="diagrams/functionals/map-arg-recycle.png" width="345" style="display: block; margin: auto;"></div>
+<p>We need a new tool: a <code><a href="https://purrr.tidyverse.org/reference/map2.html">map2()</a></code>, which is vectorised over two arguments. This means both <code>.x</code> and <code>.y</code> are varied in each call to <code>.f</code>:</p>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://purrr.tidyverse.org/reference/map2.html">map2_dbl</a></span><span class="op">(</span><span class="va">xs</span>, <span class="va">ws</span>, <span class="va">weighted.mean</span><span class="op">)</span>
+<span class="co">#&gt; [1]    NA 0.451 0.603 0.452 0.563 0.510 0.342 0.464</span></code></pre></div>
+<div class="inline-figure"><img src="diagrams/functionals/map2.png" width="368" style="display: block; margin: auto;"></div>
+<p>The arguments to <code><a href="https://purrr.tidyverse.org/reference/map2.html">map2()</a></code> are slightly different to the arguments to <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> as two vectors come before the function, rather than one. Additional arguments still go afterwards:</p>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://purrr.tidyverse.org/reference/map2.html">map2_dbl</a></span><span class="op">(</span><span class="va">xs</span>, <span class="va">ws</span>, <span class="va">weighted.mean</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="co">#&gt; [1] 0.504 0.451 0.603 0.452 0.563 0.510 0.342 0.464</span></code></pre></div>
+<div class="inline-figure"><img src="diagrams/functionals/map2-arg.png" width="453" style="display: block; margin: auto;"></div>
+<p>The basic implementation of <code><a href="https://purrr.tidyverse.org/reference/map2.html">map2()</a></code> is simple, and quite similar to that of <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code>. Instead of iterating over one vector, we iterate over two in parallel:</p>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">simple_map2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">f</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op">(</span><span class="st">"list"</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
+  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">out</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">f</span><span class="op">(</span><span class="va">x</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span>, <span class="va">y</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span>, <span class="va">...</span><span class="op">)</span>
+  <span class="op">}</span>
+  <span class="va">out</span>
+<span class="op">}</span></code></pre></div>
+<p>One of the big differences between <code><a href="https://purrr.tidyverse.org/reference/map2.html">map2()</a></code> and the simple function above is that <code><a href="https://purrr.tidyverse.org/reference/map2.html">map2()</a></code> recycles its inputs to make sure that they’re the same length:</p>
+<div class="inline-figure"><img src="diagrams/functionals/map2-recycle.png" width="368" style="display: block; margin: auto;"></div>
+<p>In other words, <code><a href="https://purrr.tidyverse.org/reference/map2.html">map2(x, y, f)</a></code> will automatically behave like <code><a href="https://purrr.tidyverse.org/reference/map.html">map(x, f, y)</a></code> when needed. This is helpful when writing functions; in scripts you’d generally just use the simpler form directly.</p>
+<div class="base">
+<p>The closest base equivalent to <code><a href="https://purrr.tidyverse.org/reference/map2.html">map2()</a></code> is <code><a href="https://rdrr.io/r/base/funprog.html">Map()</a></code>, which is discussed in Section <a href="functionals.html#pmap">1.4.5</a>.</p>
+</div>
+</div>
+<div id="no-outputs-walk-and-friends" class="section level3" number="1.4.3">
+<h3>
+<span class="header-section-number">1.4.3</span> No outputs: <code>walk()</code> and friends<a class="anchor" aria-label="anchor" href="#no-outputs-walk-and-friends"><i class="fas fa-link"></i></a>
+</h3>
+<p>Most functions are called for the value that they return, so it makes sense to capture and store the value with a <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> function. But some functions are called primarily for their side-effects (e.g. <code><a href="https://rdrr.io/r/base/cat.html">cat()</a></code>, <code><a href="https://rdrr.io/r/utils/write.table.html">write.csv()</a></code>, or <code>ggsave()</code>) and it doesn’t make sense to capture their results. Take this simple example that displays a welcome message using <code><a href="https://rdrr.io/r/base/cat.html">cat()</a></code>. <code><a href="https://rdrr.io/r/base/cat.html">cat()</a></code> returns <code>NULL</code>, so while <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> works (in the sense that it generates the desired welcomes), it also returns <code><a href="https://rdrr.io/r/base/list.html">list(NULL, NULL)</a></code>.</p>
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">welcome</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Welcome "</span>, <span class="va">x</span>, <span class="st">"!\n"</span>, sep <span class="op">=</span> <span class="st">""</span><span class="op">)</span>
+<span class="op">}</span>
+<span class="va">names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Hadley"</span>, <span class="st">"Jenny"</span><span class="op">)</span>
+
+<span class="co"># As well as generate the welcomes, it also shows </span>
+<span class="co"># the return value of cat()</span>
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">names</span>, <span class="va">welcome</span><span class="op">)</span>
+<span class="co">#&gt; Welcome Hadley!</span>
+<span class="co">#&gt; Welcome Jenny!</span>
+<span class="co">#&gt; [[1]]</span>
+<span class="co">#&gt; NULL</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[2]]</span>
+<span class="co">#&gt; NULL</span></code></pre></div>
+<p>You could avoid this problem by assigning the results of <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> to a variable that you never use, but that would muddy the intent of the code. Instead, purrr provides the walk family of functions that ignore the return values of the <code>.f</code> and instead return <code>.x</code> invisibly<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;In brief, invisible values are only printed if you explicitly request it. This makes them well suited for functions called primarily for their side-effects, as it allows their output to be ignored by default, while still giving an option to capture it. See Section &lt;a href="#invisible"&gt;&lt;strong&gt;??&lt;/strong&gt;&lt;/a&gt; for more details.&lt;/p&gt;'><sup>5</sup></a>.</p>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">walk</a></span><span class="op">(</span><span class="va">names</span>, <span class="va">welcome</span><span class="op">)</span>
+<span class="co">#&gt; Welcome Hadley!</span>
+<span class="co">#&gt; Welcome Jenny!</span></code></pre></div>
+<p>My visual depiction of walk attempts to capture the important difference from <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code>: the outputs are ephemeral, and the input is returned invisibly.</p>
+<div class="inline-figure"><img src="diagrams/functionals/walk.png" width="236" style="display: block; margin: auto;"></div>
+<p>One of the most useful <code><a href="https://purrr.tidyverse.org/reference/map.html">walk()</a></code> variants is <code><a href="https://purrr.tidyverse.org/reference/map2.html">walk2()</a></code> because a very common side-effect is saving something to disk, and when saving something to disk you always have a pair of values: the object and the path that you want to save it to.</p>
+<div class="inline-figure"><img src="diagrams/functionals/walk2.png" width="316" style="display: block; margin: auto;"></div>
+<p>For example, imagine you have a list of data frames (which I’ve created here using <code><a href="https://rdrr.io/r/base/split.html">split()</a></code>), and you’d like to save each one to a separate CSV file. That’s easy with <code><a href="https://purrr.tidyverse.org/reference/map2.html">walk2()</a></code>:</p>
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">temp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempfile</a></span><span class="op">(</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/files2.html">dir.create</a></span><span class="op">(</span><span class="va">temp</span><span class="op">)</span>
+
+<span class="va">cyls</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html">split</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="va">mtcars</span><span class="op">$</span><span class="va">cyl</span><span class="op">)</span>
+<span class="va">paths</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">temp</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"cyl-"</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">cyls</span><span class="op">)</span>, <span class="st">".csv"</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/map2.html">walk2</a></span><span class="op">(</span><span class="va">cyls</span>, <span class="va">paths</span>, <span class="va">write.csv</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/list.files.html">dir</a></span><span class="op">(</span><span class="va">temp</span><span class="op">)</span>
+<span class="co">#&gt; [1] "cyl-4.csv" "cyl-6.csv" "cyl-8.csv"</span></code></pre></div>
+<p>Here the <code><a href="https://purrr.tidyverse.org/reference/map2.html">walk2()</a></code> is equivalent to <code><a href="https://rdrr.io/r/utils/write.table.html">write.csv(cyls[[1]], paths[[1]])</a></code>, <code><a href="https://rdrr.io/r/utils/write.table.html">write.csv(cyls[[2]], paths[[2]])</a></code>, <code><a href="https://rdrr.io/r/utils/write.table.html">write.csv(cyls[[3]], paths[[3]])</a></code>.</p>
+<div class="base">
+<p>There is no base equivalent to <code><a href="https://purrr.tidyverse.org/reference/map.html">walk()</a></code>; either wrap the result of <code><a href="https://rdrr.io/r/base/lapply.html">lapply()</a></code> in <code><a href="https://rdrr.io/r/base/invisible.html">invisible()</a></code> or save it to a variable that is never used.</p>
+</div>
+</div>
+<div id="iterating-over-values-and-indices" class="section level3" number="1.4.4">
+<h3>
+<span class="header-section-number">1.4.4</span> Iterating over values and indices<a class="anchor" aria-label="anchor" href="#iterating-over-values-and-indices"><i class="fas fa-link"></i></a>
+</h3>
+<p></p>
+<p>There are three basic ways to loop over a vector with a for loop:</p>
+<ul>
+<li>Loop over the elements: <code>for (x in xs)</code>
+</li>
+<li>Loop over the numeric indices: <code>for (i in seq_along(xs))</code>
+</li>
+<li>Loop over the names: <code>for (nm in names(xs))</code>
+</li>
+</ul>
+<p>The first form is analogous to the <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> family. The second and third forms are equivalent to the <code><a href="https://purrr.tidyverse.org/reference/imap.html">imap()</a></code> family which allows you to iterate over the values and the indices of a vector in parallel.</p>
+<p><code><a href="https://purrr.tidyverse.org/reference/imap.html">imap()</a></code> is like <code><a href="https://purrr.tidyverse.org/reference/map2.html">map2()</a></code> in the sense that your <code>.f</code> gets called with two arguments, but here both are derived from the vector. <code><a href="https://purrr.tidyverse.org/reference/imap.html">imap(x, f)</a></code> is equivalent to <code><a href="https://purrr.tidyverse.org/reference/map2.html">map2(x, names(x), f)</a></code> if x has names, and <code><a href="https://purrr.tidyverse.org/reference/map2.html">map2(x, seq_along(x), f)</a></code> if it does not.</p>
+<p><code><a href="https://purrr.tidyverse.org/reference/imap.html">imap()</a></code> is often useful for constructing labels:</p>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://purrr.tidyverse.org/reference/imap.html">imap_chr</a></span><span class="op">(</span><span class="va">iris</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"The first value of "</span>, <span class="va">.y</span>, <span class="st">" is "</span>, <span class="va">.x</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt;                             Sepal.Length </span>
+<span class="co">#&gt; "The first value of Sepal.Length is 5.1" </span>
+<span class="co">#&gt;                              Sepal.Width </span>
+<span class="co">#&gt;  "The first value of Sepal.Width is 3.5" </span>
+<span class="co">#&gt;                             Petal.Length </span>
+<span class="co">#&gt; "The first value of Petal.Length is 1.4" </span>
+<span class="co">#&gt;                              Petal.Width </span>
+<span class="co">#&gt;  "The first value of Petal.Width is 0.2" </span>
+<span class="co">#&gt;                                  Species </span>
+<span class="co">#&gt;   "The first value of Species is setosa"</span></code></pre></div>
+<p>If the vector is unnamed, the second argument will be the index:</p>
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/imap.html">imap_chr</a></span><span class="op">(</span><span class="va">x</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"The highest value of "</span>, <span class="va">.y</span>, <span class="st">" is "</span>, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [1] "The highest value of 1 is 975" "The highest value of 2 is 915"</span>
+<span class="co">#&gt; [3] "The highest value of 3 is 982" "The highest value of 4 is 955"</span>
+<span class="co">#&gt; [5] "The highest value of 5 is 971" "The highest value of 6 is 696"</span></code></pre></div>
+<p><code><a href="https://purrr.tidyverse.org/reference/imap.html">imap()</a></code> is a useful helper if you want to work with the values in a vector along with their positions.</p>
+</div>
+<div id="pmap" class="section level3" number="1.4.5">
+<h3>
+<span class="header-section-number">1.4.5</span> Any number of inputs: <code>pmap()</code> and friends<a class="anchor" aria-label="anchor" href="#pmap"><i class="fas fa-link"></i></a>
+</h3>
+<p>Since we have <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> and <code><a href="https://purrr.tidyverse.org/reference/map2.html">map2()</a></code>, you might expect <code>map3()</code>, <code>map4()</code>, <code>map5()</code>, … But where would you stop? Instead of generalising <code><a href="https://purrr.tidyverse.org/reference/map2.html">map2()</a></code> to an arbitrary number of arguments, purrr takes a slightly different tack with <code><a href="https://purrr.tidyverse.org/reference/map2.html">pmap()</a></code>: you supply it a single list, which contains any number of arguments. In most cases, that will be a list of equal-length vectors, i.e. something very similar to a data frame. In diagrams, I’ll emphasise that relationship by drawing the input similar to a data frame.</p>
+<div class="inline-figure"><img src="diagrams/functionals/pmap.png" width="354" style="display: block; margin: auto;"></div>
+<p>There’s a simple equivalence between <code><a href="https://purrr.tidyverse.org/reference/map2.html">map2()</a></code> and <code><a href="https://purrr.tidyverse.org/reference/map2.html">pmap()</a></code>: <code><a href="https://purrr.tidyverse.org/reference/map2.html">map2(x, y, f)</a></code> is the same as <code><a href="https://purrr.tidyverse.org/reference/map2.html">pmap(list(x, y), f)</a></code>. The <code><a href="https://purrr.tidyverse.org/reference/map2.html">pmap()</a></code> equivalent to the <code><a href="https://purrr.tidyverse.org/reference/map2.html">map2_dbl(xs, ws, weighted.mean)</a></code> used above is:</p>
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://purrr.tidyverse.org/reference/map2.html">pmap_dbl</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">xs</span>, <span class="va">ws</span><span class="op">)</span>, <span class="va">weighted.mean</span><span class="op">)</span>
+<span class="co">#&gt; [1]    NA 0.451 0.603 0.452 0.563 0.510 0.342 0.464</span></code></pre></div>
+<p>As before, the varying arguments come before <code>.f</code> (although now they must be wrapped in a list), and the constant arguments come afterwards.</p>
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://purrr.tidyverse.org/reference/map2.html">pmap_dbl</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">xs</span>, <span class="va">ws</span><span class="op">)</span>, <span class="va">weighted.mean</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="co">#&gt; [1] 0.504 0.451 0.603 0.452 0.563 0.510 0.342 0.464</span></code></pre></div>
+<div class="inline-figure"><img src="diagrams/functionals/pmap-arg.png" width="458" style="display: block; margin: auto;"></div>
+<p>A big difference between <code><a href="https://purrr.tidyverse.org/reference/map2.html">pmap()</a></code> and the other map functions is that <code><a href="https://purrr.tidyverse.org/reference/map2.html">pmap()</a></code> gives you much finer control over argument matching because you can name the components of the list. Returning to our example from Section <a href="functionals.html#change-argument">1.2.5</a>, where we wanted to vary the <code>trim</code> argument to <code>x</code>, we could instead use <code><a href="https://purrr.tidyverse.org/reference/map2.html">pmap()</a></code>:</p>
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">trims</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.5</span><span class="op">)</span>
+<span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Cauchy.html">rcauchy</a></span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span>
+
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/map2.html">pmap_dbl</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>trim <span class="op">=</span> <span class="va">trims</span><span class="op">)</span>, <span class="va">mean</span>, x <span class="op">=</span> <span class="va">x</span><span class="op">)</span>
+<span class="co">#&gt; [1] -6.6740  0.0210  0.0235  0.0151</span></code></pre></div>
+<p>I think it’s good practice to name the components of the list to make it very clear how the function will be called.</p>
+<p>It’s often convenient to call <code><a href="https://purrr.tidyverse.org/reference/map2.html">pmap()</a></code> with a data frame. A handy way to create that data frame is with <code><a href="https://tibble.tidyverse.org/reference/tribble.html">tibble::tribble()</a></code>, which allows you to describe a data frame row-by-row (rather than column-by-column, as usual): thinking about the parameters to a function as a data frame is a very powerful pattern. The following example shows how you might draw random uniform numbers with varying parameters:</p>
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">params</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span><span class="op">(</span>
+  <span class="op">~</span> <span class="va">n</span>, <span class="op">~</span> <span class="va">min</span>, <span class="op">~</span> <span class="va">max</span>,
+   <span class="fl">1L</span>,     <span class="fl">0</span>,     <span class="fl">1</span>,
+   <span class="fl">2L</span>,    <span class="fl">10</span>,   <span class="fl">100</span>,
+   <span class="fl">3L</span>,   <span class="fl">100</span>,  <span class="fl">1000</span>
+<span class="op">)</span>
+
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/map2.html">pmap</a></span><span class="op">(</span><span class="va">params</span>, <span class="va">runif</span><span class="op">)</span>
+<span class="co">#&gt; [[1]]</span>
+<span class="co">#&gt; [1] 0.332</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[2]]</span>
+<span class="co">#&gt; [1] 53.5 47.6</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[3]]</span>
+<span class="co">#&gt; [1] 231 715 515</span></code></pre></div>
+<p><img src="diagrams/functionals/pmap-3.png" width="449" style="display: block; margin: auto;">
+Here, the column names are critical: I’ve carefully chosen to match them to the arguments to <code><a href="https://rdrr.io/r/stats/Uniform.html">runif()</a></code>, so the <code><a href="https://purrr.tidyverse.org/reference/map2.html">pmap(params, runif)</a></code> is equivalent to <code><a href="https://rdrr.io/r/stats/Uniform.html">runif(n = 1L, min = 0, max = 1)</a></code>, <code><a href="https://rdrr.io/r/stats/Uniform.html">runif(n = 2, min = 10, max = 100)</a></code>, <code><a href="https://rdrr.io/r/stats/Uniform.html">runif(n = 3L, min = 100, max = 1000)</a></code>. (If you have a data frame in hand, and the names don’t match, use <code><a href="https://dplyr.tidyverse.org/reference/rename.html">dplyr::rename()</a></code> or similar.)</p>
+<div class="base">
+<p>There are two base equivalents to the <code><a href="https://purrr.tidyverse.org/reference/map2.html">pmap()</a></code> family: <code><a href="https://rdrr.io/r/base/funprog.html">Map()</a></code> and <code><a href="https://rdrr.io/r/base/mapply.html">mapply()</a></code>. Both have significant drawbacks:</p>
+<ul>
+<li><p><code><a href="https://rdrr.io/r/base/funprog.html">Map()</a></code> vectorises over all arguments so you cannot supply arguments that
+do not vary.</p></li>
+<li><p><code><a href="https://rdrr.io/r/base/mapply.html">mapply()</a></code> is the multidimensional version of <code><a href="https://rdrr.io/r/base/lapply.html">sapply()</a></code>; conceptually it
+takes the output of <code><a href="https://rdrr.io/r/base/funprog.html">Map()</a></code> and simplifies it if possible. This gives it
+similar issues to <code><a href="https://rdrr.io/r/base/lapply.html">sapply()</a></code>. There is no multi-input equivalent of
+<code><a href="https://rdrr.io/r/base/lapply.html">vapply()</a></code>.</p></li>
+</ul>
+</div>
+</div>
+<div id="exercises-1" class="section level3" number="1.4.6">
+<h3>
+<span class="header-section-number">1.4.6</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-1"><i class="fas fa-link"></i></a>
+</h3>
+<ol style="list-style-type: decimal">
+<li><p>Explain the results of <code><a href="https://purrr.tidyverse.org/reference/modify.html">modify(mtcars, 1)</a></code>.</p></li>
+<li>
+<p>Rewrite the following code to use <code><a href="https://purrr.tidyverse.org/reference/imap.html">iwalk()</a></code> instead of <code><a href="https://purrr.tidyverse.org/reference/map2.html">walk2()</a></code>. What
+are the advantages and disadvantages?</p>
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">cyls</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html">split</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="va">mtcars</span><span class="op">$</span><span class="va">cyl</span><span class="op">)</span>
+<span class="va">paths</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">temp</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"cyl-"</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">cyls</span><span class="op">)</span>, <span class="st">".csv"</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/map2.html">walk2</a></span><span class="op">(</span><span class="va">cyls</span>, <span class="va">paths</span>, <span class="va">write.csv</span><span class="op">)</span></code></pre></div>
+</li>
+<li>
+<p>Explain how the following code transforms a data frame using functions
+stored in a list.</p>
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">trans</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+  disp <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span> <span class="op">*</span> <span class="fl">0.0163871</span>,
+  am <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">x</span>, labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"auto"</span>, <span class="st">"manual"</span><span class="op">)</span><span class="op">)</span>
+<span class="op">)</span>
+
+<span class="va">nm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">trans</span><span class="op">)</span>
+<span class="va">mtcars</span><span class="op">[</span><span class="va">nm</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map2.html">map2</a></span><span class="op">(</span><span class="va">trans</span>, <span class="va">mtcars</span><span class="op">[</span><span class="va">nm</span><span class="op">]</span>, <span class="kw">function</span><span class="op">(</span><span class="va">f</span>, <span class="va">var</span><span class="op">)</span> <span class="fu">f</span><span class="op">(</span><span class="va">var</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p>Compare and contrast the <code><a href="https://purrr.tidyverse.org/reference/map2.html">map2()</a></code> approach to this <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> approach:</p>
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">mtcars</span><span class="op">[</span><span class="va">nm</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">nm</span>, <span class="op">~</span> <span class="va">trans</span><span class="op">[[</span><span class="va">.x</span><span class="op">]</span><span class="op">]</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[[</span><span class="va">.x</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+</li>
+<li><p>What does <code><a href="https://rdrr.io/r/utils/write.table.html">write.csv()</a></code> return, i.e. what happens if you use it with
+<code><a href="https://purrr.tidyverse.org/reference/map2.html">map2()</a></code> instead of <code><a href="https://purrr.tidyverse.org/reference/map2.html">walk2()</a></code>?</p></li>
+</ol>
+</div>
+</div>
+<div id="reduce" class="section level2" number="1.5">
+<h2>
+<span class="header-section-number">1.5</span> Reduce family<a class="anchor" aria-label="anchor" href="#reduce"><i class="fas fa-link"></i></a>
+</h2>
+<p>After the map family, the next most important family of functions is the reduce family. This family is much smaller, with only two main variants, and is used less commonly, but it’s a powerful idea, gives us the opportunity to discuss some useful algebra, and powers the map-reduce framework frequently used for processing very large datasets.</p>
+<div id="basics" class="section level3" number="1.5.1">
+<h3>
+<span class="header-section-number">1.5.1</span> Basics<a class="anchor" aria-label="anchor" href="#basics"><i class="fas fa-link"></i></a>
+</h3>
+<p></p>
+<p><code><a href="https://purrr.tidyverse.org/reference/reduce.html">reduce()</a></code> takes a vector of length <em>n</em> and produces a vector of length 1 by calling a function with a pair of values at a time: <code><a href="https://purrr.tidyverse.org/reference/reduce.html">reduce(1:4, f)</a></code> is equivalent to <code>f(f(f(1, 2), 3), 4)</code>.</p>
+<div class="inline-figure"><img src="diagrams/functionals/reduce.png" width="312" style="display: block; margin: auto;"></div>
+<p><code><a href="https://purrr.tidyverse.org/reference/reduce.html">reduce()</a></code> is a useful way to generalise a function that works with two inputs (a <strong>binary</strong> function) to work with any number of inputs. Imagine you have a list of numeric vectors, and you want to find the values that occur in every element. First we generate some sample data:</p>
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">l</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">15</span>, replace <span class="op">=</span> <span class="cn">T</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">l</span><span class="op">)</span>
+<span class="co">#&gt; List of 4</span>
+<span class="co">#&gt;  $ : int [1:15] 7 1 8 8 3 8 2 4 7 10 ...</span>
+<span class="co">#&gt;  $ : int [1:15] 3 1 10 2 5 2 9 8 5 4 ...</span>
+<span class="co">#&gt;  $ : int [1:15] 6 10 9 5 6 7 8 6 10 8 ...</span>
+<span class="co">#&gt;  $ : int [1:15] 9 8 6 4 4 5 2 9 9 6 ...</span></code></pre></div>
+<p>To solve this challenge we need to use <code><a href="https://rdrr.io/r/base/sets.html">intersect()</a></code> repeatedly:</p>
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">out</span> <span class="op">&lt;-</span> <span class="va">l</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
+<span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sets.html">intersect</a></span><span class="op">(</span><span class="va">out</span>, <span class="va">l</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>
+<span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sets.html">intersect</a></span><span class="op">(</span><span class="va">out</span>, <span class="va">l</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>
+<span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sets.html">intersect</a></span><span class="op">(</span><span class="va">out</span>, <span class="va">l</span><span class="op">[[</span><span class="fl">4</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>
+<span class="va">out</span>
+<span class="co">#&gt; [1] 8 4</span></code></pre></div>
+<p><code><a href="https://purrr.tidyverse.org/reference/reduce.html">reduce()</a></code> automates this solution for us, so we can write:</p>
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://purrr.tidyverse.org/reference/reduce.html">reduce</a></span><span class="op">(</span><span class="va">l</span>, <span class="va">intersect</span><span class="op">)</span>
+<span class="co">#&gt; [1] 8 4</span></code></pre></div>
+<p>We could apply the same idea if we wanted to list all the elements that appear in at least one entry. All we have to do is switch from <code><a href="https://rdrr.io/r/base/sets.html">intersect()</a></code> to <code><a href="https://rdrr.io/r/base/sets.html">union()</a></code>:</p>
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://purrr.tidyverse.org/reference/reduce.html">reduce</a></span><span class="op">(</span><span class="va">l</span>, <span class="va">union</span><span class="op">)</span>
+<span class="co">#&gt;  [1]  7  1  8  3  2  4 10  5  9  6</span></code></pre></div>
+<p>Like the map family, you can also pass additional arguments. <code><a href="https://rdrr.io/r/base/sets.html">intersect()</a></code> and <code><a href="https://rdrr.io/r/base/sets.html">union()</a></code> don’t take extra arguments so I can’t demonstrate them here, but the principle is straightforward and I drew you a picture.</p>
+<div class="inline-figure"><img src="diagrams/functionals/reduce-arg.png" width="387" style="display: block; margin: auto;"></div>
+<p>As usual, the essence of <code><a href="https://purrr.tidyverse.org/reference/reduce.html">reduce()</a></code> can be reduced to a simple wrapper around a for loop:</p>
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">simple_reduce</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">f</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">out</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
+  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">out</span> <span class="op">&lt;-</span> <span class="fu">f</span><span class="op">(</span><span class="va">out</span>, <span class="va">x</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>
+  <span class="op">}</span>
+  <span class="va">out</span>
+<span class="op">}</span></code></pre></div>
+<div class="base">
+<p>The base equivalent is <code><a href="https://rdrr.io/r/base/funprog.html">Reduce()</a></code>. Note that the argument order is different: the function comes first, followed by the vector, and there is no way to supply additional arguments.</p>
+</div>
+</div>
+<div id="accumulate" class="section level3" number="1.5.2">
+<h3>
+<span class="header-section-number">1.5.2</span> Accumulate<a class="anchor" aria-label="anchor" href="#accumulate"><i class="fas fa-link"></i></a>
+</h3>
+<p>The first <code><a href="https://purrr.tidyverse.org/reference/reduce.html">reduce()</a></code> variant, <code><a href="https://purrr.tidyverse.org/reference/accumulate.html">accumulate()</a></code>, is useful for understanding how reduce works, because instead of returning just the final result, it returns all the intermediate results as well:</p>
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://purrr.tidyverse.org/reference/accumulate.html">accumulate</a></span><span class="op">(</span><span class="va">l</span>, <span class="va">intersect</span><span class="op">)</span>
+<span class="co">#&gt; [[1]]</span>
+<span class="co">#&gt;  [1]  7  1  8  8  3  8  2  4  7 10 10  3  7 10 10</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[2]]</span>
+<span class="co">#&gt; [1]  1  8  3  2  4 10</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[3]]</span>
+<span class="co">#&gt; [1]  8  4 10</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[4]]</span>
+<span class="co">#&gt; [1] 8 4</span></code></pre></div>
+<p>Another useful way to understand reduce is to think about <code><a href="https://rdrr.io/r/base/sum.html">sum()</a></code>: <code><a href="https://rdrr.io/r/base/sum.html">sum(x)</a></code> is equivalent to <code>x[[1]] + x[[2]] + x[[3]] + ...</code>, i.e. <code><a href="https://purrr.tidyverse.org/reference/reduce.html">reduce(x, `+`)</a></code>. Then <code><a href="https://purrr.tidyverse.org/reference/accumulate.html">accumulate(x, `+`)</a></code> is the cumulative sum:</p>
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">3</span>, <span class="fl">10</span><span class="op">)</span>
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/reduce.html">reduce</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">`+`</span><span class="op">)</span>
+<span class="co">#&gt; [1] 17</span>
+
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/accumulate.html">accumulate</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">`+`</span><span class="op">)</span>
+<span class="co">#&gt; [1]  4  7 17</span></code></pre></div>
+</div>
+<div id="output-types" class="section level3" number="1.5.3">
+<h3>
+<span class="header-section-number">1.5.3</span> Output types<a class="anchor" aria-label="anchor" href="#output-types"><i class="fas fa-link"></i></a>
+</h3>
+<p>In the above example using <code><a href="https://rdrr.io/r/base/Arithmetic.html">+</a></code>, what should <code><a href="https://purrr.tidyverse.org/reference/reduce.html">reduce()</a></code> return when <code>x</code> is short, i.e. length 1 or 0? Without additional arguments, <code><a href="https://purrr.tidyverse.org/reference/reduce.html">reduce()</a></code> just returns the input when <code>x</code> is length 1:</p>
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://purrr.tidyverse.org/reference/reduce.html">reduce</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">`+`</span><span class="op">)</span>
+<span class="co">#&gt; [1] 1</span></code></pre></div>
+<p>This means that <code><a href="https://purrr.tidyverse.org/reference/reduce.html">reduce()</a></code> has no way to check that the input is valid:</p>
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://purrr.tidyverse.org/reference/reduce.html">reduce</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="va">`+`</span><span class="op">)</span>
+<span class="co">#&gt; [1] "a"</span></code></pre></div>
+<p>What if it’s length 0? We get an error that suggests we need to use the <code>.init</code> argument:</p>
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://purrr.tidyverse.org/reference/reduce.html">reduce</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/integer.html">integer</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">`+`</span><span class="op">)</span>
+<span class="co">#&gt; Error: `.x` is empty, and no `.init` supplied</span></code></pre></div>
+<p>What should <code>.init</code> be here? To figure that out, we need to see what happens when <code>.init</code> is supplied:</p>
+<div class="inline-figure"><img src="diagrams/functionals/reduce-init.png" width="406" style="display: block; margin: auto;"></div>
+<p>So if we call <code><a href="https://purrr.tidyverse.org/reference/reduce.html">reduce(1, `+`, init)</a></code> the result will be <code>1 + init</code>. Now we know that the result should be just <code>1</code>, so that suggests that <code>.init</code> should be 0:</p>
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://purrr.tidyverse.org/reference/reduce.html">reduce</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/integer.html">integer</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">`+`</span>, .init <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
+<span class="co">#&gt; [1] 0</span></code></pre></div>
+<p>This also ensures that <code><a href="https://purrr.tidyverse.org/reference/reduce.html">reduce()</a></code> checks that length 1 inputs are valid for the function that you’re calling:</p>
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://purrr.tidyverse.org/reference/reduce.html">reduce</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="va">`+`</span>, .init <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
+<span class="co">#&gt; Error in .x + .y: non-numeric argument to binary operator</span></code></pre></div>
+<p>If you want to get algebraic about it, 0 is called the <strong>identity</strong> of the real numbers under the operation of addition: if you add a 0 to any number, you get the same number back. R applies the same principle to determine what a summary function with a zero length input should return:</p>
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/integer.html">integer</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>  <span class="co"># x + 0 = x</span>
+<span class="co">#&gt; [1] 0</span>
+<span class="fu"><a href="https://rdrr.io/r/base/prod.html">prod</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/integer.html">integer</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="co"># x * 1 = x</span>
+<span class="co">#&gt; [1] 1</span>
+<span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/integer.html">integer</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>  <span class="co"># min(x, Inf) = x</span>
+<span class="co">#&gt; [1] Inf</span>
+<span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/integer.html">integer</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>  <span class="co"># max(x, -Inf) = x</span>
+<span class="co">#&gt; [1] -Inf</span></code></pre></div>
+<p>If you’re using <code><a href="https://purrr.tidyverse.org/reference/reduce.html">reduce()</a></code> in a function, you should always supply <code>.init</code>. Think carefully about what your function should return when you pass a vector of length 0 or 1, and make sure to test your implementation.</p>
+</div>
+<div id="multiple-inputs" class="section level3" number="1.5.4">
+<h3>
+<span class="header-section-number">1.5.4</span> Multiple inputs<a class="anchor" aria-label="anchor" href="#multiple-inputs"><i class="fas fa-link"></i></a>
+</h3>
+<p>Very occasionally you need to pass two arguments to the function that you’re reducing. For example, you might have a list of data frames that you want to join together, and the variables you use to join will vary from element to element. This is a very specialised scenario, so I don’t want to spend much time on it, but I do want you to know that <code><a href="https://purrr.tidyverse.org/reference/reduce.html">reduce2()</a></code> exists.</p>
+<p>The length of the second argument varies based on whether or not <code>.init</code> is supplied: if you have four elements of <code>x</code>, <code>f</code> will only be called three times. If you supply init, <code>f</code> will be called four times.</p>
+<p><img src="diagrams/functionals/reduce2.png" width="520" style="display: block; margin: auto;"><img src="diagrams/functionals/reduce2-init.png" width="520" style="display: block; margin: auto;"></p>
+</div>
+<div id="map-reduce" class="section level3" number="1.5.5">
+<h3>
+<span class="header-section-number">1.5.5</span> Map-reduce<a class="anchor" aria-label="anchor" href="#map-reduce"><i class="fas fa-link"></i></a>
+</h3>
+<p></p>
+<p>You might have heard of map-reduce, the idea that powers technology like Hadoop. Now you can see how simple and powerful the underlying idea is: map-reduce is a map combined with a reduce. The difference for large data is that the data is spread over multiple computers. Each computer performs the map on the data that it has, then it sends the result to back to a coordinator which <em>reduces</em> the individual results back to a single result.</p>
+<p>As a simple example, imagine computing the mean of a very large vector, so large that it has to be split over multiple computers. You could ask each computer to calculate the sum and the length, and then return those to the coordinator which computes the overall mean by dividing the total sum by the total length.</p>
+</div>
+</div>
+<div id="predicate-functionals" class="section level2" number="1.6">
+<h2>
+<span class="header-section-number">1.6</span> Predicate functionals<a class="anchor" aria-label="anchor" href="#predicate-functionals"><i class="fas fa-link"></i></a>
+</h2>
+<p>
+</p>
+<p>A <strong>predicate</strong> is a function that returns a single <code>TRUE</code> or <code>FALSE</code>, like <code><a href="https://rdrr.io/r/base/character.html">is.character()</a></code>, <code><a href="https://rdrr.io/r/base/NULL.html">is.null()</a></code>, or <code><a href="https://rdrr.io/r/base/all.html">all()</a></code>, and we say a predicate <strong>matches</strong> a vector if it returns <code>TRUE</code>.</p>
+<div id="basics-1" class="section level3" number="1.6.1">
+<h3>
+<span class="header-section-number">1.6.1</span> Basics<a class="anchor" aria-label="anchor" href="#basics-1"><i class="fas fa-link"></i></a>
+</h3>
+<p>A <strong>predicate functional</strong> applies a predicate to each element of a vector. purrr provides seven useful functions which come in three groups:</p>
+<ul>
+<li>
+<p><code><a href="https://purrr.tidyverse.org/reference/every.html">some(.x, .p)</a></code> returns <code>TRUE</code> if <em>any</em> element matches;<br><code><a href="https://purrr.tidyverse.org/reference/every.html">every(.x, .p)</a></code> returns <code>TRUE</code> if <em>all</em> elements match;<br><code><a href="https://purrr.tidyverse.org/reference/every.html">none(.x, .p)</a></code> returns <code>TRUE</code> if <em>no</em> element matches.</p>
+<p>These are similar to <code><a href="https://rdrr.io/r/base/any.html">any(map_lgl(.x, .p))</a></code>, <code><a href="https://rdrr.io/r/base/all.html">all(map_lgl(.x, .p))</a></code> and
+<code><a href="https://rdrr.io/r/base/all.html">all(map_lgl(.x, negate(.p)))</a></code> but they terminate early: <code><a href="https://purrr.tidyverse.org/reference/every.html">some()</a></code> returns
+<code>TRUE</code> when it sees the first <code>TRUE</code>, and <code><a href="https://purrr.tidyverse.org/reference/every.html">every()</a></code> and <code><a href="https://purrr.tidyverse.org/reference/every.html">none()</a></code> return
+<code>FALSE</code> when they see the first <code>FALSE</code> or <code>TRUE</code> respectively.</p>
+</li>
+<li><p><code><a href="https://purrr.tidyverse.org/reference/detect.html">detect(.x, .p)</a></code> returns the <em>value</em> of the first match;
+<code><a href="https://purrr.tidyverse.org/reference/detect.html">detect_index(.x, .p)</a></code> returns the <em>location</em> of the first match.</p></li>
+<li><p><code><a href="https://purrr.tidyverse.org/reference/keep.html">keep(.x, .p)</a></code> <em>keeps</em> all matching elements;
+<code><a href="https://purrr.tidyverse.org/reference/keep.html">discard(.x, .p)</a></code> <em>drops</em> all matching elements.</p></li>
+</ul>
+<p>The following example shows how you might use these functionals with a data frame:</p>
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/detect.html">detect</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">is.factor</span><span class="op">)</span>
+<span class="co">#&gt; NULL</span>
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/detect.html">detect_index</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">is.factor</span><span class="op">)</span>
+<span class="co">#&gt; [1] 0</span>
+
+<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/keep.html">keep</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">is.factor</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; 'data.frame':    3 obs. of  0 variables</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/keep.html">discard</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">is.factor</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; 'data.frame':    3 obs. of  2 variables:</span>
+<span class="co">#&gt;  $ x: int  1 2 3</span>
+<span class="co">#&gt;  $ y: chr  "a" "b" "c"</span></code></pre></div>
+</div>
+<div id="predicate-map" class="section level3" number="1.6.2">
+<h3>
+<span class="header-section-number">1.6.2</span> Map variants<a class="anchor" aria-label="anchor" href="#predicate-map"><i class="fas fa-link"></i></a>
+</h3>
+<p><code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> and <code><a href="https://purrr.tidyverse.org/reference/modify.html">modify()</a></code> come in variants that also take predicate functions, transforming only the elements of <code>.x</code> where <code>.p</code> is <code>TRUE</code>.</p>
+<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
+  num1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">10</span>, <span class="fl">20</span><span class="op">)</span>,
+  num2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">6</span>, <span class="fl">7</span><span class="op">)</span>,
+  chr1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span><span class="op">)</span>,
+  stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span>
+<span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map_if.html">map_if</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">is.numeric</span>, <span class="va">mean</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; List of 3</span>
+<span class="co">#&gt;  $ num1: num 10</span>
+<span class="co">#&gt;  $ num2: num 6</span>
+<span class="co">#&gt;  $ chr1: chr [1:3] "a" "b" "c"</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/modify.html">modify_if</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">is.numeric</span>, <span class="va">mean</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; 'data.frame':    3 obs. of  3 variables:</span>
+<span class="co">#&gt;  $ num1: num  10 10 10</span>
+<span class="co">#&gt;  $ num2: num  6 6 6</span>
+<span class="co">#&gt;  $ chr1: chr  "a" "b" "c"</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/keep.html">keep</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">is.numeric</span><span class="op">)</span>, <span class="va">mean</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; List of 2</span>
+<span class="co">#&gt;  $ num1: num 10</span>
+<span class="co">#&gt;  $ num2: num 6</span></code></pre></div>
+</div>
+<div id="exercises-2" class="section level3" number="1.6.3">
+<h3>
+<span class="header-section-number">1.6.3</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-2"><i class="fas fa-link"></i></a>
+</h3>
+<ol style="list-style-type: decimal">
+<li><p>Why isn’t <code><a href="https://rdrr.io/r/base/NA.html">is.na()</a></code> a predicate function? What base R function is closest
+to being a predicate version of <code><a href="https://rdrr.io/r/base/NA.html">is.na()</a></code>?</p></li>
+<li>
+<p><code>simple_reduce()</code> has a problem when <code>x</code> is length 0 or length 1. Describe
+the source of the problem and how you might go about fixing it.</p>
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">simple_reduce</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">f</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">out</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
+  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">out</span> <span class="op">&lt;-</span> <span class="fu">f</span><span class="op">(</span><span class="va">out</span>, <span class="va">x</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>
+  <span class="op">}</span>
+  <span class="va">out</span>
+<span class="op">}</span></code></pre></div>
+</li>
+<li><p>Implement the <code>span()</code> function from Haskell: given a list <code>x</code> and a
+predicate function <code>f</code>, <code>span(x, f)</code> returns the location of the longest
+sequential run of elements where the predicate is true. (Hint: you
+might find <code><a href="https://rdrr.io/r/base/rle.html">rle()</a></code> helpful.)</p></li>
+<li><p>Implement <code>arg_max()</code>. It should take a function and a vector of inputs,
+and return the elements of the input where the function returns the highest
+value. For example, <code>arg_max(-10:5, function(x) x ^ 2)</code> should return -10.
+<code>arg_max(-5:5, function(x) x ^ 2)</code> should return <code><a href="https://rdrr.io/r/base/c.html">c(-5, 5)</a></code>.
+Also implement the matching <code>arg_min()</code> function.</p></li>
+<li>
+<p>The function below scales a vector so it falls in the range [0, 1]. How
+would you apply it to every column of a data frame? How would you apply it
+to every numeric column in a data frame?</p>
+<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">scale01</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">rng</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/range.html">range</a></span><span class="op">(</span><span class="va">x</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+  <span class="op">(</span><span class="va">x</span> <span class="op">-</span> <span class="va">rng</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="va">rng</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="op">-</span> <span class="va">rng</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>
+<span class="op">}</span></code></pre></div>
+</li>
+</ol>
+</div>
+</div>
+<div id="base-functionals" class="section level2" number="1.7">
+<h2>
+<span class="header-section-number">1.7</span> Base functionals<a class="anchor" aria-label="anchor" href="#base-functionals"><i class="fas fa-link"></i></a>
+</h2>
+<p>To finish up the chapter, here I provide a survey of important base functionals that are not members of the map, reduce, or predicate families, and hence have no equivalent in purrr. This is not to say that they’re not important, but they have more of a mathematical or statistical flavour, and they are generally less useful in data analysis.</p>
+<div id="matrices-and-arrays" class="section level3" number="1.7.1">
+<h3>
+<span class="header-section-number">1.7.1</span> Matrices and arrays<a class="anchor" aria-label="anchor" href="#matrices-and-arrays"><i class="fas fa-link"></i></a>
+</h3>
+<p><code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> and friends are specialised to work with one-dimensional vectors. <code><a href="https://rdrr.io/r/base/apply.html">base::apply()</a></code> is specialised to work with two-dimensional and higher vectors, i.e. matrices and arrays. You can think of <code><a href="https://rdrr.io/r/base/apply.html">apply()</a></code> as an operation that summarises a matrix or array by collapsing each row or column to a single value. It has four arguments:</p>
+<ul>
+<li><p><code>X</code>, the matrix or array to summarise.</p></li>
+<li><p><code>MARGIN</code>, an integer vector giving the dimensions to summarise over,
+1 = rows, 2 = columns, etc. (The argument name comes from thinking about
+the margins of a joint distribution.)</p></li>
+<li><p><code>FUN</code>, a summary function.</p></li>
+<li><p><code>...</code> other arguments passed on to <code>FUN</code>.</p></li>
+</ul>
+<p>A typical example of <code><a href="https://rdrr.io/r/base/apply.html">apply()</a></code> looks like this</p>
+<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">a2d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">20</span>, nrow <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">a2d</span>, <span class="fl">1</span>, <span class="va">mean</span><span class="op">)</span>
+<span class="co">#&gt; [1]  8.5  9.5 10.5 11.5 12.5</span>
+<span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">a2d</span>, <span class="fl">2</span>, <span class="va">mean</span><span class="op">)</span>
+<span class="co">#&gt; [1]  3  8 13 18</span></code></pre></div>
+<!-- HW: recreate diagrams from plyr paper -->
+<p>You can specify multiple dimensions to <code>MARGIN</code>, which is useful for high-dimensional arrays:</p>
+<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">a3d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/array.html">array</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">24</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">a3d</span>, <span class="fl">1</span>, <span class="va">mean</span><span class="op">)</span>
+<span class="co">#&gt; [1] 12 13</span>
+<span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">a3d</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, <span class="va">mean</span><span class="op">)</span>
+<span class="co">#&gt;      [,1] [,2] [,3]</span>
+<span class="co">#&gt; [1,]   10   12   14</span>
+<span class="co">#&gt; [2,]   11   13   15</span></code></pre></div>
+<p>There are two caveats to using <code><a href="https://rdrr.io/r/base/apply.html">apply()</a></code>:</p>
+<ul>
+<li><p>Like <code><a href="https://rdrr.io/r/base/lapply.html">base::sapply()</a></code>, you have no control over the output type; it
+will automatically be simplified to a list, matrix, or vector. However,
+you usually use <code><a href="https://rdrr.io/r/base/apply.html">apply()</a></code> with numeric arrays and a numeric summary
+function so you are less likely to encounter a problem than with
+<code><a href="https://rdrr.io/r/base/lapply.html">sapply()</a></code>.</p></li>
+<li>
+<p><code><a href="https://rdrr.io/r/base/apply.html">apply()</a></code> is also not idempotent in the sense that if the summary
+function is the identity operator, the output is not always the same as
+the input.</p>
+<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">a1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">a2d</span>, <span class="fl">1</span>, <span class="va">identity</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/identical.html">identical</a></span><span class="op">(</span><span class="va">a2d</span>, <span class="va">a1</span><span class="op">)</span>
+<span class="co">#&gt; [1] FALSE</span>
+
+<span class="va">a2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">a2d</span>, <span class="fl">2</span>, <span class="va">identity</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/identical.html">identical</a></span><span class="op">(</span><span class="va">a2d</span>, <span class="va">a2</span><span class="op">)</span>
+<span class="co">#&gt; [1] TRUE</span></code></pre></div>
+</li>
+<li>
+<p>Never use <code><a href="https://rdrr.io/r/base/apply.html">apply()</a></code> with a data frame. It always coerces it to a matrix,
+which will lead to undesirable results if your data frame contains anything
+other than numbers.</p>
+<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">df</span>, <span class="fl">2</span>, <span class="va">mean</span><span class="op">)</span>
+<span class="co">#&gt; Warning in mean.default(newX[, i], ...): argument is not numeric or logical:</span>
+<span class="co">#&gt; returning NA</span>
+
+<span class="co">#&gt; Warning in mean.default(newX[, i], ...): argument is not numeric or logical:</span>
+<span class="co">#&gt; returning NA</span>
+<span class="co">#&gt;  x  y </span>
+<span class="co">#&gt; NA NA</span></code></pre></div>
+</li>
+</ul>
+</div>
+<div id="mathematical-concerns" class="section level3" number="1.7.2">
+<h3>
+<span class="header-section-number">1.7.2</span> Mathematical concerns<a class="anchor" aria-label="anchor" href="#mathematical-concerns"><i class="fas fa-link"></i></a>
+</h3>
+<p>Functionals are very common in mathematics. The limit, the maximum, the roots (the set of points where <code>f(x) = 0</code>), and the definite integral are all functionals: given a function, they return a single number (or vector of numbers). At first glance, these functions don’t seem to fit in with the theme of eliminating loops, but if you dig deeper you’ll find out that they are all implemented using an algorithm that involves iteration.</p>
+<p>Base R provides a useful set:</p>
+<ul>
+<li>
+<code><a href="https://rdrr.io/r/stats/integrate.html">integrate()</a></code> finds the area under the curve defined by <code>f()</code>
+</li>
+<li>
+<code><a href="https://rdrr.io/r/stats/uniroot.html">uniroot()</a></code> finds where <code>f()</code> hits zero</li>
+<li>
+<code><a href="https://rdrr.io/r/stats/optimize.html">optimise()</a></code> finds the location of the lowest (or highest) value of <code>f()</code>
+</li>
+</ul>
+<p>The following example shows how functionals might be used with a simple function, <code><a href="https://rdrr.io/r/base/Trig.html">sin()</a></code>:</p>
+<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/integrate.html">integrate</a></span><span class="op">(</span><span class="va">sin</span>, <span class="fl">0</span>, <span class="va">pi</span><span class="op">)</span>
+<span class="co">#&gt; 2 with absolute error &lt; 2.2e-14</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/uniroot.html">uniroot</a></span><span class="op">(</span><span class="va">sin</span>, <span class="va">pi</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="fl">2</span>, <span class="fl">3</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; List of 5</span>
+<span class="co">#&gt;  $ root      : num 3.14</span>
+<span class="co">#&gt;  $ f.root    : num 1.22e-16</span>
+<span class="co">#&gt;  $ iter      : int 2</span>
+<span class="co">#&gt;  $ init.it   : int NA</span>
+<span class="co">#&gt;  $ estim.prec: num 6.1e-05</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/optimize.html">optimise</a></span><span class="op">(</span><span class="va">sin</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span> <span class="op">*</span> <span class="va">pi</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; List of 2</span>
+<span class="co">#&gt;  $ minimum  : num 4.71</span>
+<span class="co">#&gt;  $ objective: num -1</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/optimize.html">optimise</a></span><span class="op">(</span><span class="va">sin</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="va">pi</span><span class="op">)</span>, maximum <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; List of 2</span>
+<span class="co">#&gt;  $ maximum  : num 1.57</span>
+<span class="co">#&gt;  $ objective: num 1</span></code></pre></div>
+</div>
+<div id="exercises-3" class="section level3" number="1.7.3">
+<h3>
+<span class="header-section-number">1.7.3</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-3"><i class="fas fa-link"></i></a>
+</h3>
+<ol style="list-style-type: decimal">
+<li><p>How does <code><a href="https://rdrr.io/r/base/apply.html">apply()</a></code> arrange the output? Read the documentation and perform
+some experiments.</p></li>
+<li><p>What do <code><a href="https://rdrr.io/r/base/eapply.html">eapply()</a></code> and <code><a href="https://rdrr.io/r/base/rapply.html">rapply()</a></code> do? Does purrr have equivalents?</p></li>
+<li><p>Challenge: read about the
+<a href="https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book-Z-H-12.html#%25_idx_1096">fixed point algorithm</a>.
+Complete the exercises using R.</p></li>
+</ol>
+</div>
+</div>
+</div>
+
+  <div class="chapter-nav">
+<div class="prev"><a href="fp.html">Introduction</a></div>
+<div class="next"><a href="function-factories.html"><span class="header-section-number">2</span> Function factories</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#functionals"><span class="header-section-number">1</span> Functionals</a></li>
+<li>
+<a class="nav-link" href="#introduction"><span class="header-section-number">1.1</span> Introduction</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#outline">Outline</a></li>
+<li><a class="nav-link" href="#prerequisites">Prerequisites</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#map"><span class="header-section-number">1.2</span> My first functional: map()</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#map-atomic"><span class="header-section-number">1.2.1</span> Producing atomic vectors</a></li>
+<li><a class="nav-link" href="#purrr-shortcuts"><span class="header-section-number">1.2.2</span> Anonymous functions and shortcuts</a></li>
+<li><a class="nav-link" href="#passing-arguments"><span class="header-section-number">1.2.3</span> Passing arguments with ...</a></li>
+<li><a class="nav-link" href="#argument-names"><span class="header-section-number">1.2.4</span> Argument names</a></li>
+<li><a class="nav-link" href="#change-argument"><span class="header-section-number">1.2.5</span> Varying another argument</a></li>
+<li><a class="nav-link" href="#exercises"><span class="header-section-number">1.2.6</span> Exercises</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#purrr-style"><span class="header-section-number">1.3</span> Purrr style</a></li>
+<li>
+<a class="nav-link" href="#map-variants"><span class="header-section-number">1.4</span> Map variants</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#modify"><span class="header-section-number">1.4.1</span> Same type of output as input: modify()</a></li>
+<li><a class="nav-link" href="#map2"><span class="header-section-number">1.4.2</span> Two inputs: map2() and friends</a></li>
+<li><a class="nav-link" href="#no-outputs-walk-and-friends"><span class="header-section-number">1.4.3</span> No outputs: walk() and friends</a></li>
+<li><a class="nav-link" href="#iterating-over-values-and-indices"><span class="header-section-number">1.4.4</span> Iterating over values and indices</a></li>
+<li><a class="nav-link" href="#pmap"><span class="header-section-number">1.4.5</span> Any number of inputs: pmap() and friends</a></li>
+<li><a class="nav-link" href="#exercises-1"><span class="header-section-number">1.4.6</span> Exercises</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#reduce"><span class="header-section-number">1.5</span> Reduce family</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#basics"><span class="header-section-number">1.5.1</span> Basics</a></li>
+<li><a class="nav-link" href="#accumulate"><span class="header-section-number">1.5.2</span> Accumulate</a></li>
+<li><a class="nav-link" href="#output-types"><span class="header-section-number">1.5.3</span> Output types</a></li>
+<li><a class="nav-link" href="#multiple-inputs"><span class="header-section-number">1.5.4</span> Multiple inputs</a></li>
+<li><a class="nav-link" href="#map-reduce"><span class="header-section-number">1.5.5</span> Map-reduce</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#predicate-functionals"><span class="header-section-number">1.6</span> Predicate functionals</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#basics-1"><span class="header-section-number">1.6.1</span> Basics</a></li>
+<li><a class="nav-link" href="#predicate-map"><span class="header-section-number">1.6.2</span> Map variants</a></li>
+<li><a class="nav-link" href="#exercises-2"><span class="header-section-number">1.6.3</span> Exercises</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#base-functionals"><span class="header-section-number">1.7</span> Base functionals</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#matrices-and-arrays"><span class="header-section-number">1.7.1</span> Matrices and arrays</a></li>
+<li><a class="nav-link" href="#mathematical-concerns"><span class="header-section-number">1.7.2</span> Mathematical concerns</a></li>
+<li><a class="nav-link" href="#exercises-3"><span class="header-section-number">1.7.3</span> Exercises</a></li>
+</ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/hadley/adv-r/blob/master/Functionals.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/hadley/adv-r/edit/master/Functionals.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Advanced R</strong>" was written by Hadley Wickham. </p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>
