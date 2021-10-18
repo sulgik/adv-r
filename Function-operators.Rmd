@@ -7,7 +7,7 @@ source("common.R")
 ## 들어가기
 \index{function operators}
 
-이 장에서는 함수 연산자들에 대해 배울 것이다. __함수 연산자__ 는 하나 이상의 함수를 입력을 취하여 함수를 출력으로 반환하는 함수이다. The following code shows a simple function operator, `chatty()`. It wraps a function, making a new function that prints out its first argument. You might create a function like this because it gives you a window to see how functionals, like `map_int()`, work.
+이 장에서는 함수 연산자들에 대해 배울 것이다. __함수 연산자__ 는 하나 이상의 함수를 입력을 취하여 함수를 출력으로 반환하는 함수이다. 다음의 코드는 단순한 함수 연산자 `chatty()`를 보여준다. It wraps a function, making a new function that prints out its first argument. You might create a function like this because it gives you a window to see how functionals, like `map_int()`, work.
 
 ```{r, eval = TRUE}
 chatty <- function(f) {
@@ -39,7 +39,7 @@ If you're familiar with Python, decorators is just another name for function ope
 * Section \@ref(fo-case-study) works through a problem amenable to solution
   with function operators: downloading many web pages.
 
-### Prerequisites {-}
+### 준비하기 {-}
 
 Function operators are a type of function factory, so make sure you're familiar with at least Section \@ref(function-fundamentals) before you go on. 
 
