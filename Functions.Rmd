@@ -1,4 +1,4 @@
-# Functions
+# 함수 {#functions}
 
 ```{r setup, include = FALSE}
 source("common.R")
@@ -126,7 +126,7 @@ body(f02)
 environment(f02)
 ```
 
-I'll draw functions as in the following diagram. The black dot on the left is the environment. The two blocks to the right are the function arguments. I won't draw the body, because it's usually large, and doesn't help you understand the shape of the function.
+I'll draw functions as in the following diagram. The black dot on the left is the environment. The two blocks to the right are the function arguments.
 
 ```{r, echo = FALSE, out.width = NULL}
 knitr::include_graphics("diagrams/functions/components.png")
@@ -209,13 +209,13 @@ In R, you'll often see functions called __closures__. This name reflects the fac
 ### Invoking a function
 \indexc{do.call()}
 
-You normally call a function by placing its arguments, wrapped in parentheses, after its name: `mean(1:10, na.rm = TRUE)`. But what happens if you have the arguments already in a data structure?
+You normally call a function by placing its arguments, wrapped in parentheses, after its name: `mean(1:10, na.rm = TRUE)`. 인수들이 데이터 구조 안에 있으면 어떻게 할까?
 
 ```{r}
 args <- list(1:10, na.rm = TRUE)
 ```
 
-You can instead use `do.call()`: it has two arguments. The function to call, and a list containing the function arguments:
+`do.call()` 을 대신 사용하면 된다: 두 개의 인수를 취하는데, 호출하는 함수와 함수 인수들을 포함한 리스트이다.
 
 ```{r}
 do.call(mean, args)

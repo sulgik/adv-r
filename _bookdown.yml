@@ -14,8 +14,8 @@ rmd_files:
 #    "Vectors.Rmd",
 #    "Subsetting.Rmd",
 #    "Control-flow.Rmd",
-#    "Functions.Rmd",
-#    "Environments.Rmd",
+    "Functions.Rmd",
+    "Environments.Rmd",
 #    "Conditions.Rmd",
 #    "Connections.Rmd",
 

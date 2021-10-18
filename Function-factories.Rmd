@@ -192,7 +192,7 @@ Whenever you create a function factory, make sure every argument is evaluated, u
 \indexc{<<-} 
 \index{copy-on-modify!exceptions}
 
-Function factories also allow you to maintain state across function invocations, which is generally hard to do because of the fresh start principle described in Section \@ref(fresh-start).
+함수 공장을 사용하면 함수 호출들에 대해 state 를 유지할수 있는데, \@ref(fresh-start) 섹션에 기술된 fresh start 원칙때문에 일반적으로 쉬운 일은 아니다. 
 
 There are two things that make this possible:
 
@@ -201,7 +201,7 @@ There are two things that make this possible:
 * R has a special assignment operator, `<<-`, which modifies bindings in the 
   enclosing environment.
   
-The usual assignment operator, `<-`, always creates a binding in the current environment. The __super assignment operator__, `<<-` rebinds an existing name found in a parent environment.
+일반 할당 연산자, `<-`, 는 항상 현재 환경에서 바인딩을 만든다. __super assignment operator__, `<<-` 은 부모 환경에 존재하는 이름을 새로 바인드 한다. 
 
 The following example shows how we can combine these ideas to create a function that records how many times it has been called:
 

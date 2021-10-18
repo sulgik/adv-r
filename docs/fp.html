@@ -44,12 +44,14 @@
 
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
-<li><a class="" href="index.html">Welcome</a></li>
+<li><a class="" href="index.html">환영합니다</a></li>
+<li><a class="" href="functions.html"><span class="header-section-number">1</span> 함수</a></li>
+<li><a class="" href="environments.html"><span class="header-section-number">2</span> Environments</a></li>
 <li class="book-part">Functional programming</li>
 <li><a class="active" href="fp.html">Introduction</a></li>
-<li><a class="" href="functionals.html"><span class="header-section-number">1</span> Functionals</a></li>
-<li><a class="" href="function-factories.html"><span class="header-section-number">2</span> Function factories</a></li>
-<li><a class="" href="function-operators.html"><span class="header-section-number">3</span> Function operators</a></li>
+<li><a class="" href="functionals.html"><span class="header-section-number">3</span> Functionals</a></li>
+<li><a class="" href="function-factories.html"><span class="header-section-number">4</span> Function factories</a></li>
+<li><a class="" href="function-operators.html"><span class="header-section-number">5</span> Function operators</a></li>
 </ul>
 
         <div class="book-extra">
@@ -86,17 +88,17 @@ functions like <code><a href="https://rdrr.io/r/base/print.html">print()</a></co
 <p>It’s hard to describe exactly what a functional <em>style</em> is, but generally I think it means decomposing a big problem into smaller pieces, then solving each piece with a function or combination of functions. When using a functional style, you strive to decompose components of the problem into isolated functions that operate independently. Each function taken by itself is simple and straightforward to understand; complexity is handled by composing functions in various ways.</p>
 <p>The following three chapters discuss the three key functional techniques that help you to decompose problems into smaller pieces:</p>
 <ul>
-<li><p>Chapter <a href="functionals.html#functionals">1</a> shows you how to replace many for loops with
+<li><p>Chapter <a href="functionals.html#functionals">3</a> shows you how to replace many for loops with
 <strong>functionals</strong> which are functions (like <code><a href="https://rdrr.io/r/base/lapply.html">lapply()</a></code>) that take another
 function as an argument. Functionals allow you to take a function that solves
 the problem for a single input and generalise it to handle any number of
 inputs. Functionals are by far and away the most important technique and
 you’ll use them all the time in data analysis.</p></li>
-<li><p>Chapter <a href="function-factories.html#function-factories">2</a> introduces <strong>function factories</strong>:
+<li><p>Chapter <a href="function-factories.html#function-factories">4</a> introduces <strong>function factories</strong>:
 functions that create functions. Function factories are less commonly
 used than functionals, but can allow you to elegantly partition work
 between different parts of your code.</p></li>
-<li><p>Chapter <a href="function-operators.html#function-operators">3</a> shows you how to create <strong>function
+<li><p>Chapter <a href="function-operators.html#function-operators">5</a> shows you how to create <strong>function
 operators</strong>: functions that take functions as input and produce functions
 as output. They are like adverbs, because they typically modify the operation
 of a function.</p></li>
@@ -107,8 +109,8 @@ of a function.</p></li>
 </div>
 </div>
   <div class="chapter-nav">
-<div class="prev"><a href="index.html">Welcome</a></div>
-<div class="next"><a href="functionals.html"><span class="header-section-number">1</span> Functionals</a></div>
+<div class="prev"><a href="environments.html"><span class="header-section-number">2</span> Environments</a></div>
+<div class="next"><a href="functionals.html"><span class="header-section-number">3</span> Functionals</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">

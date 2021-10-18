@@ -1,4 +1,4 @@
-# Functions
+# 함수 {#functions}
 
 
 
@@ -137,10 +137,9 @@ environment(f02)
 #> <environment: R_GlobalEnv>
 ```
 
-I'll draw functions as in the following diagram. The black dot on the left is the environment. The two blocks to the right are the function arguments. I won't draw the body, because it's usually large, and doesn't help you understand the shape of the function.
+I'll draw functions as in the following diagram. The black dot on the left is the environment. The two blocks to the right are the function arguments.
 
-
-\begin{center}\includegraphics[width=1.23in]{diagrams/functions/components} \end{center}
+<img src="diagrams/functions/components.png" width="118" style="display: block; margin: auto;" />
 
 Like all objects in R, functions can also possess any number of additional `attributes()`. One attribute used by base R is `srcref`, short for source reference. It points to the source code used to create the function. The `srcref` is used for printing because, unlike `body()`, it contains code comments and other formatting.  
 
@@ -207,8 +206,7 @@ f01 <- function(x) {
 }
 ```
 
-
-\begin{center}\includegraphics[width=1.62in]{diagrams/functions/first-class} \end{center}
+<img src="diagrams/functions/first-class.png" width="156" style="display: block; margin: auto;" />
 
 While you almost always create a function and then bind it to a name, the binding step is not compulsory. If you choose not to give a function a name, you get an __anonymous function__. This is useful when it's not worth the effort to figure out a name:
 
@@ -237,14 +235,14 @@ In R, you'll often see functions called __closures__. This name reflects the fac
 ### Invoking a function
 \indexc{do.call()}
 
-You normally call a function by placing its arguments, wrapped in parentheses, after its name: `mean(1:10, na.rm = TRUE)`. But what happens if you have the arguments already in a data structure?
+You normally call a function by placing its arguments, wrapped in parentheses, after its name: `mean(1:10, na.rm = TRUE)`. 인수들이 데이터 구조 안에 있으면 어떻게 할까?
 
 
 ```r
 args <- list(1:10, na.rm = TRUE)
 ```
 
-You can instead use `do.call()`: it has two arguments. The function to call, and a list containing the function arguments:
+`do.call()` 을 대신 사용하면 된다: 두 개의 인수를 취하는데, 호출하는 함수와 함수 인수들을 포함한 리스트이다.
 
 
 ```r
@@ -840,7 +838,7 @@ Because of lazy evaluation, you don't need to worry about unnecessary computatio
       print(x)
     }
     show_time()
-    #> [1] "2021-10-18 01:10:28 UTC"
+    #> [1] "2021-10-18 00:50:05 UTC"
     ```
 
 1.  How many arguments are required when calling `library()`?
@@ -972,9 +970,7 @@ Using `...` comes with two downsides:
     plot(1:10, col = "red", pch = 20, xlab = "x", col.lab = "blue")
     ```
     
-    
-    
-    \begin{center}\includegraphics[width=0.7\linewidth]{Functions_files/figure-latex/unnamed-chunk-58-1} \end{center}
+    <img src="Functions_files/figure-html/unnamed-chunk-58-1.png" width="70%" style="display: block; margin: auto;" />
     
 1.  Why does `plot(1:10, col = "red")` only colour the points, not the axes 
     or labels? Read the source code of `plot.default()` to find out.
@@ -1288,8 +1284,8 @@ Suprisingly, in R, `for` can be called like a regular function! The same is true
   }
 }
 replicate(50, (1 + 2))
-#>  [1] 3 3 3 3 3 3 3 3 3 3 3 3 4 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3
-#> [33] 3 3 3 3 3 3 4 3 4 3 3 3 3 4 3 3 3 3
+#>  [1] 3 3 3 3 3 3 3 3 3 3 3 3 4 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3
+#> [39] 4 3 4 3 3 3 3 4 3 3 3 3
 rm("(")
 ```
 
@@ -1369,8 +1365,7 @@ In general, use positional matching only for the first one or two arguments; the
 ```r
 options(warnPartialMatchArgs = TRUE)
 x <- k01(a = 1, 2, 3)
-#> Warning in k01(a = 1, 2, 3): partial argument match of 'a' to
-#> 'abcdef'
+#> Warning in k01(a = 1, 2, 3): partial argument match of 'a' to 'abcdef'
 ```
 
 ### Infix functions
